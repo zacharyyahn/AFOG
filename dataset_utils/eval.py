@@ -1,5 +1,5 @@
 from PIL import Image
-from preprocessing import letterbox_image_padded
+from .preprocessing import letterbox_image_padded
 import xml.etree.ElementTree as ET
 import numpy as np
 

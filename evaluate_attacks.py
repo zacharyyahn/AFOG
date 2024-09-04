@@ -18,7 +18,7 @@ n_iter = 10          # Hyperparameter: number of attack iterations
 
 tps = 0.0
 fps = 0.0
-for path in tqdm(os.listdir("dataset/VOCdevkit/VOC2007/JPEGImages/")):
+for path in tqdm(os.listdir("dataset/VOCdevkit/VOC2007/JPEGImages/")[:50]):
     path = path[:-4]
     tp, fp = evaluate_image(detector, path, attack=None)
     tps += tp
