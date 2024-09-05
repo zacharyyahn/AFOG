@@ -20,6 +20,10 @@ path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
 scores = evaluate_dataset(detector, path, attack=None)
 print("(benign) mAP is:", scores["map"])
 
-scores = evaluate_dataset(detector, path, attack=tog_vanishing, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
-print("(attack) mAP is:", scores["map"])
+scores = evaluate_dataset(detector, path, attack=tog_attention, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
+print("(attention) mAP is:", scores["map"])
+
+scores = evaluate_dataset(detector, path, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
+print("(untargeted) mAP is:", scores["map"])
+
 

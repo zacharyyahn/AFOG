@@ -41,7 +41,7 @@ class_name_to_index = {name:idx for idx, name in class_index_to_name.items()}
 def evaluate_dataset(detector, path, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}):    
     tpfp = np.zeros((len(class_index_to_name.keys())-1, len(IOU_RANGE), 2))
     
-    for path in tqdm(os.listdir(path)[:500]):
+    for path in tqdm(os.listdir(path)[:250]):
         this_tpfp = evaluate_image(detector, path[:-4], attack, attack_params)
         tpfp += this_tpfp
     
@@ -51,13 +51,9 @@ def evaluate_dataset(detector, path, attack=None, attack_params={"n_iter": 10, "
         return (1. * a[0]) / (a[0] + a[1])
     
     precs = np.apply_along_axis(prec, 2, tpfp)
-    print("precs:", precs)
-    print(precs.shape)
     aps = np.mean(precs, axis=1)
     print("aps:", aps)
-    the_map = np.mean(aps)
-    print("map:", the_map)
-    
+    the_map = np.mean(aps)    
     
     scores = {
         "map":the_map
