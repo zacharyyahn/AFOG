@@ -2,6 +2,7 @@ from PIL import Image
 from .preprocessing import letterbox_image_padded
 import xml.etree.ElementTree as ET
 import numpy as np
+from collections import defaultdict
 
 class_index_to_name = {
     0:  "background",
@@ -29,38 +30,73 @@ class_index_to_name = {
 
 class_name_to_index = {name:idx for idx, name in class_index_to_name.items()}
 
-def evaluate_image(detector, path, attack, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}):
+def evaluate_image(detector, path, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}):
     base_image_path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
     base_annotation_path = "dataset/VOCdevkit/VOC2007/Annotations/"
         
-    #Preprocess the image
+    # Preprocess the image
     im = Image.open(base_image_path + path + ".jpg")
     im, meta = letterbox_image_padded(im, size=detector.model_img_size)
-    
-    #Run the attack, if any
+        
+    # Run the attack, if any
     if attack is not None:
-        im = attack(victim=detector, x_query=im, n_iter=attack_params["n_iter"], eps=attack_params["eps"], eps_iter=attack_params["eps_iter"])
+        im = attack(
+            victim=detector, 
+            x_query=im, 
+            n_iter=attack_params["n_iter"], 
+            eps=attack_params["eps"], 
+            eps_iter=attack_params["eps_iter"]
+        )
     
-    #Make detections on the image and get the ground-truth labels
+    # Make detections on the image and get the ground-truth labels
     detections = detector.detect(im, conf_threshold=detector.confidence_thresh_default)
-    pred_labels = detections[:, 0].flatten()
-    pred_scores = detections[:, 1].flatten()
-    gt_labels = np.zeros(20)
+    
+    pred_dict = defaultdict(lambda: [])
+    gt_dict = defaultdict(lambda: [])
+    score_dict = defaultdict(lambda: [])
+    
+    # for every detection, store a dictionary where the class maps to all boxes of that class [2:-1] and its confidence score [1]
+    #print("Detections is", detections)
+    
+    for det in detections:    
+        # get the box and make sure we rescale predictions to what the annotation is expecting
+        cls = int(det[0])
+        score = det[1]
+        xmin = int(max(int(det[-4] * im.shape[2] / detector.model_img_size[1]), 0))
+        ymin = int(max(int(det[-3] * im.shape[1] / detector.model_img_size[0]), 0))
+        xmax = int(min(int(det[-2] * im.shape[2] / detector.model_img_size[1]), im.shape[2]))
+        ymax = int(min(int(det[-1] * im.shape[1] / detector.model_img_size[0]), im.shape[1]))
+       
+        # insert into dictionary
+        pred_dict[cls].append([xmin, ymin, xmax, ymax])
+        score_dict[cls].append(score)
+    
+    # parse the annotations and shift them according to how the input image was padded and scaled
     tree = ET.parse(base_annotation_path + path + ".xml")
     root = tree.getroot()
-    for object in root.findall('object/name'):
-        gt_labels[class_name_to_index[object.text]-1] += 1
+    for object in root.findall('object'):
+        cls = class_name_to_index[object.findall('name')[0].text] - 1
+        box = [int(object.findall('bndbox/xmin')[0].text) + meta[0], 
+               int(object.findall('bndbox/ymin')[0].text) + meta[1], 
+               int(object.findall('bndbox/xmax')[0].text) * meta[4] + meta[0], 
+               int(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]]
+        
+        # insert into dictionary 
+        gt_dict[cls].append(box)
+        
+#     print("Pred dict is", pred_dict)
+#     print("gt dict is", gt_dict)
+#     print("Score dict is", score_dict)
     
-    #Record the true positives and false positives
-    fps = 0
-    tps = 0
-    for item in pred_labels:
-        if gt_labels[int(item)] == 0:
-            fps += 1
-        else:
-            gt_labels[int(item)] -= 1
-            tps += 1
-    return tps, fps
+    # Record the true positives and false positives
+    aps = np.zeros(20)
+    cts = np.zeros(20)
+    for cls in pred_dict.keys():
+        cts[cls] += 1 #log that we looked at that class in this image
+        if len(pred_dict[cls]) > 0 and len(gt_dict[cls]) > 0:
+            # items in pred dict are [conf box box box box]
+            aps[cls] = calculate_ap(pred_dict[cls], gt_dict[cls], score_dict[cls])
+    return aps, cts
 
 def calculate_iou(box1, box2):
     #find where the boxes intersect
@@ -80,7 +116,6 @@ def calculate_iou(box1, box2):
     return float(intersect_area) / union_area
 
 def calculate_ap(pred_boxes, gt_boxes, pred_scores):
-
     total_precision = 0
 
     # sort by scores in descending order
@@ -93,7 +128,6 @@ def calculate_ap(pred_boxes, gt_boxes, pred_scores):
     for i, gt_box in enumerate(gt_boxes):
         for j, pred_box in enumerate(pred_boxes):
             ious[i, j] = calculate_iou(gt_box, pred_box)
-
     for iou_thresh in np.arange(0.1, 1.0, 0.1):
         num_tp = 0
         num_fp = 0
@@ -108,12 +142,11 @@ def calculate_ap(pred_boxes, gt_boxes, pred_scores):
             best_idx = -1
     
             for j, gt_box in enumerate(gt_boxes):
-                iou = ious[i, j] # use pre-computed IoUs
+                iou = ious[j, i] # use pre-computed IoUs
                 
                 if iou > best_iou:
                     best_iou = iou
                     best_idx = j
-                    #print("Best IoU for pred box", i, "is gt box", j)
 
             if best_iou > iou_thresh and not matched_gt_boxes[best_idx]:
                 matched_gt_boxes[best_idx] = True

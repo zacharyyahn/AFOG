@@ -16,11 +16,12 @@ eps = 8 / 255.       # Hyperparameter: epsilon in L-inf norm
 eps_iter = 2 / 255.  # Hyperparameter: attack learning rate
 n_iter = 10          # Hyperparameter: number of attack iterations
 
-tps = 0.0
-fps = 0.0
+aps = np.zeros(20)
+cts = np.zeros(20)
 for path in tqdm(os.listdir("dataset/VOCdevkit/VOC2007/JPEGImages/")[:50]):
-    path = path[:-4]
-    tp, fp = evaluate_image(detector, path, attack=None)
-    tps += tp
-    fps += fp
-print("mAP is %0.4f" % (tp / (tp + fp)))
+    this_aps, this_cts = evaluate_image(detector, path[:-4], attack=None)
+    aps += this_aps
+    cts += this_cts
+aps = aps/cts
+print("APs are", aps)
+print("mAP is", np.mean(aps))
