@@ -1,5 +1,5 @@
 from dataset_utils.preprocessing import letterbox_image_padded
-from dataset_utils.eval import evaluate_image
+from dataset_utils.eval import evaluate_dataset
 from misc_utils.visualization import visualize_detections
 from models.frcnn import FRCNN
 from PIL import Image
@@ -15,13 +15,11 @@ detector = FRCNN().cuda(device=0).load(weights)
 eps = 8 / 255.       # Hyperparameter: epsilon in L-inf norm
 eps_iter = 2 / 255.  # Hyperparameter: attack learning rate
 n_iter = 10          # Hyperparameter: number of attack iterations
+path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
 
-aps = np.zeros(20)
-cts = np.zeros(20)
-for path in tqdm(os.listdir("dataset/VOCdevkit/VOC2007/JPEGImages/")[:50]):
-    this_aps, this_cts = evaluate_image(detector, path[:-4], attack=None)
-    aps += this_aps
-    cts += this_cts
-aps = aps/cts
-print("APs are", aps)
-print("mAP is", np.mean(aps))
+scores = evaluate_dataset(detector, path, attack=None)
+print("(benign) mAP is:", scores["map"])
+
+scores = evaluate_dataset(detector, path, attack=tog_vanishing, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
+print("(attack) mAP is:", scores["map"])
+
