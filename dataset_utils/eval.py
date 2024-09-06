@@ -38,11 +38,11 @@ class_index_to_name = {
 class_name_to_index = {name:idx for idx, name in class_index_to_name.items()}
 
 # Accumulate TP and FP numbers for all classes for all images in a dataset to calculate mAP
-def evaluate_dataset(detector, path, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}):    
+def evaluate_dataset(detector, path, num_examples=-1, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}, flag_attack_fail=False):    
     tpfp = np.zeros((len(class_index_to_name.keys())-1, len(IOU_RANGE), 2))
     
-    for path in tqdm(os.listdir(path)[:250]):
-        this_tpfp = evaluate_image(detector, path[:-4], attack, attack_params)
+    for path in tqdm(os.listdir(path)[:num_examples]):
+        this_tpfp = evaluate_image(detector, path[:-4], attack, attack_params, flag_attack_fail=flag_attack_fail)
         tpfp += this_tpfp
     
     def prec(a):
@@ -61,7 +61,7 @@ def evaluate_dataset(detector, path, attack=None, attack_params={"n_iter": 10, "
     return scores
 
 # Get tp and fp numbers for every class 
-def evaluate_image(detector, path, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}):
+def evaluate_image(detector, path, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}, flag_attack_fail=False):
     base_image_path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
     base_annotation_path = "dataset/VOCdevkit/VOC2007/Annotations/"
         
@@ -120,16 +120,31 @@ def evaluate_image(detector, path, attack=None, attack_params={"n_iter": 10, "ep
     for cls in pred_dict.keys():
         if len(pred_dict[cls]) > 0 and len(gt_dict[cls]) > 0:
             # items in pred dict are [conf box box box box]
-            tpfp[cls] += calculate_tpfp(pred_dict[cls], gt_dict[cls], score_dict[cls])
+            tpfp[cls] += calculate_tpfp(pred_dict[cls], gt_dict[cls], score_dict[cls], detector)
+    
+    
+    # if we want to track which images were not corrupted by the attack effectively
+    if flag_attack_fail:
+        attack_fail_save_dir = "dataset/AttackFails/attack_fails.txt"
+        attack_fail_tp_thresh = 1
+        
+        tps = np.sum(tpfp[:, :, 0])
+        
+        if tps >= attack_fail_tp_thresh: # if we find even a single TP
+            f = open(attack_fail_save_dir, 'a')
+            print("Image", path, "has tps", tpfp[:, :, 0].flatten())
+            f.write(path + "\n")
+            f.close()
+            
     return tpfp
 
 # Calculate the IOU between two boxes
-def calculate_iou(box1, box2):
+def calculate_iou(box1, box2, model_img_size):
     #find where the boxes intersect
-    min_x = box1[0] if box1[0] > box2[0] else box2[0]
-    min_y = box1[1] if box1[1] > box2[1] else box2[1]
-    max_x = box1[2] if box1[2] < box2[2] else box2[2]
-    max_y = box1[3] if box1[3] < box2[3] else box2[3]
+    min_x = max(0, box1[0] if box1[0] > box2[0] else box2[0])
+    min_y = max(0, box1[1] if box1[1] > box2[1] else box2[1])
+    max_x = min(model_img_size[0], box1[2] if box1[2] < box2[2] else box2[2])
+    max_y = min(model_img_size[1], box1[3] if box1[3] < box2[3] else box2[3])
     
     #check to see if they overlap at all
     if min_x > max_x or min_y > max_y:
@@ -142,7 +157,7 @@ def calculate_iou(box1, box2):
     return float(intersect_area) / union_area
 
 # Calculate an array of tp and fp values for each IoU threshold for just one class
-def calculate_tpfp(pred_boxes, gt_boxes, pred_scores):
+def calculate_tpfp(pred_boxes, gt_boxes, pred_scores, detector):
     this_tpfp = np.zeros((len(IOU_RANGE), 2)) #records TPs and FPs for each IOU value
 
     # sort by scores in descending order
@@ -154,7 +169,7 @@ def calculate_tpfp(pred_boxes, gt_boxes, pred_scores):
     ious = np.zeros((len(gt_boxes), len(pred_boxes)))
     for i, gt_box in enumerate(gt_boxes):
         for j, pred_box in enumerate(pred_boxes):
-            ious[i, j] = calculate_iou(gt_box, pred_box)
+            ious[i, j] = calculate_iou(gt_box, pred_box, detector.model_img_size)
     for iou_thresh in IOU_RANGE:
         num_tp = 0
         num_fp = 0

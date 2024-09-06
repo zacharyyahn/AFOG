@@ -7,7 +7,6 @@
 *.gif
 *.png
 *.xml
-*.txt
 *.out
 *.sbatch
 dataset/
