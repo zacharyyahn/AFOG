@@ -23,17 +23,17 @@ print("(benign) mAP is:", scores["map"])
 # scores = evaluate_dataset(detector, path, attack=tog_attention, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
 # print("(attention) mAP is:", scores["map"])
 
-for n_iter in range(2, 22, 2):
+for n_iter in range(22, 32, 2):
     print("---- n_iter =", n_iter, "----")
 
-    scores = evaluate_dataset(detector, path, num_examples=5, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=True)
+    scores = evaluate_dataset(detector, path, num_examples=500, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
 
     print("(untargeted) mAP is:", scores["map"])
 
-    scores = evaluate_dataset(detector, path, num_examples=5, attack=tog_fabrication, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
-    print("(fabrication) mAP is:", scores["map"])
+#    scores = evaluate_dataset(detector, path, num_examples=500, attack=tog_fabrication, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
+#    print("(fabrication) mAP is:", scores["map"])
 
-    scores = evaluate_dataset(detector, path, num_examples=5, attack=tog_vanishing, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
-    print("(vanishing) mAP is:", scores["map"])
+#    scores = evaluate_dataset(detector, path, num_examples=500, attack=tog_vanishing, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
+#    print("(vanishing) mAP is:", scores["map"])
 
 
