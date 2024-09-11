@@ -21,7 +21,7 @@ warnings.simplefilter("ignore", UserWarning)
 
 LossTuple = namedtuple('LossTuple', ['rpn_loc_loss', 'rpn_cls_loss', 'roi_loc_loss', 'roi_cls_loss', 'total_loss',
                                      'object_untargeted_loss',
-                                     'object_vanishing_loss', 'object_fabrication_loss', 'object_mislabeling_loss'])
+                                     'object_vanishing_loss', 'object_fabrication_loss', 'object_mislabeling_loss', 'object_untargeted_class_loss'])
 
 
 class FRCNN_RAP:
