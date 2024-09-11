@@ -74,7 +74,7 @@ def graph_aps(aps_dict):
     
     for label, aps in aps_dict.items():
         plt.plot(aps)
-    plt.legend(aps_dict.keys())
+    plt.legend(aps_dict.keys(), loc='upper right')
     plt.xticks(range(len(classes)), classes, size='small', rotation=70)
     plt.grid(True)
     plt.show()

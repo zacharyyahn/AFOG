@@ -6,8 +6,8 @@ from collections import defaultdict
 from tqdm import tqdm
 import os
 
-IOU_START = 0.5
-IOU_END = 0.6
+IOU_START = 0.0
+IOU_END = 1.0
 IOU_ITER = 0.1
 IOU_RANGE = np.arange(IOU_START, IOU_END, IOU_ITER)
 
@@ -128,9 +128,9 @@ def evaluate_image(detector, path, attack=None, attack_params={"n_iter": 10, "ep
         attack_fail_save_dir = "dataset/AttackFails/attack_fails.txt"
         attack_fail_tp_thresh = 1
         
-        tps = np.sum(tpfp[:, :, 0])
-        
-        if tps >= attack_fail_tp_thresh: # if we find even a single TP
+        tps = np.sum(tpfp[:, tpfp.shape[0] // 2, 0]) #look at the middle of the IoU threshold range
+        tpfp[tpfp.shape[0] // 2
+        if tps >= attack_fail_tp_thresh: # if we find even a single TP at the middle of the threshold
             f = open(attack_fail_save_dir, 'a')
             print("Image", path, "has tps", tpfp[:, :, 0].flatten())
             f.write(path + "\n")
@@ -190,7 +190,7 @@ def calculate_tpfp(pred_boxes, gt_boxes, pred_scores, detector):
                     best_iou = iou
                     best_idx = j
 
-            if best_iou > iou_thresh and not matched_gt_boxes[best_idx]:
+            if best_iou >= iou_thresh and not matched_gt_boxes[best_idx]:
                 matched_gt_boxes[best_idx] = True
                 #print("For IoU thresh", iou_thresh, "pred box", i, "matched gt box", best_idx, "and got a TP")
                 this_tpfp[int((iou_thresh - IOU_START) / IOU_ITER)][0] += 1
