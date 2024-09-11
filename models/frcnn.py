@@ -235,6 +235,7 @@ class FRCNN(nn.Module):
         roi_loc_loss = _fast_rcnn_loc_loss(roi_loc.contiguous(), gt_roi_loc, gt_roi_label.data, self.roi_sigma)
         roi_cls_loss = nn.CrossEntropyLoss()(roi_score, gt_roi_label.cuda())
 
+        object_untargeted_class_loss = -(rpn_cls_loss + roi_cls_loss)
         object_untargeted_loss = -(rpn_loc_loss + rpn_cls_loss + roi_loc_loss + roi_cls_loss)
         object_vanishing_loss = F.cross_entropy(rpn_score, t.zeros_like(gt_rpn_label)) + \
                                 nn.CrossEntropyLoss()(roi_score, t.zeros_like(gt_roi_label))
@@ -244,7 +245,7 @@ class FRCNN(nn.Module):
         losses = [rpn_loc_loss, rpn_cls_loss, roi_loc_loss, roi_cls_loss]
         losses = losses + [sum(losses)]
         losses = losses + [object_untargeted_loss,
-                           object_vanishing_loss, object_fabrication_loss, object_mislabeling_loss]
+                           object_vanishing_loss, object_fabrication_loss, object_mislabeling_loss, object_untargeted_class_loss]
         return LossTuple(*losses)
 
     def load(self, path, load_optimizer=True, parse_opt=False, ):
@@ -328,6 +329,29 @@ class FRCNN(nn.Module):
         self.faster_rcnn.zero_grad()
         if len(detections) > 0:
             losses.object_untargeted_loss.backward()
+        else:
+            losses.object_fabrication_loss.backward()
+        return x_tensor.grad.data.cpu().numpy().transpose((0, 2, 3, 1))
+    
+    def compute_object_untargeted_class_gradient(self, x, detections):
+        x_local = x.copy() * 255
+
+        x_tensor = t.from_numpy(preprocess(x_local[0].transpose((2, 0, 1))))[None].cuda().float()
+        x_tensor.requires_grad = True
+
+        if detections is not None and len(detections) > 0:
+            _bboxes = t.from_numpy(detections[np.newaxis, :, [-3, -4, -1, -2]]).float()
+            _labels = t.from_numpy(detections[np.newaxis, :, 0]).int()
+        else:
+            _bboxes = t.from_numpy(np.zeros((1, 1, 4))).float()
+            _labels = t.from_numpy(np.zeros((1, 1))).int()
+        _scale = at.scalar(np.asarray([1.]))
+
+        losses = self.forward(x_tensor, _bboxes, _labels, _scale)
+        self.optimizer.zero_grad()
+        self.faster_rcnn.zero_grad()
+        if len(detections) > 0:
+            losses.object_untargeted_class_loss.backward()
         else:
             losses.object_fabrication_loss.backward()
         return x_tensor.grad.data.cpu().numpy().transpose((0, 2, 3, 1))
