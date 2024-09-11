@@ -129,7 +129,7 @@ def evaluate_image(detector, path, attack=None, attack_params={"n_iter": 10, "ep
         attack_fail_tp_thresh = 1
         
         tps = np.sum(tpfp[:, tpfp.shape[0] // 2, 0]) #look at the middle of the IoU threshold range
-        tpfp[tpfp.shape[0] // 2
+
         if tps >= attack_fail_tp_thresh: # if we find even a single TP at the middle of the threshold
             f = open(attack_fail_save_dir, 'a')
             print("Image", path, "has tps", tpfp[:, :, 0].flatten())

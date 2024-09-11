@@ -33,7 +33,8 @@ def get_gt_bboxes(annotation_path, meta):
     
     tree = ET.parse(annotation_path)
     root = tree.getroot()
-    dets = []
+    dets = np.zeros((len(root.findall('object')), 6))
+    i = 0     
     for object in root.findall('object'):
         cls = class_name_to_index[object.findall('name')[0].text] - 1
         box = [int(object.findall('bndbox/xmin')[0].text) + meta[0], 
@@ -41,7 +42,13 @@ def get_gt_bboxes(annotation_path, meta):
                int(object.findall('bndbox/xmax')[0].text) * meta[4] + meta[0], 
                int(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]]
         conf = 1.0
-        dets.append([cls, conf, box[0], box[1], box[2], box[3]])
+        dets[i,0] = cls
+        dets[i,1] = conf
+        dets[i,2] = box[0]
+        dets[i,3] = box[1]
+        dets[i,4] = box[2]
+        dets[i,5] = box[3]
+        i += 1
     return dets
 
 def visualize_detections(detections_dict):

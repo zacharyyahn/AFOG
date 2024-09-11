@@ -26,7 +26,7 @@ path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
 for n_iter in range(10, 12, 2):
     print("---- n_iter =", n_iter, "----")
 
-    scores = evaluate_dataset(detector, path, num_examples=500, attack=tog_untargeted_class, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
+    scores = evaluate_dataset(detector, path, num_examples=-1, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
 
     print("(untargeted class) mAP is:", scores["map"])
 
