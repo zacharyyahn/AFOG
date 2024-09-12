@@ -15,8 +15,9 @@ detector = FRCNN().cuda(device=0).load(weights)
 eps = 8 / 255.       # Hyperparameter: epsilon in L-inf norm
 eps_iter = 2 / 255.  # Hyperparameter: attack learning rate
 n_iter = 10          # Hyperparameter: number of attack iterations
-path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
+im_path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
+annot_path = "dataset/VOCdevkit/VOC2007/Annotations/"
 
-scores = evaluate_dataset(detector, path, num_examples=-1, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=True)
+scores = evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=True)
 
 

@@ -4,6 +4,8 @@ import xml.etree.ElementTree as ET
 import numpy as np
 from collections import defaultdict
 from tqdm import tqdm
+import torchmetrics
+import torch
 import os
 
 IOU_START = 0.5
@@ -36,6 +38,79 @@ class_index_to_name = {
   }
 
 class_name_to_index = {name:idx for idx, name in class_index_to_name.items()}
+
+def evaluate_dataset_with_torch(detector, im_path, annot_path, num_examples=-1, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}, flag_attack_fail=False):
+    
+    map_metric = torchmetrics.detection.MeanAveragePrecision()
+    
+    for path in tqdm(os.listdir(im_path)[:num_examples]):
+        
+        # Preprocess the image
+        im = Image.open(im_path + path)
+        im, meta = letterbox_image_padded(im, size=detector.model_img_size)
+
+        # Run the attack, if any
+        if attack is not None:
+            im = attack(
+                victim=detector, 
+                x_query=im, 
+                n_iter=attack_params["n_iter"], 
+                eps=attack_params["eps"], 
+                eps_iter=attack_params["eps_iter"]
+            )
+
+        # Make detections on the image and get the ground-truth labels
+        detections = detector.detect(im, conf_threshold=detector.confidence_thresh_default)
+        
+        preds = []
+        gts = []
+                                  
+
+        # for every detection, extract the four bbox coords, the score, and the conf label    
+        for i, det in enumerate(detections):    
+            # get the box and make sure we rescale predictions to what the annotation is expecting
+            cls = int(det[0])
+            score = det[1]
+            xmin = max(det[-4] * im.shape[2] / detector.model_img_size[1], 0)
+            ymin = max(det[-3] * im.shape[1] / detector.model_img_size[0], 0)
+            xmax = min(det[-2] * im.shape[2] / detector.model_img_size[1], im.shape[2])
+            ymax = min(det[-1] * im.shape[1] / detector.model_img_size[0], im.shape[1])
+                         
+            this_pred = torch.zeros(6).cuda()
+            this_pred[0] = xmin
+            this_pred[1] = ymin
+            this_pred[2] = xmax
+            this_pred[3] = ymax
+            this_pred[4] = score
+            this_pred[5] = cls
+            preds.append(this_pred)
+                                
+        # parse the annotations and shift them according to how the input image was padded and scaled
+        tree = ET.parse(annot_path + path[:-4] + ".xml")
+        root = tree.getroot()
+        
+        for i, object in enumerate(root.findall('object')):
+            cls = class_name_to_index[object.findall('name')[0].text] - 1
+            xmin = float(object.findall('bndbox/xmin')[0].text) + meta[0] 
+            ymin = float(object.findall('bndbox/ymin')[0].text) + meta[1] 
+            xmax = float(object.findall('bndbox/xmax')[0].text) * meta[4] + meta[0]
+            y_max = float(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]
+            this_gt = torch.zeros(5).cuda()
+            this_gt[0] = xmin
+            this_gt[1] = ymin
+            this_gt[2] = xmax
+            this_gt[3] = ymax
+            this_gt[4] = cls
+        gts.append(this_gt)
+        print(preds)
+        print(gts)
+        
+        map_metric.update(preds, gts)
+    the_map = map_metric.compute()
+    return the_map
+    
+        
+    
 
 """
 Accumulate TP and FP numbers for all classes for all images in a dataset to calculate mAP by calling evaluate_image() on every image. 
@@ -156,15 +231,15 @@ def evaluate_image(detector, im_path, annot_path, im_num, attack=None, attack_pa
     
     # if we want to track which images were not corrupted by the attack effectively
     if flag_attack_fail:
-        attack_fail_save_dir = "dataset/AttackFails/attack_fails.txt"
+        attack_fail_save_dir = "dataset/AttackFails/attack_fails2.txt"
         attack_fail_tp_thresh = 1
         
-        tps = np.sum(tpfp[:, tpfp.shape[0] // 2, 0]) #look at the middle of the IoU threshold range
+        tps = np.sum(tpfp[:, tpfp.shape[1] // 2, 0]) #look at the middle of the IoU threshold range
 
         if tps >= attack_fail_tp_thresh: # if we find even a single TP at the middle of the threshold
             f = open(attack_fail_save_dir, 'a')
-            print("Image", path, "has tps", tpfp[:, :, 0].flatten())
-            f.write(path + "\n")
+            print("Image", im_num, "has tps", tpfp[:, :, 0].flatten())
+            f.write(im_num + "\n")
             f.close()
     return tpfp
 
@@ -248,3 +323,32 @@ def calculate_tpfp(pred_boxes, gt_boxes, pred_scores, detector):
                 #print("For IoU thresh", iou_thresh, "pred box", i, "got a FP")
                 this_tpfp[int((iou_thresh - IOU_START) / IOU_ITER)][1] += 1
     return this_tpfp
+    
+"""
+Loops through every image in the im_path directory and finds images where applying the attack caused the model to recognize a TP
+that it did not see before.
+
+Returns none
+
+- detector: model object with a model_img_size attribute and a detect() method.
+- im_path: string path to the directory of images for evaluating. Iterates through these and checks annot_path for corresponding annotation.
+- annot_path: string path to the directory of annotations for ground-truths.
+- num_examples: int for how many example images to go through. -1 to go through all images.
+- attack: function for TOG attack.
+- attack_params: dict containing TOG attack parameters.
+"""
+def flag_induced_tp(detector, im_path, annot_path, num_examples=-1, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}): 
+    
+    print("--- Images where attack induced TP ---")
+    # Iterate through each image in im_path up to num_examples and add their TP/FP numbers to the running total for respective version
+    for path in tqdm(os.listdir(im_path)[:num_examples]):
+        tpfp_benign = evaluate_image(detector, im_path, annot_path, path, attack=None, attack_params=attack_params)
+        tpfp_adv = evaluate_image(detector, im_path, annot_path, path, attack=attack, attack_params=attack_params)
+    
+        tps_benign = np.sum(tpfp_benign[:, tpfp_benign.shape[1] // 2, 0]) #look at the middle of the IoU threshold range
+        tps_adv = np.sum(tpfp_adv[:, tpfp_adv.shape[1] // 2, 0])
+        print("Im:", path, "has Benign TPs and Adv TPs::")
+        print(tpfp_benign[:, tpfp_benign.shape[1] // 2, 0])
+        print(tpfp_adv[:, tpfp_adv.shape[1] // 2, 0])
+        if tps_benign < tps_adv:
+            print(path)

@@ -17,6 +17,7 @@ eps_iter = 2 / 255.  # Hyperparameter: attack learning rate
 n_iter = 10          # Hyperparameter: number of attack iterations
 im_path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
 annot_path = "dataset/VOCdevkit/VOC2007/Annotations/"
+fail_path = "dataset/AttackFails/FailImages/"
 
 #scores = evaluate_dataset(detector, path, num_examples=500, attack=None)
 #print("(benign) mAP is:", scores["map"])
@@ -27,9 +28,9 @@ annot_path = "dataset/VOCdevkit/VOC2007/Annotations/"
 for n_iter in range(10, 12, 2):
     print("---- n_iter =", n_iter, "----")
 
-    scores = evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=None, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
+    scores = evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
 
-    print("(untargeted class) mAP is:", scores["map"])
+    print("scores are:", scores)
 
 #    scores = evaluate_dataset(detector, path, num_examples=500, attack=tog_fabrication, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
 #    print("(fabrication) mAP is:", scores["map"])
