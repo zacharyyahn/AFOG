@@ -3,8 +3,16 @@ import numpy as np
 from PIL import Image
 import xml.etree.ElementTree as ET
 
+"""
+Returns a list of gt_boxes of shape [1, 6] where each box is [class_label, conf_score, minx, miny, maxx, maxy]
+for use in visualize_detections()
 
-def get_gt_bboxes(annotation_path, meta):
+- annotation_path: string path to annotations folder
+- im_num: which image to use, including extension such as .jpg
+- meta: list return by letterbox_image_padded(), depicts how image was scaled to meet model_img_size
+
+"""
+def get_gt_bboxes(annotation_path, im_num, meta):
     class_index_to_name = {
         0:  "background",
         1:  "aeroplane",
@@ -31,7 +39,7 @@ def get_gt_bboxes(annotation_path, meta):
     
     class_name_to_index = {name:idx for idx, name in class_index_to_name.items()}
     
-    tree = ET.parse(annotation_path)
+    tree = ET.parse(annotation_path + im_num[:im_num.find(".")] + ".xml")
     root = tree.getroot()
     dets = np.zeros((len(root.findall('object')), 6))
     i = 0     

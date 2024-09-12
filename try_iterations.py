@@ -15,7 +15,8 @@ detector = FRCNN().cuda(device=0).load(weights)
 eps = 8 / 255.       # Hyperparameter: epsilon in L-inf norm
 eps_iter = 2 / 255.  # Hyperparameter: attack learning rate
 n_iter = 10          # Hyperparameter: number of attack iterations
-path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
+im_path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
+annot_path = "dataset/VOCdevkit/VOC2007/Annotations/"
 
 #scores = evaluate_dataset(detector, path, num_examples=500, attack=None)
 #print("(benign) mAP is:", scores["map"])
@@ -26,7 +27,7 @@ path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
 for n_iter in range(10, 12, 2):
     print("---- n_iter =", n_iter, "----")
 
-    scores = evaluate_dataset(detector, path, num_examples=-1, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
+    scores = evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=None, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
 
     print("(untargeted class) mAP is:", scores["map"])
 
