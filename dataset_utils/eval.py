@@ -5,6 +5,7 @@ import numpy as np
 from collections import defaultdict
 from tqdm import tqdm
 import torchmetrics
+from frcnn_utils.eval_tool import eval_detection_voc
 import torch
 import os
 
@@ -39,9 +40,86 @@ class_index_to_name = {
 
 class_name_to_index = {name:idx for idx, name in class_index_to_name.items()}
 
+def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}, flag_attack_fail=False):
+    
+    pred_bboxes_total = []
+    pred_scores_total = []
+    pred_labels_total = []
+    gt_bboxes_total = []
+    gt_labels_total = []
+    
+    for path in tqdm(os.listdir(im_path)[:num_examples]):
+        
+        # Preprocess the image
+        im = Image.open(im_path + path)
+        im, meta = letterbox_image_padded(im, size=detector.model_img_size)
+
+        # Run the attack, if any
+        if attack is not None:
+            im = attack(
+                victim=detector, 
+                x_query=im, 
+                n_iter=attack_params["n_iter"], 
+                eps=attack_params["eps"], 
+                eps_iter=attack_params["eps_iter"]
+            )
+
+        # Make detections on the image and get the ground-truth labels
+        detections = detector.detect(im, conf_threshold=detector.confidence_thresh_default)
+               
+        pred_boxes = np.zeros((len(detections), 4))
+        pred_scores = np.zeros(len(detections))
+        pred_labels = np.zeros(len(detections))
+                                  
+
+        # for every detection, extract the four bbox coords, the score, and the conf label    
+        for i, det in enumerate(detections):    
+            # get the box and make sure we rescale predictions to what the annotation is expecting
+            cls = int(det[0])
+            score = det[1]
+            xmin = max(det[-4] * im.shape[2] / detector.model_img_size[1], 0)
+            ymin = max(det[-3] * im.shape[1] / detector.model_img_size[0], 0)
+            xmax = min(det[-2] * im.shape[2] / detector.model_img_size[1], im.shape[2])
+            ymax = min(det[-1] * im.shape[1] / detector.model_img_size[0], im.shape[1])
+                         
+            pred_boxes[i, 0] = xmin
+            pred_boxes[i, 1] = ymin
+            pred_boxes[i, 2] = xmax
+            pred_boxes[i, 3] = ymax
+            pred_scores[i] = score
+            pred_labels[i] = int(cls)
+                                
+        # parse the annotations and shift them according to how the input image was padded and scaled
+        tree = ET.parse(annot_path + path[:-4] + ".xml")
+        root = tree.getroot()
+        
+        gt_boxes = np.zeros((len(root.findall('object')), 4))
+        gt_labels = np.zeros(len(root.findall('object')))
+        
+        for i, object in enumerate(root.findall('object')):
+            cls = class_name_to_index[object.findall('name')[0].text] - 1
+            xmin = float(object.findall('bndbox/xmin')[0].text) + meta[0] 
+            ymin = float(object.findall('bndbox/ymin')[0].text) + meta[1] 
+            xmax = float(object.findall('bndbox/xmax')[0].text) * meta[4] + meta[0]
+            y_max = float(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]
+
+            gt_boxes[i, 0] = xmin
+            gt_boxes[i, 1] = ymin
+            gt_boxes[i, 2] = xmax
+            gt_boxes[i, 3] = ymax
+            gt_labels[i] = int(cls)
+        pred_bboxes_total.append(pred_boxes)
+        pred_labels_total.append(pred_labels)
+        pred_scores_total.append(pred_scores)
+        gt_bboxes_total.append(gt_boxes)
+        gt_labels_total.append(gt_labels)
+        
+    scores = eval_detection_voc(pred_bboxes=pred_bboxes_total, pred_labels=pred_labels_total, pred_scores=pred_scores_total, gt_bboxes=gt_bboxes_total, gt_labels=gt_labels_total, iou_thresh=0.5, use_07_metric=True)
+    return scores
+
 def evaluate_dataset_with_torch(detector, im_path, annot_path, num_examples=-1, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}, flag_attack_fail=False):
     
-    map_metric = torchmetrics.detection.MeanAveragePrecision()
+    map_metric = torchmetrics.detection.MeanAveragePrecision(iou_type='bbox', extended_summary=True, class_metrics=True)
     
     for path in tqdm(os.listdir(im_path)[:num_examples]):
         
@@ -63,7 +141,10 @@ def evaluate_dataset_with_torch(detector, im_path, annot_path, num_examples=-1, 
         detections = detector.detect(im, conf_threshold=detector.confidence_thresh_default)
         
         preds = []
-        gts = []
+        
+        pred_boxes = torch.empty((len(detections), 4))
+        pred_scores = torch.empty(len(detections))
+        pred_labels = torch.empty(len(detections), dtype=torch.int64)
                                   
 
         # for every detection, extract the four bbox coords, the score, and the conf label    
@@ -76,18 +157,18 @@ def evaluate_dataset_with_torch(detector, im_path, annot_path, num_examples=-1, 
             xmax = min(det[-2] * im.shape[2] / detector.model_img_size[1], im.shape[2])
             ymax = min(det[-1] * im.shape[1] / detector.model_img_size[0], im.shape[1])
                          
-            this_pred = torch.zeros(6).cuda()
-            this_pred[0] = xmin
-            this_pred[1] = ymin
-            this_pred[2] = xmax
-            this_pred[3] = ymax
-            this_pred[4] = score
-            this_pred[5] = cls
-            preds.append(this_pred)
+            pred_boxes[i, 0] = xmin
+            pred_boxes[i, 1] = ymin
+            pred_boxes[i, 2] = xmax
+            pred_boxes[i, 3] = ymax
+            pred_scores[i] = score
+            pred_labels[i] = int(cls)
                                 
         # parse the annotations and shift them according to how the input image was padded and scaled
         tree = ET.parse(annot_path + path[:-4] + ".xml")
         root = tree.getroot()
+        gt_boxes = torch.empty((len(root.findall('object')), 4))
+        gt_labels = torch.empty(len(root.findall('object')), dtype=torch.int64)
         
         for i, object in enumerate(root.findall('object')):
             cls = class_name_to_index[object.findall('name')[0].text] - 1
@@ -95,16 +176,17 @@ def evaluate_dataset_with_torch(detector, im_path, annot_path, num_examples=-1, 
             ymin = float(object.findall('bndbox/ymin')[0].text) + meta[1] 
             xmax = float(object.findall('bndbox/xmax')[0].text) * meta[4] + meta[0]
             y_max = float(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]
-            this_gt = torch.zeros(5).cuda()
-            this_gt[0] = xmin
-            this_gt[1] = ymin
-            this_gt[2] = xmax
-            this_gt[3] = ymax
-            this_gt[4] = cls
-        gts.append(this_gt)
+
+            gt_boxes[i, 0] = xmin
+            gt_boxes[i, 1] = ymin
+            gt_boxes[i, 2] = xmax
+            gt_boxes[i, 3] = ymax
+            gt_labels[i] = int(cls)
+
+        preds = [dict(boxes=pred_boxes, scores=pred_scores, labels=pred_labels)]
+        gts = [dict(boxes=gt_boxes, labels=gt_labels)]
         print(preds)
         print(gts)
-        
         map_metric.update(preds, gts)
     the_map = map_metric.compute()
     return the_map

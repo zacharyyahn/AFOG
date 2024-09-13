@@ -2,25 +2,64 @@ from attack_utils.target_utils import generate_attack_targets
 import numpy as np
 
 
-def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_lr=0.01):
+def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_lr=0.1):
     detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
     eta = np.random.uniform(-eps, eps, size=x_query.shape)
-    attn_map = np.random.normal(1, 0.05, (x_query.shape))
+    attn_map = np.random.normal(1, 0.001, (x_query.shape))
+    x_adv = np.clip(x_query + np.multiply(attn_map, eta), 0.0, 1.0)
+    #x_adv = x_query + np.multiply(attn_map, eta)
     for i in range(n_iter):
         # on odd iterations, update eta
-        if i % 2 == 0: 
-            grad = victim.compute_object_attention_gradient(x_query, eta, attn_map, detections_query, mode="eta")
-            signed_grad = np.sign(grad)
-            eta += eps_iter * signed_grad
-        
+        grad = victim.compute_object_attention_gradient(x_adv, detections = detections_query)
+        if i > n_iter // 2: 
+            eta_grad = np.multiply(grad, attn_map)
+            signed_eta_grad = np.sign(eta_grad)
+            eta -= eps_iter * signed_eta_grad
+            eta = np.clip(eta, -eps, eps)
         # on even iterations, update attention map
         else:
-            grad = victim.compute_object_attention_gradient(x_query, eta, attn_map, detections_query, mode="attn")
-            attn_map += attn_lr * grad
-    eta = np.clip(eta, -eps, eps)
-    x_adv = x_query + np.multiply(eta, attn_map)
+            attn_map_grad = np.multiply(grad, eta)
+            signed_attn_map_grad = np.sign(attn_map_grad)
+            #print("Updated attn with:\n", attn_lr * signed_attn_map_grad)
+            old_map = attn_map.copy()
+            attn_map -= attn_lr * signed_attn_map_grad
+            attn_map = np.clip(attn_map, 0, 2)
+        x_adv = np.clip(x_query + np.multiply(attn_map, eta), 0.0, 1.0)
     x_adv = np.clip(x_adv, 0.0, 1.0)
     return x_adv 
+
+def tog_attention_viz(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_lr=0.05):
+    etas = []
+    grads = []
+    maps = []
+    
+    detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
+    eta = np.random.uniform(-eps, eps, size=x_query.shape)
+    attn_map = np.random.normal(1, 0.001, (x_query.shape))
+    x_adv = np.clip(x_query + np.multiply(attn_map, eta), 0.0, 1.0)
+    #x_adv = x_query + np.multiply(attn_map, eta)
+    for i in range(n_iter):
+        # on odd iterations, update eta
+        grad = victim.compute_object_attention_gradient(x_adv, detections = detections_query)
+        if i > n_iter // 2: 
+            eta_grad = np.multiply(grad, attn_map)
+            signed_eta_grad = np.sign(eta_grad)
+            eta -= eps_iter * signed_eta_grad
+            eta = np.clip(eta, -eps, eps)
+        # on even iterations, update attention map
+        else:
+            attn_map_grad = np.multiply(grad, eta)
+            signed_attn_map_grad = np.sign(attn_map_grad)
+            #print("Updated attn with:\n", attn_lr * signed_attn_map_grad)
+            old_map = attn_map.copy()
+            attn_map -= attn_lr * signed_attn_map_grad
+            attn_map = np.clip(attn_map, 0, 2)
+        x_adv = np.clip(x_query + np.multiply(attn_map, eta), 0.0, 1.0)
+        grads.append(grad)
+        etas.append(eta)
+        maps.append(attn_map.copy())
+    x_adv = np.clip(x_adv, 0.0, 1.0)
+    return x_adv, etas, grads, maps
 
 def tog_untargeted_class(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255.):
     detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)

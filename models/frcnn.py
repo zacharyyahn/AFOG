@@ -275,20 +275,11 @@ class FRCNN(nn.Module):
         detections_query = np.concatenate([_labels, _scores, _logits, _bboxes], axis=-1)
         return detections_query
 
-    def compute_object_attention_gradient(self, x_query, eta, attn, detections, mode):
-        x_query_local = x_query.copy() * 255
-        eta_local = eta.copy()
-        attn_local = attn.copy()
+    def compute_object_attention_gradient(self, x, detections):
+        x_local = x.copy() * 255
 
-        x_query_tensor = t.from_numpy(preprocess(x_query_local[0].transpose((2, 0, 1))))[None].cuda().float()
-        eta_tensor = t.from_numpy(preprocess(eta_local[0].transpose((2, 0, 1))))[None].cuda().float()
-        attn_tensor = t.from_numpy(preprocess(attn_local[0].transpose((2, 0, 1))))[None].cuda().float()
-
-        x_query_tensor.requires_grad = True
-        eta_tensor.requires_grad = True
-        attn_tensor.requires_grad = True
-        
-        x_adv_tensor = x_query_tensor + t.multiply(eta_tensor, attn_tensor)
+        x_tensor = t.from_numpy(preprocess(x_local[0].transpose((2, 0, 1))))[None].cuda().float()
+        x_tensor.requires_grad = True
 
         if detections is not None and len(detections) > 0:
             _bboxes = t.from_numpy(detections[np.newaxis, :, [-3, -4, -1, -2]]).float()
@@ -298,17 +289,14 @@ class FRCNN(nn.Module):
             _labels = t.from_numpy(np.zeros((1, 1))).int()
         _scale = at.scalar(np.asarray([1.]))
 
-        losses = self.forward(x_adv_tensor, _bboxes, _labels, _scale)
+        losses = self.forward(x_tensor, _bboxes, _labels, _scale)
         self.optimizer.zero_grad()
         self.faster_rcnn.zero_grad()
         if len(detections) > 0:
             losses.object_untargeted_loss.backward()
         else:
             losses.object_fabrication_loss.backward()
-        if mode == "attn":
-            return attn_tensor.grad.data.cpu().numpy().transpose((0, 2, 3, 1))
-        if mode == "eta":
-            return eta_tensor.grad.data.cpu().numpy().transpose((0, 2, 3, 1))
+        return x_tensor.grad.data.cpu().numpy().transpose((0, 2, 3, 1))
     
     def compute_object_untargeted_gradient(self, x, detections):
         x_local = x.copy() * 255
