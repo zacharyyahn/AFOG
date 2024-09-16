@@ -21,7 +21,7 @@ warnings.simplefilter("ignore", UserWarning)
 
 LossTuple = namedtuple('LossTuple', ['rpn_loc_loss', 'rpn_cls_loss', 'roi_loc_loss', 'roi_cls_loss', 'total_loss',
                                      'object_untargeted_loss',
-                                     'object_vanishing_loss', 'object_fabrication_loss', 'object_mislabeling_loss', 'object_untargeted_class_loss'])
+                                     'object_vanishing_loss', 'object_fabrication_loss', 'object_mislabeling_loss', 'object_untargeted_class_loss', 'object_attention_loss'])
 
 
 class FRCNN_RAP:
@@ -234,7 +234,8 @@ class FRCNN(nn.Module):
 
         roi_loc_loss = _fast_rcnn_loc_loss(roi_loc.contiguous(), gt_roi_loc, gt_roi_label.data, self.roi_sigma)
         roi_cls_loss = nn.CrossEntropyLoss()(roi_score, gt_roi_label.cuda())
-
+        
+        object_attention_loss = -(rpn_loc_loss + rpn_cls_loss + roi_loc_loss + roi_cls_loss)
         object_untargeted_class_loss = -(rpn_cls_loss + roi_cls_loss)
         object_untargeted_loss = -(rpn_loc_loss + rpn_cls_loss + roi_loc_loss + roi_cls_loss)
         object_vanishing_loss = F.cross_entropy(rpn_score, t.zeros_like(gt_rpn_label)) + \
@@ -245,7 +246,7 @@ class FRCNN(nn.Module):
         losses = [rpn_loc_loss, rpn_cls_loss, roi_loc_loss, roi_cls_loss]
         losses = losses + [sum(losses)]
         losses = losses + [object_untargeted_loss,
-                           object_vanishing_loss, object_fabrication_loss, object_mislabeling_loss, object_untargeted_class_loss]
+                           object_vanishing_loss, object_fabrication_loss, object_mislabeling_loss, object_untargeted_class_loss, object_attention_loss]
         return LossTuple(*losses)
 
     def load(self, path, load_optimizer=True, parse_opt=False, ):
@@ -275,11 +276,16 @@ class FRCNN(nn.Module):
         detections_query = np.concatenate([_labels, _scores, _logits, _bboxes], axis=-1)
         return detections_query
 
-    def compute_object_attention_gradient(self, x, detections):
+    def compute_object_attention_gradient(self, x, x_orig, detections):
         x_local = x.copy() * 255
 
         x_tensor = t.from_numpy(preprocess(x_local[0].transpose((2, 0, 1))))[None].cuda().float()
         x_tensor.requires_grad = True
+        
+        x_orig = x_orig.copy() * 255
+        
+        x_orig_tensor = t.from_numpy(preprocess(x_orig[0].transpose((2, 0, 1))))[None].cuda().float()
+        x_orig_tensor.requires_grad = True
 
         if detections is not None and len(detections) > 0:
             _bboxes = t.from_numpy(detections[np.newaxis, :, [-3, -4, -1, -2]]).float()
@@ -288,12 +294,18 @@ class FRCNN(nn.Module):
             _bboxes = t.from_numpy(np.zeros((1, 1, 4))).float()
             _labels = t.from_numpy(np.zeros((1, 1))).int()
         _scale = at.scalar(np.asarray([1.]))
+        
+        l2_loss = t.linalg.norm(t.abs(x_tensor - x_orig_tensor).flatten(), 5)
+        #print("Norm loss is", l2_loss)
 
         losses = self.forward(x_tensor, _bboxes, _labels, _scale)
+        attn_loss = losses.object_attention_loss
+        attn_loss += l2_loss
         self.optimizer.zero_grad()
         self.faster_rcnn.zero_grad()
         if len(detections) > 0:
-            losses.object_untargeted_loss.backward()
+            #print("Attn loss:", attn_loss)
+            attn_loss.backward()
         else:
             losses.object_fabrication_loss.backward()
         return x_tensor.grad.data.cpu().numpy().transpose((0, 2, 3, 1))
