@@ -7,6 +7,9 @@ from tog.attacks import *
 from tqdm import tqdm
 import os
 import xml.etree.ElementTree as ET
+import numpy as np
+
+np.random.seed(42)
 
 weights = 'model_files/FRCNN.pth'  # TODO: Change this path to the victim model's weights
 
@@ -15,6 +18,7 @@ detector = FRCNN().cuda(device=0).load(weights)
 eps = 8 / 255.       # Hyperparameter: epsilon in L-inf norm
 eps_iter = 2 / 255.  # Hyperparameter: attack learning rate
 n_iter = 10          # Hyperparameter: number of attack iterations
+mini_path = "dataset/MiniVOC/"
 im_path = "dataset/VOCdevkit/VOC2007/JPEGImages/"
 annot_path = "dataset/VOCdevkit/VOC2007/Annotations/"
 fail_path = "dataset/AttackFails/FailImages/"
@@ -25,10 +29,10 @@ fail_path = "dataset/AttackFails/FailImages/"
 # scores = evaluate_dataset(detector, path, attack=tog_attention, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter})
 # print("(attention) mAP is:", scores["map"])
 
-for n_iter in range(10, 12, 2):
+for n_iter in range(20, 22, 2):
     print("---- n_iter =", n_iter, "----")
 
-    scores = evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=tog_attention, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
+    scores = evaluate_dataset(detector, mini_path, annot_path, num_examples=-1, attack=tog_attention, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
 
     print("scores are:", scores)
 
