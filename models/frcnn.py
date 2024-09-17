@@ -295,12 +295,12 @@ class FRCNN(nn.Module):
             _labels = t.from_numpy(np.zeros((1, 1))).int()
         _scale = at.scalar(np.asarray([1.]))
         
-        l2_loss = t.linalg.norm(t.abs(x_tensor - x_orig_tensor).flatten(), 5)
+        norm_loss = t.linalg.norm(t.abs(x_tensor - x_orig_tensor).flatten(), 4)
         #print("Norm loss is", l2_loss)
 
         losses = self.forward(x_tensor, _bboxes, _labels, _scale)
         attn_loss = losses.object_attention_loss
-        attn_loss += l2_loss
+        attn_loss += norm_loss
         self.optimizer.zero_grad()
         self.faster_rcnn.zero_grad()
         if len(detections) > 0:

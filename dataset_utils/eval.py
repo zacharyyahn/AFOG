@@ -51,7 +51,11 @@ def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1
     for path in tqdm(os.listdir(im_path)[:num_examples]):
         
         # Preprocess the image
-        im = Image.open(im_path + path)
+        try:
+            im = Image.open(im_path + path)
+        except:
+            print(path, "is not an image.")
+            continue
         im, meta = letterbox_image_padded(im, size=detector.model_img_size)
 
         # Run the attack, if any
@@ -211,11 +215,13 @@ def evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=None
     
     # Array of shape (num_classes, num_iou_iterations, 2)
     tpfp = np.zeros((len(class_index_to_name.keys())-1, len(IOU_RANGE), 2))
+    counts = np.zeros(len(class_index_to_name.keys())-1)
     
     # Iterate through each image in im_path up to num_examples and add their TP/FP numbers to the running total
     for path in tqdm(os.listdir(im_path)[:num_examples]):
-        this_tpfp = evaluate_image(detector, im_path, annot_path, path, attack, attack_params, flag_attack_fail=flag_attack_fail)
+        this_tpfp, this_counts = evaluate_image(detector, im_path, annot_path, path, attack, attack_params, flag_attack_fail=flag_attack_fail)
         tpfp += this_tpfp
+        counts += this_counts
     
     # Helper function that calculates precision along an axis
     def prec(a):
@@ -226,7 +232,7 @@ def evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=None
     # Apply precision function along axis of TP/FP accumulation array
     precs = np.apply_along_axis(prec, 2, tpfp)
     aps = np.mean(precs, axis=1)
-    the_map = np.mean(aps)    
+    the_map = np.sum(np.multiply(counts, aps)) / np.sum(counts)  
     
     scores = {
         "aps":aps,
@@ -250,7 +256,11 @@ Returns a numpy array of shape (num_classes, num_iou_iterations, 2)
 def evaluate_image(detector, im_path, annot_path, im_num, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}, flag_attack_fail=False):
         
     # Preprocess the image
-    im = Image.open(im_path + im_num)
+    try:
+        im = Image.open(im_path + im_num)
+    except:
+        print(im_num, "is not an image.")
+        return np.zeros((len(class_index_to_name.keys())-1, len(IOU_RANGE), 2))
     im, meta = letterbox_image_padded(im, size=detector.model_img_size)
         
     # Run the attack, if any
@@ -300,6 +310,7 @@ def evaluate_image(detector, im_path, annot_path, im_num, attack=None, attack_pa
     
     # Record the true positives and false positives
     tpfp = np.zeros((len(class_index_to_name.keys())-1, len(IOU_RANGE), 2))
+    counts = np.zeros(len(class_index_to_name.keys())-1)
     for cls in pred_dict.keys():
         if len(pred_dict[cls]) == 0 and len(gt_dict[cls]) == 0:
             continue # no TPs or FPs because no preds for this class
@@ -308,6 +319,7 @@ def evaluate_image(detector, im_path, annot_path, im_num, attack=None, attack_pa
         elif len(gt_dict[cls]) == 0:
             tpfp[cls, :, 1] = len(pred_dict[cls]) * np.ones(len(IOU_RANGE)) # if we have preds but no gt then all FPs
         else: 
+            counts[cls] += len(pred_dict[cls])
             tpfp[cls] += calculate_tpfp(pred_dict[cls], gt_dict[cls], score_dict[cls], detector)
     
     
@@ -323,7 +335,7 @@ def evaluate_image(detector, im_path, annot_path, im_num, attack=None, attack_pa
             print("Image", im_num, "has tps", tpfp[:, :, 0].flatten())
             f.write(im_num + "\n")
             f.close()
-    return tpfp
+    return tpfp, counts
 
 """
 Calculate the IoU between two boxes

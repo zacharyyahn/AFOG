@@ -1,11 +1,11 @@
-from keras.layers import Input, Lambda, Conv2D, MaxPooling2D, ZeroPadding2D, Reshape, Concatenate
+import tensorflow as tf
+from tensorflow.keras.layers import Input, Lambda, Conv2D, MaxPooling2D, ZeroPadding2D, Reshape, Concatenate
 from ssd_utils.keras_layer_L2Normalization import L2Normalization
 from ssd_utils.ssd_input_encoder import SSDInputEncoder
 from ssd_utils.keras_layer_AnchorBoxes import AnchorBoxes
-from keras.regularizers import l2
-from keras.models import Model
-import keras.backend as K
-import tensorflow as tf
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras.models import Model
+import tensorflow.keras.backend as K
 import numpy as np
 
 
@@ -26,13 +26,16 @@ class SSD(object):
         self.input_encoder = input_encoder
 
         predictions = self.model.get_layer('predictions').output
-        self.encoded_detections = tf.placeholder(dtype=tf.float32, shape=predictions._keras_shape)
-        self.confidence_thresh = tf.placeholder(dtype=tf.float32, shape=())
-        self.iou_thresh = tf.placeholder(dtype=tf.float32, shape=())
-        self.nms_max_output_size = tf.placeholder(dtype=tf.int32, shape=())
-        self.top_k = tf.placeholder(dtype=tf.int32, shape=())
+        
+        predictions=predictions.reshape((1, predictions.shape[1], predictions.shape[2]))
+       
+        self.encoded_detections = tf.Variable(tf.ones(shape=predictions.shape), dtype=tf.float32)
+        self.confidence_thresh = tf.Variable(tf.ones(shape=()), dtype=tf.float32)
+        self.iou_thresh = tf.Variable(tf.ones(shape=()), dtype=tf.float32)
+        self.nms_max_output_size = tf.Variable(tf.ones(shape=(), dtype=tf.int32), dtype=tf.int32)
+        self.top_k = tf.Variable(tf.ones(shape=(), dtype=tf.int32), dtype=tf.int32)
         self.decoded_detections = self.build_decoding_graph()
-        self.encoded_labels = tf.placeholder(dtype=tf.float32, shape=predictions._keras_shape)
+        self.encoded_labels = tf.Variable(tf.ones(shape=predictions.shape), dtype=tf.float32)
 
         # Untargeted Attacks
         self.object_untargeted_loss = self.build_object_untargeted_loss()
@@ -89,7 +92,7 @@ class SSD(object):
                 # confidence values for just one class, determined by `index`.
                 box_confidences_softmax = tf.nn.softmax(batch_item[..., :-4])
                 confidences = tf.expand_dims(box_confidences_softmax[..., index], axis=-1)
-                class_id = tf.fill(dims=tf.shape(confidences), value=tf.to_float(index))
+                class_id = tf.fill(dims=tf.shape(confidences), value=tf.cast(index, dtype=tf.float32))
                 box_confidences = batch_item[..., :-4]
                 box_coordinates = batch_item[..., -4:]
 
@@ -184,13 +187,14 @@ class SSD(object):
         return np.asarray(detected_objects)
 
     def build_object_untargeted_loss(self):
-        classification_loss = tf.to_float(
+        print(tf.convert_to_tensor(self.model.output[:, :, :-12]))
+        classification_loss = tf.cast(
             tf.nn.softmax_cross_entropy_with_logits(labels=self.encoded_labels[:, :, :-12],
-                                                    logits=self.model.output[:, :, :-12]))
-        localization_loss = tf.to_float(self.smooth_L1_loss(self.encoded_labels[:, :, -12:-8],
-                                                            self.model.output[:, :, -12:-8]))
+                                                    logits=tf.convert_to_tensor(self.model.output[:, :, :-12])), dtype=tf.float32)
+        localization_loss = tf.cast(self.smooth_L1_loss(self.encoded_labels[:, :, -12:-8],
+                                                            tf.convert_to_tensor(self.model.output[:, :, -12:-8])), dtype=tf.float32)
 
-        positives = tf.to_float(tf.reduce_max(self.encoded_labels[:, :, 1:-12], axis=-1))
+        positives = tf.cast(tf.reduce_max(self.encoded_labels[:, :, 1:-12], axis=-1), dtype=tf.float32)
         class_loss = tf.reduce_sum(classification_loss * positives, axis=-1)
         loc_loss = tf.reduce_sum(localization_loss * positives, axis=-1)
         return -tf.reduce_mean(class_loss + loc_loss)
@@ -505,12 +509,12 @@ class SSD300(SSD):
         model = Model(inputs=x, outputs=predictions)
         input_encoder = SSDInputEncoder(img_height=model_img_height, img_width=model_img_width,
                                         n_classes=n_classes - 1,
-                                        scales=scales, predictor_sizes=[conv4_3_norm_mbox_conf._keras_shape[1:3],
-                                                                        fc7_mbox_conf._keras_shape[1:3],
-                                                                        conv6_2_mbox_conf._keras_shape[1:3],
-                                                                        conv7_2_mbox_conf._keras_shape[1:3],
-                                                                        conv8_2_mbox_conf._keras_shape[1:3],
-                                                                        conv9_2_mbox_conf._keras_shape[1:3]],
+                                        scales=scales, predictor_sizes=[conv4_3_norm_mbox_conf.shape[1:3],
+                                                                        fc7_mbox_conf.shape[1:3],
+                                                                        conv6_2_mbox_conf.shape[1:3],
+                                                                        conv7_2_mbox_conf.shape[1:3],
+                                                                        conv8_2_mbox_conf.shape[1:3],
+                                                                        conv9_2_mbox_conf.shape[1:3]],
                                         aspect_ratios_per_layer=aspect_ratios, two_boxes_for_ar1=two_boxes_for_ar1,
                                         steps=steps, offsets=offsets, clip_boxes=clip_boxes, variances=variances,
                                         normalize_coords=normalize_coords)
