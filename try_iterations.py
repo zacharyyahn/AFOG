@@ -1,5 +1,5 @@
 from dataset_utils.preprocessing import letterbox_image_padded
-from dataset_utils.eval import evaluate_dataset
+from dataset_utils.eval import evaluate_dataset, evaluate_dataset_with_torch, evaluate_dataset_with_builtin
 from misc_utils.visualization import visualize_detections
 from models.frcnn import FRCNN
 from PIL import Image
@@ -32,7 +32,7 @@ fail_path = "dataset/AttackFails/FailImages/"
 for n_iter in range(10, 12, 2):
     print("---- n_iter =", n_iter, "----")
 
-    scores = evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
+    scores = evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=tog_attention, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
 
     print("scores are:", scores)
 

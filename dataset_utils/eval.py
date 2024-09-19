@@ -9,8 +9,8 @@ from frcnn_utils.eval_tool import eval_detection_voc
 import torch
 import os
 
-IOU_START = 0.5
-IOU_END = 0.6
+IOU_START = 0.0
+IOU_END = 1.0
 IOU_ITER = 0.1
 IOU_RANGE = np.arange(IOU_START, IOU_END, IOU_ITER)
 
@@ -56,6 +56,7 @@ def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1
         except:
             print(path, "is not an image.")
             continue
+        
         im, meta = letterbox_image_padded(im, size=detector.model_img_size)
 
         # Run the attack, if any
@@ -68,7 +69,7 @@ def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1
                 eps_iter=attack_params["eps_iter"]
             )
 
-        # Make detections on the image and get the ground-truth labels
+        # Make detections on the image
         detections = detector.detect(im, conf_threshold=detector.confidence_thresh_default)
                
         pred_boxes = np.zeros((len(detections), 4))
@@ -86,10 +87,10 @@ def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1
             xmax = min(det[-2] * im.shape[2] / detector.model_img_size[1], im.shape[2])
             ymax = min(det[-1] * im.shape[1] / detector.model_img_size[0], im.shape[1])
                          
-            pred_boxes[i, 0] = xmin
-            pred_boxes[i, 1] = ymin
-            pred_boxes[i, 2] = xmax
-            pred_boxes[i, 3] = ymax
+            pred_boxes[i, 0] = ymin
+            pred_boxes[i, 1] = xmin
+            pred_boxes[i, 2] = ymax
+            pred_boxes[i, 3] = xmax
             pred_scores[i] = score
             pred_labels[i] = int(cls)
                                 
@@ -99,31 +100,39 @@ def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1
         
         gt_boxes = np.zeros((len(root.findall('object')), 4))
         gt_labels = np.zeros(len(root.findall('object')))
-        
+                
         for i, object in enumerate(root.findall('object')):
             cls = class_name_to_index[object.findall('name')[0].text] - 1
-            xmin = float(object.findall('bndbox/xmin')[0].text) + meta[0] 
-            ymin = float(object.findall('bndbox/ymin')[0].text) + meta[1] 
+            xmin = float(object.findall('bndbox/xmin')[0].text) * meta[4] + meta[0] 
+            ymin = float(object.findall('bndbox/ymin')[0].text) * meta[4] + meta[1] 
             xmax = float(object.findall('bndbox/xmax')[0].text) * meta[4] + meta[0]
-            y_max = float(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]
+            ymax = float(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]
 
-            gt_boxes[i, 0] = xmin
-            gt_boxes[i, 1] = ymin
-            gt_boxes[i, 2] = xmax
-            gt_boxes[i, 3] = ymax
+            gt_boxes[i, 0] = ymin
+            gt_boxes[i, 1] = xmin
+            gt_boxes[i, 2] = ymax
+            gt_boxes[i, 3] = xmax
             gt_labels[i] = int(cls)
+            
         pred_bboxes_total.append(pred_boxes)
         pred_labels_total.append(pred_labels)
         pred_scores_total.append(pred_scores)
         gt_bboxes_total.append(gt_boxes)
         gt_labels_total.append(gt_labels)
+#         print("Looking at image", path)
+#     print(len(pred_bboxes_total), len(gt_labels_total))
+#     print(pred_bboxes_total)
+#     print(pred_labels_total)
+#     print(gt_bboxes_total)
+#     print(gt_labels_total)
         
-    scores = eval_detection_voc(pred_bboxes=pred_bboxes_total, pred_labels=pred_labels_total, pred_scores=pred_scores_total, gt_bboxes=gt_bboxes_total, gt_labels=gt_labels_total, iou_thresh=0.5, use_07_metric=True)
+    scores = eval_detection_voc(pred_bboxes=pred_bboxes_total, pred_labels=pred_labels_total, pred_scores=pred_scores_total, gt_bboxes=gt_bboxes_total, gt_labels=gt_labels_total, iou_thresh=0.5
+                                , use_07_metric=True)
     return scores
 
 def evaluate_dataset_with_torch(detector, im_path, annot_path, num_examples=-1, attack=None, attack_params={"n_iter": 10, "eps": 8/255., "eps_iter":2/255.}, flag_attack_fail=False):
     
-    map_metric = torchmetrics.detection.MeanAveragePrecision(iou_type='bbox', extended_summary=True, class_metrics=True)
+    map_metric = torchmetrics.detection.MeanAveragePrecision(iou_type='bbox', extended_summary=False, class_metrics=True)
     
     for path in tqdm(os.listdir(im_path)[:num_examples]):
         
@@ -176,10 +185,10 @@ def evaluate_dataset_with_torch(detector, im_path, annot_path, num_examples=-1, 
         
         for i, object in enumerate(root.findall('object')):
             cls = class_name_to_index[object.findall('name')[0].text] - 1
-            xmin = float(object.findall('bndbox/xmin')[0].text) + meta[0] 
-            ymin = float(object.findall('bndbox/ymin')[0].text) + meta[1] 
+            xmin = float(object.findall('bndbox/xmin')[0].text) * meta[4] + meta[0] 
+            ymin = float(object.findall('bndbox/ymin')[0].text) * meta[4] + meta[1] 
             xmax = float(object.findall('bndbox/xmax')[0].text) * meta[4] + meta[0]
-            y_max = float(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]
+            ymax = float(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]
 
             gt_boxes[i, 0] = xmin
             gt_boxes[i, 1] = ymin
@@ -189,8 +198,8 @@ def evaluate_dataset_with_torch(detector, im_path, annot_path, num_examples=-1, 
 
         preds = [dict(boxes=pred_boxes, scores=pred_scores, labels=pred_labels)]
         gts = [dict(boxes=gt_boxes, labels=gt_labels)]
-        print(preds)
-        print(gts)
+        #print(preds)
+        #print(gts)
         map_metric.update(preds, gts)
     the_map = map_metric.compute()
     return the_map
@@ -225,14 +234,15 @@ def evaluate_dataset(detector, im_path, annot_path, num_examples=-1, attack=None
     
     # Helper function that calculates precision along an axis
     def prec(a):
-        if a[0] == 0:
-            return 0.0
+#         if a[0] == 0:
+#             return 0.0
         return (1. * a[0]) / (a[0] + a[1])
     
     # Apply precision function along axis of TP/FP accumulation array
     precs = np.apply_along_axis(prec, 2, tpfp)
-    aps = np.mean(precs, axis=1)
-    the_map = np.sum(np.multiply(counts, aps)) / np.sum(counts)  
+    aps = np.nanmean(precs, axis=1)
+    the_map = np.nanmean(aps)
+    #the_map = np.sum(np.multiply(counts, aps)) / np.sum(counts)  
     
     scores = {
         "aps":aps,
@@ -299,8 +309,8 @@ def evaluate_image(detector, im_path, annot_path, im_num, attack=None, attack_pa
     root = tree.getroot()
     for object in root.findall('object'):
         cls = class_name_to_index[object.findall('name')[0].text] - 1
-        box = [int(object.findall('bndbox/xmin')[0].text) + meta[0], 
-               int(object.findall('bndbox/ymin')[0].text) + meta[1], 
+        box = [int(object.findall('bndbox/xmin')[0].text) * meta[4] + meta[0], 
+               int(object.findall('bndbox/ymin')[0].text) * meta[4] + meta[1], 
                int(object.findall('bndbox/xmax')[0].text) * meta[4] + meta[0], 
                int(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]]
         

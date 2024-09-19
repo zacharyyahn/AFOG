@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras.layers import Input, Lambda, Conv2D, MaxPooling2D, ZeroPadding2D, Reshape, Concatenate
+from tensorflow.keras.layers import Input, Lambda, Conv2D, MaxPooling2D, ZeroPadding2D, Reshape, Concatenate, Layer
 from ssd_utils.keras_layer_L2Normalization import L2Normalization
 from ssd_utils.ssd_input_encoder import SSDInputEncoder
 from ssd_utils.keras_layer_AnchorBoxes import AnchorBoxes
@@ -39,7 +39,7 @@ class SSD(object):
 
         # Untargeted Attacks
         self.object_untargeted_loss = self.build_object_untargeted_loss()
-        self.object_untargeted_gradient = tf.gradients(ys=self.object_untargeted_loss, xs=self.model.input)[0]
+        self.object_untargeted_gradient = tf.GradientTape(ys=self.object_untargeted_loss, xs=self.model.input)[0]
 
         # Targeted Attacks
         self.object_vanishing_loss = self.build_object_vanishing_loss()
@@ -187,17 +187,16 @@ class SSD(object):
         return np.asarray(detected_objects)
 
     def build_object_untargeted_loss(self):
-        print(tf.convert_to_tensor(self.model.output[:, :, :-12]))
-        classification_loss = tf.cast(
-            tf.nn.softmax_cross_entropy_with_logits(labels=self.encoded_labels[:, :, :-12],
-                                                    logits=tf.convert_to_tensor(self.model.output[:, :, :-12])), dtype=tf.float32)
-        localization_loss = tf.cast(self.smooth_L1_loss(self.encoded_labels[:, :, -12:-8],
-                                                            tf.convert_to_tensor(self.model.output[:, :, -12:-8])), dtype=tf.float32)
+        class BuildLossLayer(Layer):
+            def call(self, labels, outputs):
+                classification_loss = tf.nn.softmax_cross_entropy_with_logits(labels=labels[:, :, :-12], logits=outputs[:, :, :-12])
+                localization_loss = tf.keras.losses.MeanAbsoluteError()(labels[:, :, -12:-8], outputs[:, :, -12:-8])
 
-        positives = tf.cast(tf.reduce_max(self.encoded_labels[:, :, 1:-12], axis=-1), dtype=tf.float32)
-        class_loss = tf.reduce_sum(classification_loss * positives, axis=-1)
-        loc_loss = tf.reduce_sum(localization_loss * positives, axis=-1)
-        return -tf.reduce_mean(class_loss + loc_loss)
+                positives = tf.reduce_max(labels[:, :, 1:-12], axis=-1)
+                class_loss = tf.reduce_sum(classification_loss * positives, axis=-1)
+                loc_loss = tf.reduce_sum(localization_loss * positives, axis=-1)
+                return -tf.reduce_mean(class_loss + loc_loss)
+        return BuildLossLayer()(self.encoded_labels, self.model.output)       
 
     def compute_object_untargeted_gradient(self, x, detections):
         detections_ = detections[:, [0, -4, -3, -2, -1]] if len(detections) > 0 else detections
@@ -206,8 +205,9 @@ class SSD(object):
                                                                                self.model.input: x.copy() * 255})
 
     def build_object_vanishing_loss(self):
+        output = K.eval(self.model.output)
         return tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(
-            logits=self.model.output[:, :, :-12], labels=self.encoded_labels[:, :, :-12]))
+            logits=output[:, :, :-12], labels=self.encoded_labels[:, :, :-12]))
 
     def compute_object_vanishing_gradient(self, x, detections=None):
         encoded_labels = self.input_encoder([np.asarray([])])

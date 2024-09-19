@@ -295,7 +295,7 @@ class FRCNN(nn.Module):
             _labels = t.from_numpy(np.zeros((1, 1))).int()
         _scale = at.scalar(np.asarray([1.]))
         
-        norm_loss = t.linalg.norm(t.abs(x_tensor - x_orig_tensor).flatten(), 4)
+        norm_loss = t.linalg.norm(t.abs(x_tensor - x_orig_tensor).flatten(), 2)
         #print("Norm loss is", l2_loss)
 
         losses = self.forward(x_tensor, _bboxes, _labels, _scale)

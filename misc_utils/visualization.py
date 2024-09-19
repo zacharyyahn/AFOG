@@ -107,8 +107,8 @@ def get_gt_bboxes(annotation_path, im_num, meta):
     i = 0     
     for object in root.findall('object'):
         cls = class_name_to_index[object.findall('name')[0].text] - 1
-        box = [int(object.findall('bndbox/xmin')[0].text) + meta[0], 
-               int(object.findall('bndbox/ymin')[0].text) + meta[1], 
+        box = [int(object.findall('bndbox/xmin')[0].text) * meta[4] + meta[0], 
+               int(object.findall('bndbox/ymin')[0].text) * meta[4] + meta[1], 
                int(object.findall('bndbox/xmax')[0].text) * meta[4] + meta[0], 
                int(object.findall('bndbox/ymax')[0].text) * meta[4] + meta[1]]
         conf = 1.0
