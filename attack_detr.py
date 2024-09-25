@@ -15,6 +15,8 @@ from dataset_utils.coco import build_dataset, get_coco_api_from_dataset
 from detr_utils.engine import evaluate
 from detr_utils import build_model
 
+from tog.attacks import *
+
 def get_args_parser():
     parser = argparse.ArgumentParser('Set transformer detector', add_help=False)
     parser.add_argument('--lr', default=1e-4, type=float)
@@ -161,9 +163,11 @@ def main(args):
             lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
             args.start_epoch = checkpoint['epoch'] + 1
 
+    model.criterion = criterion #give model access to evaluate things itself
+    model.optimizer = optimizer #same as above
     if args.eval:
         test_stats, coco_evaluator = evaluate(model, criterion, postprocessors,
-                                              data_loader_val, base_ds, device, args.output_dir)
+                                              data_loader_val, base_ds, device, args.output_dir, attack=tog_untargeted)
         if args.output_dir:
             utils.save_on_master(coco_evaluator.coco_eval["bbox"].eval, output_dir / "eval.pth")
         return

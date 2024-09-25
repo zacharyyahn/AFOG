@@ -20,7 +20,7 @@ from detr_utils.transformer import build_transformer
 
 class DETR(nn.Module):
     """ This is the DETR module that performs object detection """
-    def __init__(self, backbone, transformer, num_classes, num_queries, aux_loss=False):
+    def __init__(self, backbone, transformer, num_classes, num_queries, aux_loss=False, criterion=None):
         """ Initializes the model.
         Parameters:
             backbone: torch module of the backbone to be used. See backbone.py
@@ -39,7 +39,10 @@ class DETR(nn.Module):
         self.query_embed = nn.Embedding(num_queries, hidden_dim)
         self.input_proj = nn.Conv2d(backbone.num_channels, hidden_dim, kernel_size=1)
         self.backbone = backbone
+        self.confidence_thresh_default = 0.5 # Added to place nice with attack
         self.aux_loss = aux_loss
+        self.criterion = None # Added to place nice with attack so that we can get the loss as part of the model
+        self.optimizer = None
 
     def forward(self, samples: NestedTensor):
         """ The forward expects a NestedTensor, which consists of:
@@ -70,6 +73,102 @@ class DETR(nn.Module):
         if self.aux_loss:
             out['aux_outputs'] = self._set_aux_loss(outputs_class, outputs_coord)
         return out
+    
+    # Exactly the same as the forward method, except it's called detect to play nice with
+    # the attack function.
+    def detect(self, samples: NestedTensor, conf_threshold=None):
+        """ The forward expects a NestedTensor, which consists of:
+               - samples.tensor: batched images, of shape [batch_size x 3 x H x W]
+               - samples.mask: a binary mask of shape [batch_size x H x W], containing 1 on padded pixels
+
+            It returns a dict with the following elements:
+               - "pred_logits": the classification logits (including no-object) for all queries.
+                                Shape= [batch_size x num_queries x (num_classes + 1)]
+               - "pred_boxes": The normalized boxes coordinates for all queries, represented as
+                               (center_x, center_y, height, width). These values are normalized in [0, 1],
+                               relative to the size of each individual image (disregarding possible padding).
+                               See PostProcess for information on how to retrieve the unnormalized bounding box.
+               - "aux_outputs": Optional, only returned when auxilary losses are activated. It is a list of
+                                dictionnaries containing the two above keys for each decoder layer.
+        """
+        samples = NestedTensor(tensors=samples, mask=torch.full(samples[0, 0, :, :].unsqueeze(0).shape, False, dtype=torch.bool))
+        if isinstance(samples, (list, torch.Tensor)):
+            samples = nested_tensor_from_tensor_list(samples)
+        samples = samples.to(torch.device("cuda"))
+        features, pos = self.backbone(samples)
+
+        src, mask = features[-1].decompose()
+        assert mask is not None
+        hs = self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])[0]
+
+        outputs_class = self.class_embed(hs)
+        outputs_coord = self.bbox_embed(hs).sigmoid()
+        out = {'pred_logits': outputs_class[-1], 'pred_boxes': outputs_coord[-1]}
+        if self.aux_loss:
+            out['aux_outputs'] = self._set_aux_loss(outputs_class, outputs_coord)
+        return out
+    
+    ### NEW TOG METHOD ###
+    def compute_object_attention_gradient(self, x, x_orig, detections):
+        #print(" ---- ATTEMPTING TO COMPUTE ATTACK GRADIENT ---- " )
+        #torch.set_grad_enabled(True)
+        
+        x_copy = x.float().clone().cuda()
+        x_orig = x_orig.float().clone().cuda()
+        x_copy.requires_grad = True
+        x_orig.requires_grad = True
+        
+        detections_copy = detections.copy()
+        
+        detections_adv = self.detect(x_copy)
+        
+        detections_copy["boxes"] = detections["pred_boxes"].squeeze().clone()
+        detections_copy["labels"] = torch.argmax(detections["pred_logits"], axis=2).squeeze().clone()
+        detections_copy.pop("pred_boxes")
+        detections_copy.pop("pred_logits")
+        detections_copy = (detections_copy,)
+        
+        # detections argument is our labels (desired detections)
+        # detections_adv is our actual output from adv attack  
+        losses = self.criterion(detections_adv, detections_copy)
+        loss_ce = losses["loss_ce"]
+        loss_bbox = losses["loss_bbox"]
+        loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5)
+        attn_loss = -(loss_ce + loss_bbox) + loss_norm
+#         print("Attention loss:", attn_loss)
+        #self.optimizer.zero_grad()
+        attn_loss.backward(retain_graph=True)
+        return x_copy.grad.data.cpu().numpy()
+    
+    ### NEW TOG METHOD ###
+    def compute_object_untargeted_gradient(self, x, detections):
+        #print(" ---- ATTEMPTING TO COMPUTE ATTACK GRADIENT ---- " )
+        #torch.set_grad_enabled(True)
+        
+        x_copy = x.float().clone().cuda()
+        x_copy.requires_grad = True
+        
+        detections_copy = detections.copy()
+        
+        detections_adv = self.detect(x_copy)
+        
+        detections_copy["boxes"] = detections["pred_boxes"].squeeze().clone()
+        detections_copy["labels"] = torch.argmax(detections["pred_logits"], axis=2).squeeze().clone()
+        detections_copy.pop("pred_boxes")
+        detections_copy.pop("pred_logits")
+        detections_copy = (detections_copy,)
+        
+        # detections argument is our labels (desired detections)
+        # detections_adv is our actual output from adv attack  
+        losses = self.criterion(detections_adv, detections_copy)
+        loss_ce = losses["loss_ce"]
+        loss_bbox = losses["loss_bbox"]
+        untarget_loss = -(loss_ce + loss_bbox)
+#       print("Untarget loss:", untarget_loss)
+        #self.optimizer.zero_grad()
+        untarget_loss.backward(retain_graph=True)
+        return x_copy.grad.data.cpu().numpy()
+        
 
     @torch.jit.unused
     def _set_aux_loss(self, outputs_class, outputs_coord):
@@ -257,7 +356,7 @@ class SetCriterion(nn.Module):
 
 class PostProcess(nn.Module):
     """ This module converts the model's output into the format expected by the coco api"""
-    @torch.no_grad()
+    #@torch.no_grad()
     def forward(self, outputs, target_sizes):
         """ Perform the computation
         Parameters:
@@ -321,13 +420,6 @@ def build(args):
 
     transformer = build_transformer(args)
 
-    model = DETR(
-        backbone,
-        transformer,
-        num_classes=num_classes,
-        num_queries=args.num_queries,
-        aux_loss=args.aux_loss,
-    )
     if args.masks:
         model = DETRsegm(model, freeze_detr=(args.frozen_weights is not None))
     matcher = build_matcher(args)
@@ -349,6 +441,15 @@ def build(args):
     criterion = SetCriterion(num_classes, matcher=matcher, weight_dict=weight_dict,
                              eos_coef=args.eos_coef, losses=losses)
     criterion.to(device)
+    
+    model = DETR(
+        backbone,
+        transformer,
+        num_classes=num_classes,
+        num_queries=args.num_queries,
+        aux_loss=args.aux_loss,
+    )
+    
     postprocessors = {'bbox': PostProcess()}
     if args.masks:
         postprocessors['segm'] = PostProcessSegm()

@@ -1,5 +1,6 @@
 from attack_utils.target_utils import generate_attack_targets
 import numpy as np
+import torch
 
 def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_lr=0.5, vis=False):
     if vis:
@@ -10,15 +11,16 @@ def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_
    
     # Get detections and initialize eta and attn
     detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
+    
     eta = np.random.uniform(-eps, eps, size=x_query.shape)
     attn_map = np.ones((x_query.shape))
     
     # initialize attention maps with bounding boxes. Area inside the box gets a 1.5 effect multiplier
-    for det in detections_query:
-        effect = np.ones(attn_map.shape)
-        xmin, ymin, xmax, ymax = int(det[-4]), int(det[-3]), int(det[-2]), int(det[-1])
-        effect[0, ymin:ymax, xmin:xmax, :] = 1.5
-        attn_map = np.multiply(attn_map, effect)
+#     for det in detections_query:
+#         effect = np.ones(attn_map.shape)
+#         xmin, ymin, xmax, ymax = int(det[-4]), int(det[-3]), int(det[-2]), int(det[-1])
+#         effect[0, ymin:ymax, xmin:xmax, :] = 1.5
+#         attn_map = np.multiply(attn_map, effect)
     
     # Make the first adversarial example
     x_adv = x_query + np.multiply(attn_map, eta)

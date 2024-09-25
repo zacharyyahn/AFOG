@@ -64,10 +64,10 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 
-@torch.no_grad()
-def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, output_dir):
-    model.eval()
-    criterion.eval()
+# @torch.no_grad()
+def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, output_dir, attack=None):
+    model.eval() # changed to train so gradients can be propagated
+    criterion.eval() # changed to train so gradients can be propagated
 
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter('class_error', utils.SmoothedValue(window_size=1, fmt='{value:.2f}'))
@@ -85,13 +85,20 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, out
             output_dir=os.path.join(output_dir, "panoptic_eval"),
         )
 
-    for samples, targets in metric_logger.log_every(data_loader, 10, header):
+    for samples, targets in metric_logger.log_every(data_loader, 10, header):        
+        
+        if attack != None:
+            samples = attack(model, samples.tensors)
+            samples = samples.float()
+        
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
-
+        
         outputs = model(samples)
+        
         loss_dict = criterion(outputs, targets)
-        weight_dict = criterion.weight_dict
+        loss_dict["loss_ce"].backward()
+        weight_dict = criterion.weight_dict       
 
         # reduce losses over all GPUs for logging purposes
         loss_dict_reduced = utils.reduce_dict(loss_dict)
