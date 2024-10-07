@@ -11,15 +11,14 @@
 *.h5
 *.sbatch
 .nfs*
-*.ipynb
 *.pyc
 .dumbo.json
 .DS_store
 .*.swp
 **/__pycache__/**
 .ipynb_checkpoints/
-coco/
-VOCdevkit/
+dataset/coco/
+dataset/VOCdevkit/
 experiment-*
 *.tmp
 *.pkl

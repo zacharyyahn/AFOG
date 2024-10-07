@@ -65,9 +65,9 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
 
 
 # @torch.no_grad()
-def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, output_dir, attack=None):
-    model.eval() # changed to train so gradients can be propagated
-    criterion.eval() # changed to train so gradients can be propagated
+def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, output_dir, attack=None, args=None):
+    model.eval()
+    criterion.eval() 
 
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter('class_error', utils.SmoothedValue(window_size=1, fmt='{value:.2f}'))
@@ -86,9 +86,8 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, out
         )
 
     for samples, targets in metric_logger.log_every(data_loader, 10, header):        
-        
         if attack != None:
-            samples = attack(model, samples.tensors)
+            samples = attack(model, samples.tensors, mode=args.attack_mode)
             samples = samples.float()
         
         samples = samples.to(device)

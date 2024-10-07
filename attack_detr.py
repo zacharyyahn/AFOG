@@ -100,6 +100,9 @@ def get_args_parser():
                         help='number of distributed processes')
     parser.add_argument('--dist_url', default='env://', help='url used to set up distributed training')
     parser.add_argument('--distributed', default=False, type=int)
+    
+    parser.add_argument('--attack', default=None, type=str)
+    parser.add_argument('--attack_mode', default=None, type=str)
     return parser
 
 def main(args):
@@ -165,9 +168,17 @@ def main(args):
 
     model.criterion = criterion #give model access to evaluate things itself
     model.optimizer = optimizer #same as above
+    model.postprocessors = postprocessors
+    attack = None
+    if args.attack == "attention":
+        attack = tog_attention
+    if args.attack == "untargeted":
+        attack = tog_untargeted
+    print("--- Attacking with", attack, "----")
+
     if args.eval:
         test_stats, coco_evaluator = evaluate(model, criterion, postprocessors,
-                                              data_loader_val, base_ds, device, args.output_dir, attack=tog_untargeted)
+                                              data_loader_val, base_ds, device, args.output_dir, attack, args)
         if args.output_dir:
             utils.save_on_master(coco_evaluator.coco_eval["bbox"].eval, output_dir / "eval.pth")
         return

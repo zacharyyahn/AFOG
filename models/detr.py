@@ -43,6 +43,7 @@ class DETR(nn.Module):
         self.aux_loss = aux_loss
         self.criterion = None # Added to place nice with attack so that we can get the loss as part of the model
         self.optimizer = None
+        self.postprocessors = None
 
     def forward(self, samples: NestedTensor):
         """ The forward expects a NestedTensor, which consists of:
@@ -109,66 +110,111 @@ class DETR(nn.Module):
         return out
     
     ### NEW TOG METHOD ###
-    def compute_object_attention_gradient(self, x, x_orig, detections):
+    def compute_object_untargeted_gradient(self, x, x_orig=None, detections=None, norm=False):
         #print(" ---- ATTEMPTING TO COMPUTE ATTACK GRADIENT ---- " )
         #torch.set_grad_enabled(True)
         
         x_copy = x.float().clone().cuda()
-        x_orig = x_orig.float().clone().cuda()
         x_copy.requires_grad = True
-        x_orig.requires_grad = True
+        if norm:
+            x_orig = x_orig.float().clone().cuda()
+            x_orig.requires_grad = True
         
         detections_copy = detections.copy()
-        
         detections_adv = self.detect(x_copy)
         
-        detections_copy["boxes"] = detections["pred_boxes"].squeeze().clone()
-        detections_copy["labels"] = torch.argmax(detections["pred_logits"], axis=2).squeeze().clone()
-        detections_copy.pop("pred_boxes")
-        detections_copy.pop("pred_logits")
+        detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]        
+        copy_mask = detections_copy["scores"] > 0.5
+        
+        detections_copy["boxes"] = detections_copy["boxes"][copy_mask]
+        detections_copy["labels"] = detections_copy["labels"][copy_mask]
+        detections_copy["scores"] = detections_copy["scores"][copy_mask]
+        
         detections_copy = (detections_copy,)
         
         # detections argument is our labels (desired detections)
         # detections_adv is our actual output from adv attack  
         losses = self.criterion(detections_adv, detections_copy)
+        #print(losses)
+        class_error = losses["class_error"]
         loss_ce = losses["loss_ce"]
         loss_bbox = losses["loss_bbox"]
-        loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5)
-        attn_loss = -(loss_ce + loss_bbox) + loss_norm
-#         print("Attention loss:", attn_loss)
+        loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
+        #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
+        unt_loss = -(loss_ce + loss_bbox) + int(norm) * loss_norm
+        #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
-        attn_loss.backward(retain_graph=True)
+        unt_loss.backward(retain_graph=True)
         return x_copy.grad.data.cpu().numpy()
     
-    ### NEW TOG METHOD ###
-    def compute_object_untargeted_gradient(self, x, detections):
-        #print(" ---- ATTEMPTING TO COMPUTE ATTACK GRADIENT ---- " )
-        #torch.set_grad_enabled(True)
-        
+    def compute_object_vanishing_gradient(self, x, x_orig=None, detections=None, norm=False):
         x_copy = x.float().clone().cuda()
         x_copy.requires_grad = True
+        if norm:
+            x_orig = x_orig.float().clone().cuda()
+            x_orig.requires_grad = True
         
         detections_copy = detections.copy()
-        
         detections_adv = self.detect(x_copy)
         
-        detections_copy["boxes"] = detections["pred_boxes"].squeeze().clone()
-        detections_copy["labels"] = torch.argmax(detections["pred_logits"], axis=2).squeeze().clone()
-        detections_copy.pop("pred_boxes")
-        detections_copy.pop("pred_logits")
+        detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]        
+        copy_mask = detections_copy["scores"] > 0.5
+        
+        detections_copy["boxes"] = detections_copy["boxes"][copy_mask]
+        detections_copy["labels"] = detections_copy["labels"][copy_mask]
+        detections_copy["scores"] = torch.zeros(detections_copy["scores"][copy_mask].shape, dtype=torch.float)
+        
+        detections_copy = (detections_copy,)
+        
+        
+        # detections argument is our labels (desired detections)
+        # detections_adv is our actual output from adv attack  
+        losses = self.criterion(detections_adv, detections_copy)
+        #print(losses)
+        class_error = losses["class_error"]
+        loss_ce = losses["loss_ce"]
+        loss_bbox = losses["loss_bbox"]
+        loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
+        #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
+        unt_loss = (loss_ce + loss_bbox) + int(norm) * loss_norm
+        #print("Attention loss:", unt_loss)
+        #self.optimizer.zero_grad()
+        unt_loss.backward(retain_graph=True)
+        return x_copy.grad.data.cpu().numpy()
+    
+    def compute_object_fabrication_gradient(self, x, x_orig, detections, norm=False):
+        x_copy = x.float().clone().cuda()
+        x_copy.requires_grad = True
+        if norm:
+            x_orig = x_orig.float().clone().cuda()
+            x_orig.requires_grad = True
+        
+        detections_copy = detections.copy()
+        detections_adv = self.detect(x_copy)
+        
+        detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]        
+        copy_mask = detections_copy["scores"] > 0.5
+        
+        detections_copy["boxes"] = detections_copy["boxes"]
+        detections_copy["labels"] = detections_copy["labels"]
+        detections_copy["scores"] = torch.ones(detections_copy["scores"].shape, dtype=torch.float)
+        
         detections_copy = (detections_copy,)
         
         # detections argument is our labels (desired detections)
         # detections_adv is our actual output from adv attack  
         losses = self.criterion(detections_adv, detections_copy)
+        #print(losses)
+        class_error = losses["class_error"]
         loss_ce = losses["loss_ce"]
         loss_bbox = losses["loss_bbox"]
-        untarget_loss = -(loss_ce + loss_bbox)
-#       print("Untarget loss:", untarget_loss)
+        loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
+        #print("ATTN fabrication: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
+        unt_loss = (loss_ce + loss_bbox) + int(norm) * loss_norm
+        #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
-        untarget_loss.backward(retain_graph=True)
+        unt_loss.backward(retain_graph=True)
         return x_copy.grad.data.cpu().numpy()
-        
 
     @torch.jit.unused
     def _set_aux_loss(self, outputs_class, outputs_coord):

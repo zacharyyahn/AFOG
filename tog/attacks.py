@@ -2,7 +2,13 @@ from attack_utils.target_utils import generate_attack_targets
 import numpy as np
 import torch
 
-def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_lr=0.5, vis=False):
+def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_lr=0.01, vis=False, mode="untargeted"):
+    attack_modes = {
+        "untargeted":victim.compute_object_untargeted_gradient,
+        "vanishing":victim.compute_object_vanishing_gradient,
+        "fabrication":victim.compute_object_fabrication_gradient
+    }
+    
     if vis:
         etas = []
         eta_grads = []
@@ -11,6 +17,12 @@ def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_
    
     # Get detections and initialize eta and attn
     detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
+    
+    init_min = torch.min(x_query.squeeze()).item()
+    init_max = torch.max(x_query.squeeze()).item()
+    
+    eps_iter = eps_iter * init_max
+    eps = eps * init_max
     
     eta = np.random.uniform(-eps, eps, size=x_query.shape)
     attn_map = np.ones((x_query.shape))
@@ -34,7 +46,7 @@ def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_
             maps.append(attn_map.copy())
 
         # first get the gradient for x_adv
-        grad = victim.compute_object_attention_gradient(x_adv, x_query, detections = detections_query)
+        grad = attack_modes[mode](x_adv, x_query, detections = detections_query, norm=True)
         
         # compute the two partials. Simple multiplication because this is elementwise, not matmul
         eta_grad = np.multiply(grad, attn_map)
@@ -55,16 +67,17 @@ def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_
             map_grads.append(attn_map_grad.copy())
     
         # make the next iteration of x_adv
-        x_adv = np.clip(x_query + np.multiply(attn_map, eta), 0.0, 1.0)
+        #x_adv = x_query + np.multiply(attn_map, eta)
+        x_adv = np.clip(x_query + np.multiply(attn_map, eta), init_min, init_max)
     
-#     final_pert = x_adv - x_query
-#     final_pert = np.clip(final_pert, -eps, eps)
-#     x_adv = np.clip(x_query + final_pert, 0.0, 1.0)
+    final_pert = x_adv - x_query
+    final_pert = np.clip(final_pert, -eps, eps)
+    x_adv = np.clip(x_query + final_pert, init_min, init_max)
     
     if vis: return x_adv, etas, eta_grads, map_grads, maps
     return x_adv
 
-def tog_untargeted_class(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255.):
+def tog_untargeted_class(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., mode=None):
     detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
     eta = np.random.uniform(-eps, eps, size=x_query.shape)
     x_adv = np.clip(x_query + eta, 0.0, 1.0)
@@ -76,7 +89,7 @@ def tog_untargeted_class(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255.
         x_adv = np.clip(x_query + eta, 0.0, 1.0)
     return x_adv              
 
-def tog_vanishing(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255.):
+def tog_vanishing(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., mode=None):
     eta = np.random.uniform(-eps, eps, size=x_query.shape)
     x_adv = np.clip(x_query + eta, 0.0, 1.0)
     for _ in range(n_iter):
@@ -88,7 +101,7 @@ def tog_vanishing(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255.):
     return x_adv
 
 
-def tog_fabrication(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255.):
+def tog_fabrication(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., mode=None):
     eta = np.random.uniform(-eps, eps, size=x_query.shape)
     x_adv = np.clip(x_query + eta, 0.0, 1.0)
     for _ in range(n_iter):
@@ -115,16 +128,23 @@ def tog_mislabeling(victim, x_query, target, n_iter=10, eps=8/255., eps_iter=2/2
     return x_adv
 
 
-def tog_untargeted(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255.):
+def tog_untargeted(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., mode=None):
+    init_min = torch.min(x_query).item()
+    init_max = torch.max(x_query).item()
+    
+    eps_iter = eps_iter * init_max
+    eps = eps * init_max
+    
     detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
     eta = np.random.uniform(-eps, eps, size=x_query.shape)
-    x_adv = np.clip(x_query + eta, 0.0, 1.0)
+    
+    x_adv = np.clip(x_query + eta, init_min, init_max)
     for _ in range(n_iter):
         grad = victim.compute_object_untargeted_gradient(x_adv, detections=detections_query)
         signed_grad = np.sign(grad)
         x_adv -= eps_iter * signed_grad
         eta = np.clip(x_adv - x_query, -eps, eps)
-        x_adv = np.clip(x_query + eta, 0.0, 1.0)
+        x_adv = np.clip(x_query + eta, init_min, init_max)
     return x_adv
 
 def tog_untargeted_viz(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255.):
