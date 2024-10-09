@@ -484,9 +484,10 @@ class DINO(nn.Module):
         detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]        
         copy_mask = detections_copy["scores"] > 0.5
         
-        detections_copy["boxes"] = detections_copy["boxes"][copy_mask]
-        detections_copy["labels"] = detections_copy["labels"][copy_mask]
-        detections_copy["scores"] = torch.zeros(detections_copy["scores"][copy_mask].shape, dtype=torch.float)
+        # For vanishing there are no boxes, classes are N/A, and scores are 0
+        detections_copy["boxes"] = torch.tensor([[0.0001, 0.0001, 0.0002, 0.0002]]).cuda()
+        detections_copy["labels"] = torch.tensor([0.]).long().cuda()
+        detections_copy["scores"] = torch.tensor([0.]).long().cuda()
         
         detections_copy = (detections_copy,)
         
@@ -519,11 +520,13 @@ class DINO(nn.Module):
         detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]        
         copy_mask = detections_copy["scores"] > 0.5
         
-        detections_copy["boxes"] = detections_copy["boxes"]
-        detections_copy["labels"] = detections_copy["labels"]
-        detections_copy["scores"] = torch.ones(detections_copy["scores"].shape, dtype=torch.float)
+        # For vanishing there are no boxes, classes are N/A, and scores are 0
+        detections_copy["boxes"] = torch.tensor([[0.0001, 0.0001, 0.0002, 0.0002]]).cuda()
+        detections_copy["labels"] = torch.tensor([0.]).long().cuda()
+        detections_copy["scores"] = torch.tensor([0.]).long().cuda()
         
         detections_copy = (detections_copy,)
+        
         
         # detections argument is our labels (desired detections)
         # detections_adv is our actual output from adv attack  
@@ -533,8 +536,8 @@ class DINO(nn.Module):
         loss_ce = losses["loss_ce"]
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
-        #print("ATTN fabrication: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
-        unt_loss = (loss_ce + loss_bbox) + int(norm) * loss_norm
+        #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
+        unt_loss = -(loss_ce + loss_bbox) + int(norm) * loss_norm
         #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)

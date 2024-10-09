@@ -1,0 +1,27 @@
+---------------------------------------
+Begin Slurm Prolog: Sep-25-2024 15:19:32
+Job ID:    673074
+User ID:   zyahn3
+Account:   scs
+Job name:  TOG_Plus_DETR
+Partition: coc-gpu
+---------------------------------------
+/home/hice1/zyahn3/.conda/envs/TOG_test
+/home/hice1/zyahn3/.conda/envs/TOG_test
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/attack_detr.py", line 179
+srun: error: atl1-1-01-002-2-0: task 0: Exited with exit code 1
+    data_loader_val, base_ds, device, args.output_dir, args.attack=None)
+                                                       ^^^^^^^^^^^^
+SyntaxError: expression cannot contain assignment, perhaps you meant "=="?
+---------------------------------------
+Begin Slurm Epilog: Sep-25-2024 15:19:38
+Job ID:        673074
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      TOG_Plus_DETR
+Resources:     cpu=1,gres/gpu:v100=1,mem=8G,node=1
+Rsrc Used:     cput=00:00:07,vmem=0,walltime=00:00:07,mem=2636K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-01-002-2-0
+---------------------------------------

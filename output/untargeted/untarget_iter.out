@@ -1,0 +1,50 @@
+---------------------------------------
+Begin Slurm Prolog: Sep-16-2024 23:56:43
+Job ID:    657225
+User ID:   zyahn3
+Account:   scs
+Job name:  TOG_Plus
+Partition: coc-gpu
+---------------------------------------
+/storage/ice1/5/9/zyahn3/TOG_plus/frcnn_utils/utils/nms/non_maximum_suppression.py:9: UserWarning: 
+    the python code for non_maximum_suppression is about 2x slow
+    It is strongly recommended to build cython code: 
+    `cd model/utils/nms/; python3 build.py build_ext --inplace
+  warnings.warn('''
+Traceback (most recent call last):
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/try_iterations.py", line 16, in <module>
+    detector = FRCNN().cuda(device=0).load(weights)
+               ^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/models/frcnn.py", line 176, in __init__
+    self.faster_rcnn = FRCNN_VGG16()
+                       ^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/frcnn_utils/model.py", line 36, in __init__
+    head = VGG16RoIHead(n_class=n_fg_class + 1, roi_size=7,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/frcnn_utils/model.py", line 97, in __init__
+    self.roi = RoIPooling2D(self.roi_size, self.roi_size, self.spatial_scale)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/frcnn_utils/roi_module.py", line 82, in __init__
+    self.RoI = RoI(outh, outw, spatial_scale)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/frcnn_utils/roi_module.py", line 31, in __init__
+    self.forward_fn = load_kernel('roi_forward', kernel_forward)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "cupy/_util.pyx", line 57, in cupy._util.memoize.decorator.ret
+  File "cupy/cuda/device.pyx", line 40, in cupy.cuda.device.get_device_id
+  File "cupy_backends/cuda/api/runtime.pyx", line 202, in cupy_backends.cuda.api.runtime.getDevice
+  File "cupy_backends/cuda/api/runtime.pyx", line 146, in cupy_backends.cuda.api.runtime.check_status
+cupy_backends.cuda.api.runtime.CUDARuntimeError: cudaErrorInsufficientDriver: CUDA driver version is insufficient for CUDA runtime version
+srun: error: atl1-1-01-005-17-0: task 0: Exited with exit code 1
+---------------------------------------
+Begin Slurm Epilog: Sep-16-2024 23:57:58
+Job ID:        657225
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      TOG_Plus
+Resources:     cpu=1,mem=4G,node=1
+Rsrc Used:     cput=00:01:15,vmem=0,walltime=00:01:15,mem=6576K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-01-005-17-0
+---------------------------------------

@@ -33,6 +33,6 @@
   "rank": 0,
   "local_rank": null,
   "amp": false,
-  "attack": "untargeted",
-  "attack_mode": "vanishing"
+  "attack": "attention",
+  "attack_mode": "fabrication"
 }

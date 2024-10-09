@@ -7,7 +7,6 @@
 *.gif
 *.png
 *.xml
-*.out
 *.h5
 *.sbatch
 .nfs*
