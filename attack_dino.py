@@ -76,6 +76,7 @@ def get_args_parser():
     # attack parameters
     parser.add_argument('--attack', default="None", type=str)
     parser.add_argument('--attack_mode', default="None", type=str)
+    parser.add_argument('--sample_rate', default=1.0, type=float)
     
     return parser
 

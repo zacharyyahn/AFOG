@@ -156,6 +156,9 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, out
     _cnt = 0
     output_state_dict = {} # for debug only
     for samples, targets in metric_logger.log_every(data_loader, 10, header, logger=logger):
+        # sampling function to enable testing large models on low compute environments
+        if torch.rand(1)[0] < (1 - args.sample_rate):
+            continue
         if attack != None:
             samples = attack(model, samples.tensors, mode=args.attack_mode)
             samples = samples.float()

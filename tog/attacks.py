@@ -2,7 +2,7 @@ from attack_utils.target_utils import generate_attack_targets
 import numpy as np
 import torch
 
-def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_lr=0.01, vis=False, mode="untargeted"):
+def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_lr=0.01, vis=False, mode="untargeted", meta=None):
     attack_modes = {
         "untargeted":victim.compute_object_untargeted_gradient,
         "vanishing":victim.compute_object_vanishing_gradient,
@@ -15,11 +15,16 @@ def tog_attention(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., attn_
         map_grads = []
         maps = []
    
-    # Get detections and initialize eta and attn
-    detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
-    
-    init_min = torch.min(x_query.squeeze()).item()
-    init_max = torch.max(x_query.squeeze()).item()
+    # Get detections and initialize eta and attn. Sometimes there is additional metadata to pass in
+    detections_query = None
+    if meta == None:
+        detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
+    else:
+        detections_query = victim.detect(x_query, meta=meta)
+        detections_query[0]['meta'] = meta # also want to pass in meta here so that the gradient functions can access it
+            
+    init_min = torch.min(x_query).item()
+    init_max = torch.max(x_query).item()
     
     eps_iter = eps_iter * init_max
     eps = eps * init_max
@@ -128,14 +133,18 @@ def tog_mislabeling(victim, x_query, target, n_iter=10, eps=8/255., eps_iter=2/2
     return x_adv
 
 
-def tog_untargeted(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., mode=None):
+def tog_untargeted(victim, x_query, n_iter=10, eps=8/255., eps_iter=2/255., mode=None, meta=None):
     init_min = torch.min(x_query).item()
     init_max = torch.max(x_query).item()
     
     eps_iter = eps_iter * init_max
     eps = eps * init_max
     
-    detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
+    if meta == None:
+        detections_query = victim.detect(x_query, conf_threshold=victim.confidence_thresh_default)
+    else:
+        detections_query = victim.detect(x_query, meta=meta)
+        detections_query[0]["meta"] = meta
     eta = np.random.uniform(-eps, eps, size=x_query.shape)
     
     x_adv = np.clip(x_query + eta, init_min, init_max)

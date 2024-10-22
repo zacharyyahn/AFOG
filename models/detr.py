@@ -123,7 +123,8 @@ class DETR(nn.Module):
         detections_copy = detections.copy()
         detections_adv = self.detect(x_copy)
         
-        detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]        
+        detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]
+        print("Detections are", detections_copy["scores"].sort())
         copy_mask = detections_copy["scores"] > 0.5
         
         detections_copy["boxes"] = detections_copy["boxes"][copy_mask]
@@ -194,13 +195,12 @@ class DETR(nn.Module):
         detections_adv = self.detect(x_copy)
         
         detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]        
-        copy_mask = detections_copy["scores"] > 0.5
         
         # For vanishing there are no boxes, classes are N/A, and scores are 0
-        detections_copy["boxes"] = torch.tensor([[0.0001, 0.0001, 0.0002, 0.0002]]).cuda()
-        detections_copy["labels"] = torch.tensor([0.]).long().cuda()
-        detections_copy["scores"] = torch.tensor([0.]).long().cuda()
-        
+        detections_copy["boxes"] = detections_copy["boxes"]
+        detections_copy["labels"] = detections_copy["labels"]
+        detections_copy["scores"] = torch.ones(detections_copy["scores"].shape).float().cuda()
+                
         detections_copy = (detections_copy,)
         
         
@@ -213,7 +213,7 @@ class DETR(nn.Module):
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
         #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
-        unt_loss = -(loss_ce + loss_bbox) + int(norm) * loss_norm
+        unt_loss = (loss_ce + loss_bbox) + int(norm) * loss_norm
         #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)

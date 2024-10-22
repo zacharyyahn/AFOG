@@ -1,5 +1,5 @@
 {
-  "config_file": "dino_utils/config/DINO/DINO_4scale.py",
+  "config_file": "dino_utils/config/DINO/DINO_4scale_swin.py",
   "options": {
     "dn_scalar": 100,
     "embed_init_tgt": true,
@@ -17,7 +17,7 @@
   "note": "",
   "device": "cuda",
   "seed": 42,
-  "resume": "model_files/checkpoint0011_4scale.pth",
+  "resume": "model_files/checkpoint0011_4scale_swin.pth",
   "pretrain_model_path": null,
   "finetune_ignore": null,
   "start_epoch": 0,
@@ -35,6 +35,7 @@
   "amp": false,
   "attack": "attention",
   "attack_mode": "fabrication",
+  "sample_rate": 0.75,
   "data_aug_scales": [
     480,
     512,
@@ -86,8 +87,8 @@
   ],
   "modelname": "dino",
   "frozen_weights": null,
-  "backbone": "resnet50",
-  "use_checkpoint": false,
+  "backbone": "swin_L_384_22k",
+  "use_checkpoint": true,
   "dilation": false,
   "position_embedding": "sine",
   "pe_temperatureH": 20,
