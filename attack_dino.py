@@ -21,7 +21,7 @@ import dino_utils.misc as utils
 import dataset_utils
 from dataset_utils.coco import build_dataset, get_coco_api_from_dataset
 from dino_utils.engine import evaluate, train_one_epoch, test
-from tog.attacks import *
+from afog.attacks import *
 
 
 
@@ -77,7 +77,8 @@ def get_args_parser():
     parser.add_argument('--attack', default="None", type=str)
     parser.add_argument('--attack_mode', default="None", type=str)
     parser.add_argument('--sample_rate', default=1.0, type=float)
-    
+    parser.add_argument('--load_dir', default=None, type=str)
+    parser.add_argument('--load_attack', default=None, type=str)
     return parser
 
 
@@ -263,10 +264,8 @@ def main(args):
     attack = None
     if args.attack == "untargeted":
         attack = tog_untargeted
-    if args.attack == "attention":
-        attack = tog_attention
-    if args.attack == "vanishing":
-        attack = tog_vanishing
+    if args.attack == "afog":
+        attack = afog
     print("---- Attacking with", attack, "----")
 
     if args.eval:

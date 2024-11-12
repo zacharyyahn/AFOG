@@ -19,9 +19,8 @@ limitations under the License.
 from __future__ import division
 import numpy as np
 import keras.backend as K
-import tensorflow as tf
-from tensorflow.keras.layers import InputSpec
-from tensorflow.keras.layers import Layer
+from keras.engine.topology import InputSpec
+from keras.engine.topology import Layer
 
 class L2Normalization(Layer):
     '''
@@ -45,32 +44,22 @@ class L2Normalization(Layer):
     '''
 
     def __init__(self, gamma_init=20, **kwargs):
-        if K.image_data_format() == 'channels_last':
+        if K.image_dim_ordering() == 'tf':
             self.axis = 3
         else:
             self.axis = 1
         self.gamma_init = gamma_init
-        self.trainable = True
-        self._trainable=True
-        #super(L2Normalization, self).__init__(**kwargs)
-        super().__init__(**kwargs)
+        super(L2Normalization, self).__init__(**kwargs)
 
     def build(self, input_shape):
         self.input_spec = [InputSpec(shape=input_shape)]
         gamma = self.gamma_init * np.ones((input_shape[self.axis],))
-        #self.gamma = tf.Variable(gamma, name='{}_gamma'.format(self.name), dtype=tf.float32)
-        self.gamma = self.add_weight(
-            shape = gamma.shape,
-            initializer="ones",
-            trainable=True
-        )
-        #self._trainable_weights = [self.gamma]
-        #print("Layer has trainable_weights, ", self.trainable_weights, self._trainable_weights)
-        #super(L2Normalization, self).build(input_shape)
-        super().build(input_shape)
+        self.gamma = K.variable(gamma, name='{}_gamma'.format(self.name))
+        self.trainable_weights = [self.gamma]
+        super(L2Normalization, self).build(input_shape)
 
     def call(self, x, mask=None):
-        output = tf.keras.backend.l2_normalize(x, self.axis)
+        output = K.l2_normalize(x, self.axis)
         return output * self.gamma
 
     def get_config(self):

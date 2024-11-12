@@ -124,7 +124,6 @@ class DETR(nn.Module):
         detections_adv = self.detect(x_copy)
         
         detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]
-        print("Detections are", detections_copy["scores"].sort())
         copy_mask = detections_copy["scores"] > 0.5
         
         detections_copy["boxes"] = detections_copy["boxes"][copy_mask]
@@ -142,7 +141,7 @@ class DETR(nn.Module):
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
         #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
-        unt_loss = -(loss_ce + loss_bbox) + int(norm) * loss_norm
+        unt_loss = -(loss_ce + loss_bbox / (0.01 + loss_bbox / (0.01 + loss_ce))) + int(norm) * loss_norm
         #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)
@@ -178,7 +177,7 @@ class DETR(nn.Module):
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
         #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
-        unt_loss = (loss_ce + loss_bbox) + int(norm) * loss_norm
+        unt_loss = (loss_ce + loss_bbox/(0.01 + loss_bbox / (0.01 + loss_ce))) + int(norm) * loss_norm
         #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)
@@ -213,7 +212,7 @@ class DETR(nn.Module):
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
         #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
-        unt_loss = (loss_ce + loss_bbox) + int(norm) * loss_norm
+        unt_loss = (loss_ce + loss_bbox / (0.01 + loss_bbox / (0.01 + loss_ce))) + int(norm) * loss_norm
         #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)

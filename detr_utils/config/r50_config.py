@@ -49,3 +49,11 @@ num_workers=1
 world_size=1
 dist_url=None
 distributed=False
+
+num_feature_levels=4
+dec_n_points=4
+enc_n_points=4
+two_stage=False
+with_box_refine=False
+cls_loss_coef=2
+focal_alpha=0.25

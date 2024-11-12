@@ -19,8 +19,8 @@ limitations under the License.
 from __future__ import division
 import numpy as np
 import keras.backend as K
-from tensorflow.keras.layers import InputSpec
-from tensorflow.keras.layers import Layer
+from keras.engine.topology import InputSpec
+from keras.engine.topology import Layer
 
 from ssd_utils.bounding_box_utils import convert_coordinates
 
@@ -124,13 +124,11 @@ class AnchorBoxes(Layer):
             self.n_boxes = len(aspect_ratios) + 1
         else:
             self.n_boxes = len(aspect_ratios)
-        #super(AnchorBoxes, self).__init__(**kwargs)
-        super().__init__(**kwargs)
+        super(AnchorBoxes, self).__init__(**kwargs)
 
     def build(self, input_shape):
         self.input_spec = [InputSpec(shape=input_shape)]
-        #super(AnchorBoxes, self).build(input_shape)
-        super().build(input_shape)
+        super(AnchorBoxes, self).build(input_shape)
 
     def call(self, x, mask=None):
         '''
@@ -170,7 +168,7 @@ class AnchorBoxes(Layer):
         wh_list = np.array(wh_list)
 
         # We need the shape of the input tensor
-        if K.image_data_format() == 'channels_last':
+        if K.image_dim_ordering() == 'tf':
             batch_size, feature_map_height, feature_map_width, feature_map_channels = x._keras_shape
         else: # Not yet relevant since TensorFlow is the only supported backend right now, but it can't harm to have this in here for the future
             batch_size, feature_map_channels, feature_map_height, feature_map_width = x._keras_shape
@@ -257,7 +255,7 @@ class AnchorBoxes(Layer):
         return boxes_tensor
 
     def compute_output_shape(self, input_shape):
-        if K.image_data_format() == 'channels_last':
+        if K.image_dim_ordering() == 'tf':
             batch_size, feature_map_height, feature_map_width, feature_map_channels = input_shape
         else: # Not yet relevant since TensorFlow is the only supported backend right now, but it can't harm to have this in here for the future
             batch_size, feature_map_channels, feature_map_height, feature_map_width = input_shape
@@ -276,6 +274,5 @@ class AnchorBoxes(Layer):
             'coords': self.coords,
             'normalize_coords': self.normalize_coords
         }
-        #base_config = super(AnchorBoxes, self).get_config()
-        base_config = super().get_config()
+        base_config = super(AnchorBoxes, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))

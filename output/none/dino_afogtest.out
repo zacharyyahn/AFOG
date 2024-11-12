@@ -1,0 +1,28 @@
+---------------------------------------
+Begin Slurm Prolog: Nov-07-2024 23:40:56
+Job ID:    917317
+User ID:   zyahn3
+Account:   scs
+Job name:  AFOG_DINO
+Partition: coc-gpu
+---------------------------------------
+Traceback (most recent call last):
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/attack_dino.py", line 24, in <module>
+    from afog.attacks import *
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/afog/attacks.py", line 103
+    etas = []        eta_grads = []
+                     ^^^^^^^^^
+SyntaxError: invalid syntax
+srun: error: atl1-1-01-005-13-0: task 0: Exited with exit code 1
+---------------------------------------
+Begin Slurm Epilog: Nov-07-2024 23:42:19
+Job ID:        917317
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      AFOG_DINO
+Resources:     cpu=1,gres/gpu:a100=1,mem=64G,node=1
+Rsrc Used:     cput=00:01:24,vmem=0,walltime=00:01:24,mem=6676K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-01-005-13-0
+---------------------------------------

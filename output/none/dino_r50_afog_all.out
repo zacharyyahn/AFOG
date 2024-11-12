@@ -1,0 +1,1177 @@
+---------------------------------------
+Begin Slurm Prolog: Nov-08-2024 09:40:46
+Job ID:    918500
+User ID:   zyahn3
+Account:   scs
+Job name:  AFOG_R50
+Partition: coc-gpu
+---------------------------------------
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:23: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:52: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+[11/08 09:42:20 detectron2]: Rank of current process: 0. World size: 1
+[11/08 09:42:21 detectron2]: Environment info:
+-------------------------------  ------------------------------------------------------------------------------------
+sys.platform                     linux
+Python                           3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:12:24) [GCC 11.2.0]
+numpy                            1.26.4
+detectron2                       0.6 @/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detectron2/detectron2
+Compiler                         GCC 12.3
+CUDA compiler                    not available
+DETECTRON2_ENV_MODULE            <not set>
+PyTorch                          2.4.1 @/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/torch
+PyTorch debug build              False
+torch._C._GLIBCXX_USE_CXX11_ABI  False
+GPU available                    Yes
+GPU 0                            Tesla V100-PCIE-32GB (arch=7.0)
+Driver version                   555.42.02
+CUDA_HOME                        /usr/local/cuda
+Pillow                           10.4.0
+torchvision                      0.19.1 @/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/torchvision
+torchvision arch flags           5.0, 6.0, 7.0, 7.5, 8.0, 8.6, 9.0
+fvcore                           0.1.5.post20221221
+iopath                           0.1.9
+cv2                              4.10.0
+-------------------------------  ------------------------------------------------------------------------------------
+PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.4.2 (Git Hash 1137e04ec0b5251ca2b4400a4fd3c667ce843d67)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 12.4
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 90.1
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.4, CUDNN_VERSION=9.1.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.4.1, USE_CUDA=ON, USE_CUDNN=ON, USE_CUSPARSELT=1, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+[11/08 09:42:21 detectron2]: Command line arguments: Namespace(config_file='detrex/projects/dino/configs/dino-resnet/dino_r50_4scale_12ep.py', resume=False, eval_only=True, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:53103', opts=['train.init_checkpoint=model_files/dino_r50_4scale.pth', 'attack=afog', 'attack_mode=baseline', 'sample=1.0', 'save_attack=0.0', 'save_dir=datasets/blackbox/dino_r50_vanishing/', 'load_attack=0.0', 'load_dir=datasets/blackbox/focalnet_vanishing/'])
+[11/08 09:42:22 detectron2]: Contents of args.config_file=detrex/projects/dino/configs/dino-resnet/dino_r50_4scale_12ep.py:
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15mdetrex[39m[38;5;15m.[39m[38;5;15mconfig[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mget_config[39m
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15m.[39m[38;5;15mmodels[39m[38;5;15m.[39m[38;5;15mdino_r50[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mmodel[39m
+
+[38;5;245m# get default config[39m
+[38;5;15mdataloader[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/data/coco_detr.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mdataloader[39m
+[38;5;15moptimizer[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/optim.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mAdamW[39m
+[38;5;15mlr_multiplier[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/coco_schedule.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mlr_multiplier_12ep[39m
+[38;5;15mtrain[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/train.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mtrain[39m
+
+[38;5;245m# modify training config[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15minit_checkpoint[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mdetectron2://ImageNetPretrained/torchvision/R-50.pkl[39m[38;5;186m"[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15moutput_dir[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186m./output/dino_r50_4scale_12ep[39m[38;5;186m"[39m
+
+[38;5;245m# max training iterations[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mmax_iter[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m90000[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15meval_period[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m5000[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mlog_period[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m20[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mcheckpointer[39m[38;5;204m.[39m[38;5;15mperiod[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m5000[39m
+
+[38;5;245m# gradient clipping for training[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15menabled[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mTrue[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mmax_norm[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m0.1[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mnorm_type[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m2[39m
+
+[38;5;245m# set training devices[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mdevice[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mcuda[39m[38;5;186m"[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mdevice[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mdevice[39m
+
+[38;5;245m# modify optimizer config[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mlr[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1e-4[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mbetas[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15m([39m[38;5;141m0.9[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m0.999[39m[38;5;15m)[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mweight_decay[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1e-4[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mlr_factor_func[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mlambda[39m[38;5;15m [39m[38;5;15mmodule_name[39m[38;5;15m:[39m[38;5;15m [39m[38;5;141m0.1[39m[38;5;15m [39m[38;5;81mif[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mbackbone[39m[38;5;186m"[39m[38;5;15m [39m[38;5;204min[39m[38;5;15m [39m[38;5;15mmodule_name[39m[38;5;15m [39m[38;5;81melse[39m[38;5;15m [39m[38;5;141m1[39m
+
+[38;5;245m# modify dataloader config[39m
+[38;5;15mdataloader[39m[38;5;204m.[39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mnum_workers[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m16[39m
+
+[38;5;245m# please notice that this is total batch size.[39m
+[38;5;245m# surpose you're using 4 gpus for training and the batch size for[39m
+[38;5;245m# each gpu is 16/4 = 4[39m
+[38;5;15mdataloader[39m[38;5;204m.[39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mtotal_batch_size[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m16[39m
+
+[38;5;245m# dump the testing results into output_dir for visualization[39m
+[38;5;15mdataloader[39m[38;5;204m.[39m[38;5;15mevaluator[39m[38;5;204m.[39m[38;5;15moutput_dir[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15moutput_dir[39m
+
+[38;5;15mattack[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15mattack_mode[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15msample[39m[38;5;204m=[39m[38;5;141m1.0[39m
+[38;5;15msave_attack[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15msave_dir[39m[38;5;204m=[39m[38;5;81mNone[39m
+
+WARNING [11/08 09:42:22 d2.config.lazy]: The config contains objects that cannot serialize to a valid yaml. ./output/dino_r50_4scale_12ep/config.yaml is human-readable but cannot be loaded.
+WARNING [11/08 09:42:22 d2.config.lazy]: Config is saved using cloudpickle at ./output/dino_r50_4scale_12ep/config.yaml.pkl.
+[11/08 09:42:22 detectron2]: Full config saved to ./output/dino_r50_4scale_12ep/config.yaml
+[11/08 09:42:22 d2.utils.env]: Using a generated random seed 24593114
+[11/08 09:42:27 d2.checkpoint.detection_checkpoint]: [DetectionCheckpointer] Loading from model_files/dino_r50_4scale.pth ...
+[11/08 09:42:27 fvcore.common.checkpoint]: [Checkpointer] Loading from model_files/dino_r50_4scale.pth ...
+/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/fvcore/common/checkpoint.py:252: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(f, map_location=torch.device("cpu"))
+[11/08 09:42:30 detectron2]: Run evaluation under eval-only mode
+[11/08 09:42:30 detectron2]: Run evaluation without EMA.
+[11/08 09:42:30 d2.data.datasets.coco]: Loaded 5000 images in COCO format from /home/hice1/zyahn3/scratch/TOG_plus/datasets/coco/annotations/instances_val2017.json
+[11/08 09:42:31 d2.data.build]: Distribution of instances among all 80 categories:
+|   category    | #instances   |   category   | #instances   |   category    | #instances   |
+|:-------------:|:-------------|:------------:|:-------------|:-------------:|:-------------|
+|    person     | 10777        |   bicycle    | 314          |      car      | 1918         |
+|  motorcycle   | 367          |   airplane   | 143          |      bus      | 283          |
+|     train     | 190          |    truck     | 414          |     boat      | 424          |
+| traffic light | 634          | fire hydrant | 101          |   stop sign   | 75           |
+| parking meter | 60           |    bench     | 411          |     bird      | 427          |
+|      cat      | 202          |     dog      | 218          |     horse     | 272          |
+|     sheep     | 354          |     cow      | 372          |   elephant    | 252          |
+|     bear      | 71           |    zebra     | 266          |    giraffe    | 232          |
+|   backpack    | 371          |   umbrella   | 407          |    handbag    | 540          |
+|      tie      | 252          |   suitcase   | 299          |    frisbee    | 115          |
+|     skis      | 241          |  snowboard   | 69           |  sports ball  | 260          |
+|     kite      | 327          | baseball bat | 145          | baseball gl.. | 148          |
+|  skateboard   | 179          |  surfboard   | 267          | tennis racket | 225          |
+|    bottle     | 1013         |  wine glass  | 341          |      cup      | 895          |
+|     fork      | 215          |    knife     | 325          |     spoon     | 253          |
+|     bowl      | 623          |    banana    | 370          |     apple     | 236          |
+|   sandwich    | 177          |    orange    | 285          |   broccoli    | 312          |
+|    carrot     | 365          |   hot dog    | 125          |     pizza     | 284          |
+|     donut     | 328          |     cake     | 310          |     chair     | 1771         |
+|     couch     | 261          | potted plant | 342          |      bed      | 163          |
+| dining table  | 695          |    toilet    | 179          |      tv       | 288          |
+|    laptop     | 231          |    mouse     | 106          |    remote     | 283          |
+|   keyboard    | 153          |  cell phone  | 262          |   microwave   | 55           |
+|     oven      | 143          |   toaster    | 9            |     sink      | 225          |
+| refrigerator  | 126          |     book     | 1129         |     clock     | 267          |
+|     vase      | 274          |   scissors   | 36           |  teddy bear   | 190          |
+|  hair drier   | 11           |  toothbrush  | 57           |               |              |
+|     total     | 36335        |              |              |               |              |
+[11/08 09:42:31 d2.data.common]: Serializing the dataset using: <class 'detectron2.data.common._TorchSerializedList'>
+[11/08 09:42:31 d2.data.common]: Serializing 5000 elements to byte tensors and concatenating them all ...
+[11/08 09:42:31 d2.data.common]: Serialized dataset takes 19.27 MiB
+[11/08 09:42:32 d2.evaluation.evaluator]: Start inference on 5000 batches
+Doing attack: <function afog at 0x15549d277560>
+/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1724789220573/work/aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+eps is 7.152941176470588 for init min and max 0.0 228
+Got SSIM 0.7884249
+Got L2 tensor(0.0013)
+Got L0 tensor(1.0000)
+Got mean tensor(0.0183)
+Got median tensor(0.0179)
+Got diff tensor(0.0444)
+[11/08 09:43:04 d2.evaluation.evaluator]: Inference done 1/5000. Dataloading: 0.9875 s/iter. Inference: 31.8021 s/iter. Eval: 0.0160 s/iter. Total: 32.8073 s/iter. ETA=1 day, 21:33:23
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.9200394
+Got L2 tensor(0.0014)
+Got L0 tensor(0.9721)
+Got mean tensor(0.0171)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8731268
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9742)
+Got mean tensor(0.0173)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:43:12 d2.evaluation.evaluator]: Inference done 3/5000. Dataloading: 0.3302 s/iter. Inference: 13.2649 s/iter. Eval: 0.0057 s/iter. Total: 13.6015 s/iter. ETA=18:52:46
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8353432
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9975)
+Got mean tensor(0.0174)
+Got median tensor(0.0175)
+Got diff tensor(0.0353)
+eps is 7.874509803921568 for init min and max 0.0 251
+Got SSIM 0.9009142
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9730)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:43:21 d2.evaluation.evaluator]: Inference done 5/5000. Dataloading: 0.1987 s/iter. Inference: 9.6108 s/iter. Eval: 0.0036 s/iter. Total: 9.8135 s/iter. ETA=13:36:58
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.77129394
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9725)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7715688
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9732)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.89484185
+Got L2 tensor(0.0014)
+Got L0 tensor(0.9704)
+Got mean tensor(0.0173)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7539275
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9744)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.88668126
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9727)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8359556
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9587)
+Got mean tensor(0.0167)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+[11/08 09:43:45 d2.evaluation.evaluator]: Inference done 11/5000. Dataloading: 0.0418 s/iter. Inference: 4.0395 s/iter. Eval: 0.0005 s/iter. Total: 4.0818 s/iter. ETA=5:39:23
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8033065
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9660)
+Got mean tensor(0.0171)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 7.9372549019607845 for init min and max 0.0 253
+Got SSIM 0.76469445
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9642)
+Got mean tensor(0.0166)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+[11/08 09:43:53 d2.evaluation.evaluator]: Inference done 13/5000. Dataloading: 0.0317 s/iter. Inference: 4.0498 s/iter. Eval: 0.0005 s/iter. Total: 4.0822 s/iter. ETA=5:39:17
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.79283017
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9722)
+Got mean tensor(0.0170)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8824651
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9737)
+Got mean tensor(0.0174)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:44:01 d2.evaluation.evaluator]: Inference done 15/5000. Dataloading: 0.0256 s/iter. Inference: 4.0018 s/iter. Eval: 0.0005 s/iter. Total: 4.0281 s/iter. ETA=5:34:40
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7886154
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9736)
+Got mean tensor(0.0172)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.78353757
+Got L2 tensor(0.0015)
+Got L0 tensor(1.0000)
+Got mean tensor(0.0205)
+Got median tensor(0.0185)
+Got diff tensor(0.0537)
+[11/08 09:44:09 d2.evaluation.evaluator]: Inference done 17/5000. Dataloading: 0.0216 s/iter. Inference: 3.9829 s/iter. Eval: 0.0005 s/iter. Total: 4.0052 s/iter. ETA=5:32:37
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8290067
+Got L2 tensor(0.0014)
+Got L0 tensor(0.9740)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8227067
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9706)
+Got mean tensor(0.0172)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:44:16 d2.evaluation.evaluator]: Inference done 19/5000. Dataloading: 0.0188 s/iter. Inference: 3.9113 s/iter. Eval: 0.0005 s/iter. Total: 3.9308 s/iter. ETA=5:26:19
+eps is 7.968627450980392 for init min and max 0.0 254
+Got SSIM 0.76244205
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.91580385
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9547)
+Got mean tensor(0.0165)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+[11/08 09:44:24 d2.evaluation.evaluator]: Inference done 21/5000. Dataloading: 0.0170 s/iter. Inference: 3.9531 s/iter. Eval: 0.0005 s/iter. Total: 3.9707 s/iter. ETA=5:29:30
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8208503
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9729)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8712594
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9907)
+Got mean tensor(0.0171)
+Got median tensor(0.0170)
+Got diff tensor(0.0352)
+[11/08 09:44:32 d2.evaluation.evaluator]: Inference done 23/5000. Dataloading: 0.0152 s/iter. Inference: 3.9713 s/iter. Eval: 0.0005 s/iter. Total: 3.9873 s/iter. ETA=5:30:44
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.747776
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9571)
+Got mean tensor(0.0164)
+Got median tensor(0.0157)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8574013
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:44:41 d2.evaluation.evaluator]: Inference done 25/5000. Dataloading: 0.0139 s/iter. Inference: 3.9777 s/iter. Eval: 0.0005 s/iter. Total: 3.9922 s/iter. ETA=5:31:01
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8394825
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9745)
+Got mean tensor(0.0173)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8543002
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9684)
+Got mean tensor(0.0172)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+[11/08 09:44:49 d2.evaluation.evaluator]: Inference done 27/5000. Dataloading: 0.0128 s/iter. Inference: 4.0133 s/iter. Eval: 0.0005 s/iter. Total: 4.0267 s/iter. ETA=5:33:44
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.9104803
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9723)
+Got mean tensor(0.0173)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7883261
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0172)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:44:58 d2.evaluation.evaluator]: Inference done 29/5000. Dataloading: 0.0118 s/iter. Inference: 4.0538 s/iter. Eval: 0.0005 s/iter. Total: 4.0663 s/iter. ETA=5:36:53
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.78141
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0172)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8237311
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9740)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:45:06 d2.evaluation.evaluator]: Inference done 31/5000. Dataloading: 0.0110 s/iter. Inference: 4.0535 s/iter. Eval: 0.0005 s/iter. Total: 4.0651 s/iter. ETA=5:36:39
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7996324
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9731)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.87149304
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9724)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:45:15 d2.evaluation.evaluator]: Inference done 33/5000. Dataloading: 0.0103 s/iter. Inference: 4.0616 s/iter. Eval: 0.0005 s/iter. Total: 4.0726 s/iter. ETA=5:37:08
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8421584
+Got L2 tensor(0.0014)
+Got L0 tensor(0.9754)
+Got mean tensor(0.0174)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7874713
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:45:23 d2.evaluation.evaluator]: Inference done 35/5000. Dataloading: 0.0097 s/iter. Inference: 4.0574 s/iter. Eval: 0.0005 s/iter. Total: 4.0678 s/iter. ETA=5:36:36
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.81262034
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9709)
+Got mean tensor(0.0170)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.82980365
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9738)
+Got mean tensor(0.0174)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+[11/08 09:45:31 d2.evaluation.evaluator]: Inference done 37/5000. Dataloading: 0.0092 s/iter. Inference: 4.0731 s/iter. Eval: 0.0005 s/iter. Total: 4.0831 s/iter. ETA=5:37:44
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8144474
+Got L2 tensor(0.0014)
+Got L0 tensor(0.9731)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.84116864
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9658)
+Got mean tensor(0.0168)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+[11/08 09:45:39 d2.evaluation.evaluator]: Inference done 39/5000. Dataloading: 0.0088 s/iter. Inference: 4.0476 s/iter. Eval: 0.0005 s/iter. Total: 4.0571 s/iter. ETA=5:35:27
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.76104593
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9725)
+Got mean tensor(0.0171)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8417223
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9721)
+Got mean tensor(0.0171)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:45:47 d2.evaluation.evaluator]: Inference done 41/5000. Dataloading: 0.0084 s/iter. Inference: 4.0618 s/iter. Eval: 0.0005 s/iter. Total: 4.0709 s/iter. ETA=5:36:27
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8335406
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9731)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8099749
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9737)
+Got mean tensor(0.0170)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+[11/08 09:45:56 d2.evaluation.evaluator]: Inference done 43/5000. Dataloading: 0.0080 s/iter. Inference: 4.0831 s/iter. Eval: 0.0005 s/iter. Total: 4.0919 s/iter. ETA=5:38:03
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7694127
+Got L2 tensor(0.0011)
+Got L0 tensor(0.8889)
+Got mean tensor(0.0149)
+Got median tensor(0.0149)
+Got diff tensor(0.0314)
+eps is 7.623529411764705 for init min and max 0.0 243
+Got SSIM 0.7896077
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9741)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:46:04 d2.evaluation.evaluator]: Inference done 45/5000. Dataloading: 0.0077 s/iter. Inference: 4.0804 s/iter. Eval: 0.0005 s/iter. Total: 4.0888 s/iter. ETA=5:37:39
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.84805137
+Got L2 tensor(0.0015)
+Got L0 tensor(1.0000)
+Got mean tensor(0.0178)
+Got median tensor(0.0175)
+Got diff tensor(0.0424)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.87602454
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9719)
+Got mean tensor(0.0172)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:46:11 d2.evaluation.evaluator]: Inference done 47/5000. Dataloading: 0.0074 s/iter. Inference: 4.0507 s/iter. Eval: 0.0005 s/iter. Total: 4.0588 s/iter. ETA=5:35:03
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8064553
+Got L2 tensor(0.0011)
+Got L0 tensor(0.8568)
+Got mean tensor(0.0145)
+Got median tensor(0.0142)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8444404
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9668)
+Got mean tensor(0.0172)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+[11/08 09:46:20 d2.evaluation.evaluator]: Inference done 49/5000. Dataloading: 0.0071 s/iter. Inference: 4.0579 s/iter. Eval: 0.0005 s/iter. Total: 4.0657 s/iter. ETA=5:35:29
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8650041
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9742)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8137319
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9743)
+Got mean tensor(0.0174)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+[11/08 09:46:28 d2.evaluation.evaluator]: Inference done 51/5000. Dataloading: 0.0069 s/iter. Inference: 4.0577 s/iter. Eval: 0.0005 s/iter. Total: 4.0653 s/iter. ETA=5:35:19
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7933746
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9742)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 7.968627450980392 for init min and max 0.0 254
+Got SSIM 0.7588887
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9734)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:46:36 d2.evaluation.evaluator]: Inference done 53/5000. Dataloading: 0.0067 s/iter. Inference: 4.0669 s/iter. Eval: 0.0005 s/iter. Total: 4.0742 s/iter. ETA=5:35:55
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.87184215
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9741)
+Got mean tensor(0.0174)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.79030436
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9722)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:46:44 d2.evaluation.evaluator]: Inference done 55/5000. Dataloading: 0.0064 s/iter. Inference: 4.0689 s/iter. Eval: 0.0005 s/iter. Total: 4.0760 s/iter. ETA=5:35:55
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7823396
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9708)
+Got mean tensor(0.0170)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8383174
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9675)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:46:53 d2.evaluation.evaluator]: Inference done 57/5000. Dataloading: 0.0063 s/iter. Inference: 4.0807 s/iter. Eval: 0.0005 s/iter. Total: 4.0876 s/iter. ETA=5:36:45
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8867876
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9690)
+Got mean tensor(0.0170)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8328574
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9743)
+Got mean tensor(0.0172)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+[11/08 09:47:01 d2.evaluation.evaluator]: Inference done 59/5000. Dataloading: 0.0061 s/iter. Inference: 4.0758 s/iter. Eval: 0.0005 s/iter. Total: 4.0826 s/iter. ETA=5:36:11
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.763305
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9728)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.9061842
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9735)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:47:10 d2.evaluation.evaluator]: Inference done 61/5000. Dataloading: 0.0059 s/iter. Inference: 4.0813 s/iter. Eval: 0.0005 s/iter. Total: 4.0879 s/iter. ETA=5:36:30
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.82392794
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9736)
+Got mean tensor(0.0173)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.888004
+Got L2 tensor(0.0012)
+Got L0 tensor(0.8629)
+Got mean tensor(0.0140)
+Got median tensor(0.0121)
+Got diff tensor(0.0419)
+[11/08 09:47:18 d2.evaluation.evaluator]: Inference done 63/5000. Dataloading: 0.0058 s/iter. Inference: 4.0786 s/iter. Eval: 0.0005 s/iter. Total: 4.0851 s/iter. ETA=5:36:08
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.85859984
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9711)
+Got mean tensor(0.0170)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8082969
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9709)
+Got mean tensor(0.0172)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:47:26 d2.evaluation.evaluator]: Inference done 65/5000. Dataloading: 0.0056 s/iter. Inference: 4.0818 s/iter. Eval: 0.0005 s/iter. Total: 4.0881 s/iter. ETA=5:36:14
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.79236084
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9736)
+Got mean tensor(0.0173)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.78704953
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9735)
+Got mean tensor(0.0173)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:47:34 d2.evaluation.evaluator]: Inference done 67/5000. Dataloading: 0.0055 s/iter. Inference: 4.0864 s/iter. Eval: 0.0005 s/iter. Total: 4.0926 s/iter. ETA=5:36:28
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8461997
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9569)
+Got mean tensor(0.0170)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.9160107
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0166)
+Got median tensor(0.0157)
+Got diff tensor(0.0314)
+[11/08 09:47:42 d2.evaluation.evaluator]: Inference done 69/5000. Dataloading: 0.0054 s/iter. Inference: 4.0785 s/iter. Eval: 0.0005 s/iter. Total: 4.0846 s/iter. ETA=5:35:41
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.9029862
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9748)
+Got mean tensor(0.0171)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8059533
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9722)
+Got mean tensor(0.0172)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:47:50 d2.evaluation.evaluator]: Inference done 71/5000. Dataloading: 0.0052 s/iter. Inference: 4.0775 s/iter. Eval: 0.0005 s/iter. Total: 4.0834 s/iter. ETA=5:35:27
+eps is 7.968627450980392 for init min and max 0.0 254
+Got SSIM 0.89030933
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9700)
+Got mean tensor(0.0172)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8096674
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:47:58 d2.evaluation.evaluator]: Inference done 73/5000. Dataloading: 0.0051 s/iter. Inference: 4.0790 s/iter. Eval: 0.0005 s/iter. Total: 4.0848 s/iter. ETA=5:35:25
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8719654
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9706)
+Got mean tensor(0.0170)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8367346
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9675)
+Got mean tensor(0.0171)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+[11/08 09:48:07 d2.evaluation.evaluator]: Inference done 75/5000. Dataloading: 0.0050 s/iter. Inference: 4.0810 s/iter. Eval: 0.0005 s/iter. Total: 4.0867 s/iter. ETA=5:35:27
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.808722
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9733)
+Got mean tensor(0.0173)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.72724485
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9729)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:48:15 d2.evaluation.evaluator]: Inference done 77/5000. Dataloading: 0.0049 s/iter. Inference: 4.0787 s/iter. Eval: 0.0005 s/iter. Total: 4.0844 s/iter. ETA=5:35:07
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8208924
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9732)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8519461
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9735)
+Got mean tensor(0.0173)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:48:23 d2.evaluation.evaluator]: Inference done 79/5000. Dataloading: 0.0048 s/iter. Inference: 4.0828 s/iter. Eval: 0.0005 s/iter. Total: 4.0884 s/iter. ETA=5:35:18
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.73599416
+Got L2 tensor(0.0011)
+Got L0 tensor(0.8930)
+Got mean tensor(0.0152)
+Got median tensor(0.0154)
+Got diff tensor(0.0314)
+eps is 7.874509803921568 for init min and max 0.0 251
+Got SSIM 0.77074736
+Got L2 tensor(0.0014)
+Got L0 tensor(0.9733)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:48:31 d2.evaluation.evaluator]: Inference done 81/5000. Dataloading: 0.0048 s/iter. Inference: 4.0718 s/iter. Eval: 0.0005 s/iter. Total: 4.0773 s/iter. ETA=5:34:16
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8345361
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.84508103
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9722)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:48:39 d2.evaluation.evaluator]: Inference done 83/5000. Dataloading: 0.0047 s/iter. Inference: 4.0815 s/iter. Eval: 0.0005 s/iter. Total: 4.0869 s/iter. ETA=5:34:55
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7817154
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9612)
+Got mean tensor(0.0165)
+Got median tensor(0.0157)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8785253
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9747)
+Got mean tensor(0.0174)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+[11/08 09:48:47 d2.evaluation.evaluator]: Inference done 85/5000. Dataloading: 0.0046 s/iter. Inference: 4.0785 s/iter. Eval: 0.0005 s/iter. Total: 4.0838 s/iter. ETA=5:34:32
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.87074214
+Got L2 tensor(0.0014)
+Got L0 tensor(0.9640)
+Got mean tensor(0.0169)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7715227
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:48:55 d2.evaluation.evaluator]: Inference done 87/5000. Dataloading: 0.0045 s/iter. Inference: 4.0691 s/iter. Eval: 0.0005 s/iter. Total: 4.0743 s/iter. ETA=5:33:37
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8653476
+Got L2 tensor(0.0014)
+Got L0 tensor(0.9367)
+Got mean tensor(0.0157)
+Got median tensor(0.0156)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8734762
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9500)
+Got mean tensor(0.0167)
+Got median tensor(0.0157)
+Got diff tensor(0.0469)
+[11/08 09:49:02 d2.evaluation.evaluator]: Inference done 89/5000. Dataloading: 0.0044 s/iter. Inference: 4.0550 s/iter. Eval: 0.0005 s/iter. Total: 4.0602 s/iter. ETA=5:32:19
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7382
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9709)
+Got mean tensor(0.0166)
+Got median tensor(0.0157)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7976114
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:49:10 d2.evaluation.evaluator]: Inference done 91/5000. Dataloading: 0.0044 s/iter. Inference: 4.0612 s/iter. Eval: 0.0005 s/iter. Total: 4.0662 s/iter. ETA=5:32:41
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.9151296
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9704)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7892885
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9353)
+Got mean tensor(0.0159)
+Got median tensor(0.0156)
+Got diff tensor(0.0314)
+[11/08 09:49:18 d2.evaluation.evaluator]: Inference done 93/5000. Dataloading: 0.0043 s/iter. Inference: 4.0574 s/iter. Eval: 0.0005 s/iter. Total: 4.0624 s/iter. ETA=5:32:14
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8109625
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9710)
+Got mean tensor(0.0163)
+Got median tensor(0.0157)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.87640697
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9576)
+Got mean tensor(0.0167)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+[11/08 09:49:26 d2.evaluation.evaluator]: Inference done 95/5000. Dataloading: 0.0043 s/iter. Inference: 4.0525 s/iter. Eval: 0.0005 s/iter. Total: 4.0575 s/iter. ETA=5:31:41
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.814859
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9744)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8239744
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9697)
+Got mean tensor(0.0166)
+Got median tensor(0.0157)
+Got diff tensor(0.0314)
+[11/08 09:49:35 d2.evaluation.evaluator]: Inference done 97/5000. Dataloading: 0.0042 s/iter. Inference: 4.0589 s/iter. Eval: 0.0005 s/iter. Total: 4.0638 s/iter. ETA=5:32:04
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.909931
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9743)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.822484
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9613)
+Got mean tensor(0.0167)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+[11/08 09:49:42 d2.evaluation.evaluator]: Inference done 99/5000. Dataloading: 0.0041 s/iter. Inference: 4.0510 s/iter. Eval: 0.0005 s/iter. Total: 4.0558 s/iter. ETA=5:31:17
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8547027
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9915)
+Got mean tensor(0.0173)
+Got median tensor(0.0175)
+Got diff tensor(0.0353)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.86104864
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9737)
+Got mean tensor(0.0173)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+[11/08 09:49:50 d2.evaluation.evaluator]: Inference done 101/5000. Dataloading: 0.0041 s/iter. Inference: 4.0492 s/iter. Eval: 0.0005 s/iter. Total: 4.0539 s/iter. ETA=5:31:00
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8402155
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9732)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.81175166
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9739)
+Got mean tensor(0.0174)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+[11/08 09:49:59 d2.evaluation.evaluator]: Inference done 103/5000. Dataloading: 0.0040 s/iter. Inference: 4.0552 s/iter. Eval: 0.0005 s/iter. Total: 4.0599 s/iter. ETA=5:31:21
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8831795
+Got L2 tensor(0.0014)
+Got L0 tensor(0.9718)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8205593
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9658)
+Got mean tensor(0.0169)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+[11/08 09:50:06 d2.evaluation.evaluator]: Inference done 105/5000. Dataloading: 0.0040 s/iter. Inference: 4.0445 s/iter. Eval: 0.0005 s/iter. Total: 4.0492 s/iter. ETA=5:30:20
+eps is 7.968627450980392 for init min and max 0.0 254
+Got SSIM 0.82040244
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9728)
+Got mean tensor(0.0173)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8014989
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9111)
+Got mean tensor(0.0156)
+Got median tensor(0.0156)
+Got diff tensor(0.0314)
+[11/08 09:50:14 d2.evaluation.evaluator]: Inference done 107/5000. Dataloading: 0.0039 s/iter. Inference: 4.0446 s/iter. Eval: 0.0005 s/iter. Total: 4.0492 s/iter. ETA=5:30:12
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7824766
+Got L2 tensor(0.0011)
+Got L0 tensor(0.9419)
+Got mean tensor(0.0152)
+Got median tensor(0.0152)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7711263
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9727)
+Got mean tensor(0.0172)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+[11/08 09:50:21 d2.evaluation.evaluator]: Inference done 109/5000. Dataloading: 0.0039 s/iter. Inference: 4.0377 s/iter. Eval: 0.0005 s/iter. Total: 4.0422 s/iter. ETA=5:29:30
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.94773275
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9516)
+Got mean tensor(0.0170)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.9071963
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9731)
+Got mean tensor(0.0174)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+[11/08 09:50:29 d2.evaluation.evaluator]: Inference done 111/5000. Dataloading: 0.0038 s/iter. Inference: 4.0341 s/iter. Eval: 0.0005 s/iter. Total: 4.0386 s/iter. ETA=5:29:04
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.83028823
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9743)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8172868
+Got L2 tensor(0.0011)
+Got L0 tensor(0.8757)
+Got mean tensor(0.0152)
+Got median tensor(0.0155)
+Got diff tensor(0.0314)
+[11/08 09:50:37 d2.evaluation.evaluator]: Inference done 113/5000. Dataloading: 0.0038 s/iter. Inference: 4.0358 s/iter. Eval: 0.0005 s/iter. Total: 4.0403 s/iter. ETA=5:29:04
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.83604056
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9679)
+Got mean tensor(0.0171)
+Got median tensor(0.0158)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8186981
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9619)
+Got mean tensor(0.0169)
+Got median tensor(0.0159)
+Got diff tensor(0.0314)
+[11/08 09:50:45 d2.evaluation.evaluator]: Inference done 115/5000. Dataloading: 0.0037 s/iter. Inference: 4.0322 s/iter. Eval: 0.0005 s/iter. Total: 4.0366 s/iter. ETA=5:28:38
+eps is 7.968627450980392 for init min and max 0.0 254
+Got SSIM 0.95174766
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9746)
+Got mean tensor(0.0175)
+Got median tensor(0.0163)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7874198
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9731)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:50:53 d2.evaluation.evaluator]: Inference done 117/5000. Dataloading: 0.0037 s/iter. Inference: 4.0362 s/iter. Eval: 0.0005 s/iter. Total: 4.0406 s/iter. ETA=5:28:50
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.9071955
+Got L2 tensor(0.0012)
+Got L0 tensor(1.0000)
+Got mean tensor(0.0174)
+Got median tensor(0.0173)
+Got diff tensor(0.0353)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8272798
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9728)
+Got mean tensor(0.0175)
+Got median tensor(0.0163)
+Got diff tensor(0.0314)
+[11/08 09:51:02 d2.evaluation.evaluator]: Inference done 119/5000. Dataloading: 0.0037 s/iter. Inference: 4.0430 s/iter. Eval: 0.0005 s/iter. Total: 4.0474 s/iter. ETA=5:29:15
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.84298307
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9740)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8759654
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9720)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:51:10 d2.evaluation.evaluator]: Inference done 121/5000. Dataloading: 0.0036 s/iter. Inference: 4.0412 s/iter. Eval: 0.0005 s/iter. Total: 4.0455 s/iter. ETA=5:28:58
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.9102947
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9760)
+Got mean tensor(0.0176)
+Got median tensor(0.0165)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7853797
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9734)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:51:18 d2.evaluation.evaluator]: Inference done 123/5000. Dataloading: 0.0036 s/iter. Inference: 4.0392 s/iter. Eval: 0.0005 s/iter. Total: 4.0435 s/iter. ETA=5:28:40
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.85907197
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9724)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.82760525
+Got L2 tensor(0.0015)
+Got L0 tensor(0.9942)
+Got mean tensor(0.0196)
+Got median tensor(0.0171)
+Got diff tensor(0.0507)
+[11/08 09:51:26 d2.evaluation.evaluator]: Inference done 125/5000. Dataloading: 0.0036 s/iter. Inference: 4.0438 s/iter. Eval: 0.0005 s/iter. Total: 4.0480 s/iter. ETA=5:28:54
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.80077094
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9733)
+Got mean tensor(0.0173)
+Got median tensor(0.0162)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8688531
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9728)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:51:34 d2.evaluation.evaluator]: Inference done 127/5000. Dataloading: 0.0035 s/iter. Inference: 4.0434 s/iter. Eval: 0.0005 s/iter. Total: 4.0476 s/iter. ETA=5:28:44
+eps is 7.968627450980392 for init min and max 0.0 254
+Got SSIM 0.8167789
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9738)
+Got mean tensor(0.0173)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.82162184
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9743)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:51:43 d2.evaluation.evaluator]: Inference done 129/5000. Dataloading: 0.0035 s/iter. Inference: 4.0462 s/iter. Eval: 0.0005 s/iter. Total: 4.0504 s/iter. ETA=5:28:49
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8095711
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9740)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.8637178
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9729)
+Got mean tensor(0.0172)
+Got median tensor(0.0160)
+Got diff tensor(0.0314)
+[11/08 09:51:52 d2.evaluation.evaluator]: Inference done 131/5000. Dataloading: 0.0035 s/iter. Inference: 4.0504 s/iter. Eval: 0.0005 s/iter. Total: 4.0545 s/iter. ETA=5:29:01
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.7974677
+Got L2 tensor(0.0012)
+Got L0 tensor(0.9735)
+Got mean tensor(0.0173)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.83318067
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9745)
+Got mean tensor(0.0174)
+Got median tensor(0.0161)
+Got diff tensor(0.0314)
+[11/08 09:52:00 d2.evaluation.evaluator]: Inference done 133/5000. Dataloading: 0.0034 s/iter. Inference: 4.0540 s/iter. Eval: 0.0005 s/iter. Total: 4.0582 s/iter. ETA=5:29:11
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.829556
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9750)
+Got mean tensor(0.0174)
+Got median tensor(0.0163)
+Got diff tensor(0.0314)
+eps is 8.0 for init min and max 0.0 255
+Got SSIM 0.77462
+Got L2 tensor(0.0013)
+Got L0 tensor(0.9962)
+Got mean tensor(0.0175)
+Got median tensor(0.0175)
+Got diff tensor(0.0392)
+[11/08 09:52:08 d2.evaluation.evaluator]: Inference done 135/5000. Dataloading: 0.0034 s/iter. Inference: 4.0517 s/iter. Eval: 0.0005 s/iter. Total: 4.0558 s/iter. ETA=5:28:51
+slurmstepd: error: *** JOB 918500 ON atl1-1-01-002-4-0 CANCELLED AT 2024-11-08T09:52:16 ***
+---------------------------------------
+Begin Slurm Epilog: Nov-08-2024 09:52:18
+Job ID:        918500
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      AFOG_R50
+Resources:     cpu=1,gres/gpu:v100=1,mem=128G,node=1
+Rsrc Used:     cput=00:11:30,vmem=0,walltime=00:11:30,mem=3722348K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-01-002-4-0
+---------------------------------------

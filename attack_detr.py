@@ -15,7 +15,7 @@ from dataset_utils.coco import build_dataset, get_coco_api_from_dataset
 from detr_utils.engine import evaluate
 from detr_utils import build_model
 
-from tog.attacks import *
+from afog.attacks import *
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Set transformer detector', add_help=False)
@@ -103,6 +103,8 @@ def get_args_parser():
     
     parser.add_argument('--attack', default=None, type=str)
     parser.add_argument('--attack_mode', default=None, type=str)
+    parser.add_argument('--load_attack', default=None, type=str)
+    parser.add_argument('--load_dir', default=None, type=str)
     return parser
 
 def main(args):
@@ -170,8 +172,8 @@ def main(args):
     model.optimizer = optimizer #same as above
     model.postprocessors = postprocessors
     attack = None
-    if args.attack == "attention":
-        attack = tog_attention
+    if args.attack == "afog":
+        attack = afog
     if args.attack == "untargeted":
         attack = tog_untargeted
     print("--- Attacking with", attack, "----")

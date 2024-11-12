@@ -1,0 +1,388 @@
+---------------------------------------
+Begin Slurm Prolog: Nov-05-2024 10:29:00
+Job ID:    912086
+User ID:   zyahn3
+Account:   scs
+Job name:  TOG_Plus_Deformable_DETR
+Partition: coc-gpu
+---------------------------------------
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+git:
+  sha: 3382b163e7cea37d2c643d3a81a9326b6a64430d, status: has uncommited changes, branch: main
+
+Namespace(lr=0.0002, lr_backbone_names=['backbone.0'], lr_backbone=2e-05, lr_linear_proj_names=['reference_points', 'sampling_offsets'], lr_linear_proj_mult=0.1, batch_size=1, weight_decay=0.0001, epochs=50, lr_drop=40, lr_drop_epochs=None, clip_max_norm=0.1, sgd=False, with_box_refine=False, two_stage=False, frozen_weights=None, backbone='resnet50', dilation=False, position_embedding='sine', position_embedding_scale=6.283185307179586, num_feature_levels=4, enc_layers=6, dec_layers=6, dim_feedforward=1024, hidden_dim=256, dropout=0.1, nheads=8, num_queries=300, dec_n_points=4, enc_n_points=4, masks=False, aux_loss=False, set_cost_class=2, set_cost_bbox=5, set_cost_giou=2, mask_loss_coef=1, dice_loss_coef=1, cls_loss_coef=2, bbox_loss_coef=5, giou_loss_coef=2, focal_alpha=0.25, dataset_file='coco', coco_path='datasets/coco', coco_panoptic_path=None, remove_difficult=False, output_dir='', device='cuda', seed=42, resume='model_files/r50_deformable_detr-checkpoint.pth', start_epoch=0, eval=True, num_workers=1, cache_mode=False, attack='attention', attack_mode='untargeted', load_attack='0.0', load_dir='datasets/blackbox/focalnet_vanishing/')
+number of params: 39847265
+loading annotations into memory...
+Done (t=0.39s)
+creating index...
+index created!
+--- Attacking with <function tog_attention at 0x15548c4e4fe0> ----
+transformer.level_embed
+transformer.encoder.layers.0.self_attn.sampling_offsets.weight
+transformer.encoder.layers.0.self_attn.sampling_offsets.bias
+transformer.encoder.layers.0.self_attn.attention_weights.weight
+transformer.encoder.layers.0.self_attn.attention_weights.bias
+transformer.encoder.layers.0.self_attn.value_proj.weight
+transformer.encoder.layers.0.self_attn.value_proj.bias
+transformer.encoder.layers.0.self_attn.output_proj.weight
+transformer.encoder.layers.0.self_attn.output_proj.bias
+transformer.encoder.layers.0.norm1.weight
+transformer.encoder.layers.0.norm1.bias
+transformer.encoder.layers.0.linear1.weight
+transformer.encoder.layers.0.linear1.bias
+transformer.encoder.layers.0.linear2.weight
+transformer.encoder.layers.0.linear2.bias
+transformer.encoder.layers.0.norm2.weight
+transformer.encoder.layers.0.norm2.bias
+transformer.encoder.layers.1.self_attn.sampling_offsets.weight
+transformer.encoder.layers.1.self_attn.sampling_offsets.bias
+transformer.encoder.layers.1.self_attn.attention_weights.weight
+transformer.encoder.layers.1.self_attn.attention_weights.bias
+transformer.encoder.layers.1.self_attn.value_proj.weight
+transformer.encoder.layers.1.self_attn.value_proj.bias
+transformer.encoder.layers.1.self_attn.output_proj.weight
+transformer.encoder.layers.1.self_attn.output_proj.bias
+transformer.encoder.layers.1.norm1.weight
+transformer.encoder.layers.1.norm1.bias
+transformer.encoder.layers.1.linear1.weight
+transformer.encoder.layers.1.linear1.bias
+transformer.encoder.layers.1.linear2.weight
+transformer.encoder.layers.1.linear2.bias
+transformer.encoder.layers.1.norm2.weight
+transformer.encoder.layers.1.norm2.bias
+transformer.encoder.layers.2.self_attn.sampling_offsets.weight
+transformer.encoder.layers.2.self_attn.sampling_offsets.bias
+transformer.encoder.layers.2.self_attn.attention_weights.weight
+transformer.encoder.layers.2.self_attn.attention_weights.bias
+transformer.encoder.layers.2.self_attn.value_proj.weight
+transformer.encoder.layers.2.self_attn.value_proj.bias
+transformer.encoder.layers.2.self_attn.output_proj.weight
+transformer.encoder.layers.2.self_attn.output_proj.bias
+transformer.encoder.layers.2.norm1.weight
+transformer.encoder.layers.2.norm1.bias
+transformer.encoder.layers.2.linear1.weight
+transformer.encoder.layers.2.linear1.bias
+transformer.encoder.layers.2.linear2.weight
+transformer.encoder.layers.2.linear2.bias
+transformer.encoder.layers.2.norm2.weight
+transformer.encoder.layers.2.norm2.bias
+transformer.encoder.layers.3.self_attn.sampling_offsets.weight
+transformer.encoder.layers.3.self_attn.sampling_offsets.bias
+transformer.encoder.layers.3.self_attn.attention_weights.weight
+transformer.encoder.layers.3.self_attn.attention_weights.bias
+transformer.encoder.layers.3.self_attn.value_proj.weight
+transformer.encoder.layers.3.self_attn.value_proj.bias
+transformer.encoder.layers.3.self_attn.output_proj.weight
+transformer.encoder.layers.3.self_attn.output_proj.bias
+transformer.encoder.layers.3.norm1.weight
+transformer.encoder.layers.3.norm1.bias
+transformer.encoder.layers.3.linear1.weight
+transformer.encoder.layers.3.linear1.bias
+transformer.encoder.layers.3.linear2.weight
+transformer.encoder.layers.3.linear2.bias
+transformer.encoder.layers.3.norm2.weight
+transformer.encoder.layers.3.norm2.bias
+transformer.encoder.layers.4.self_attn.sampling_offsets.weight
+transformer.encoder.layers.4.self_attn.sampling_offsets.bias
+transformer.encoder.layers.4.self_attn.attention_weights.weight
+transformer.encoder.layers.4.self_attn.attention_weights.bias
+transformer.encoder.layers.4.self_attn.value_proj.weight
+transformer.encoder.layers.4.self_attn.value_proj.bias
+transformer.encoder.layers.4.self_attn.output_proj.weight
+transformer.encoder.layers.4.self_attn.output_proj.bias
+transformer.encoder.layers.4.norm1.weight
+transformer.encoder.layers.4.norm1.bias
+transformer.encoder.layers.4.linear1.weight
+transformer.encoder.layers.4.linear1.bias
+transformer.encoder.layers.4.linear2.weight
+transformer.encoder.layers.4.linear2.bias
+transformer.encoder.layers.4.norm2.weight
+transformer.encoder.layers.4.norm2.bias
+transformer.encoder.layers.5.self_attn.sampling_offsets.weight
+transformer.encoder.layers.5.self_attn.sampling_offsets.bias
+transformer.encoder.layers.5.self_attn.attention_weights.weight
+transformer.encoder.layers.5.self_attn.attention_weights.bias
+transformer.encoder.layers.5.self_attn.value_proj.weight
+transformer.encoder.layers.5.self_attn.value_proj.bias
+transformer.encoder.layers.5.self_attn.output_proj.weight
+transformer.encoder.layers.5.self_attn.output_proj.bias
+transformer.encoder.layers.5.norm1.weight
+transformer.encoder.layers.5.norm1.bias
+transformer.encoder.layers.5.linear1.weight
+transformer.encoder.layers.5.linear1.bias
+transformer.encoder.layers.5.linear2.weight
+transformer.encoder.layers.5.linear2.bias
+transformer.encoder.layers.5.norm2.weight
+transformer.encoder.layers.5.norm2.bias
+transformer.decoder.layers.0.cross_attn.sampling_offsets.weight
+transformer.decoder.layers.0.cross_attn.sampling_offsets.bias
+transformer.decoder.layers.0.cross_attn.attention_weights.weight
+transformer.decoder.layers.0.cross_attn.attention_weights.bias
+transformer.decoder.layers.0.cross_attn.value_proj.weight
+transformer.decoder.layers.0.cross_attn.value_proj.bias
+transformer.decoder.layers.0.cross_attn.output_proj.weight
+transformer.decoder.layers.0.cross_attn.output_proj.bias
+transformer.decoder.layers.0.norm1.weight
+transformer.decoder.layers.0.norm1.bias
+transformer.decoder.layers.0.self_attn.in_proj_weight
+transformer.decoder.layers.0.self_attn.in_proj_bias
+transformer.decoder.layers.0.self_attn.out_proj.weight
+transformer.decoder.layers.0.self_attn.out_proj.bias
+transformer.decoder.layers.0.norm2.weight
+transformer.decoder.layers.0.norm2.bias
+transformer.decoder.layers.0.linear1.weight
+transformer.decoder.layers.0.linear1.bias
+transformer.decoder.layers.0.linear2.weight
+transformer.decoder.layers.0.linear2.bias
+transformer.decoder.layers.0.norm3.weight
+transformer.decoder.layers.0.norm3.bias
+transformer.decoder.layers.1.cross_attn.sampling_offsets.weight
+transformer.decoder.layers.1.cross_attn.sampling_offsets.bias
+transformer.decoder.layers.1.cross_attn.attention_weights.weight
+transformer.decoder.layers.1.cross_attn.attention_weights.bias
+transformer.decoder.layers.1.cross_attn.value_proj.weight
+transformer.decoder.layers.1.cross_attn.value_proj.bias
+transformer.decoder.layers.1.cross_attn.output_proj.weight
+transformer.decoder.layers.1.cross_attn.output_proj.bias
+transformer.decoder.layers.1.norm1.weight
+transformer.decoder.layers.1.norm1.bias
+transformer.decoder.layers.1.self_attn.in_proj_weight
+transformer.decoder.layers.1.self_attn.in_proj_bias
+transformer.decoder.layers.1.self_attn.out_proj.weight
+transformer.decoder.layers.1.self_attn.out_proj.bias
+transformer.decoder.layers.1.norm2.weight
+transformer.decoder.layers.1.norm2.bias
+transformer.decoder.layers.1.linear1.weight
+transformer.decoder.layers.1.linear1.bias
+transformer.decoder.layers.1.linear2.weight
+transformer.decoder.layers.1.linear2.bias
+transformer.decoder.layers.1.norm3.weight
+transformer.decoder.layers.1.norm3.bias
+transformer.decoder.layers.2.cross_attn.sampling_offsets.weight
+transformer.decoder.layers.2.cross_attn.sampling_offsets.bias
+transformer.decoder.layers.2.cross_attn.attention_weights.weight
+transformer.decoder.layers.2.cross_attn.attention_weights.bias
+transformer.decoder.layers.2.cross_attn.value_proj.weight
+transformer.decoder.layers.2.cross_attn.value_proj.bias
+transformer.decoder.layers.2.cross_attn.output_proj.weight
+transformer.decoder.layers.2.cross_attn.output_proj.bias
+transformer.decoder.layers.2.norm1.weight
+transformer.decoder.layers.2.norm1.bias
+transformer.decoder.layers.2.self_attn.in_proj_weight
+transformer.decoder.layers.2.self_attn.in_proj_bias
+transformer.decoder.layers.2.self_attn.out_proj.weight
+transformer.decoder.layers.2.self_attn.out_proj.bias
+transformer.decoder.layers.2.norm2.weight
+transformer.decoder.layers.2.norm2.bias
+transformer.decoder.layers.2.linear1.weight
+transformer.decoder.layers.2.linear1.bias
+transformer.decoder.layers.2.linear2.weight
+transformer.decoder.layers.2.linear2.bias
+transformer.decoder.layers.2.norm3.weight
+transformer.decoder.layers.2.norm3.bias
+transformer.decoder.layers.3.cross_attn.sampling_offsets.weight
+transformer.decoder.layers.3.cross_attn.sampling_offsets.bias
+transformer.decoder.layers.3.cross_attn.attention_weights.weight
+transformer.decoder.layers.3.cross_attn.attention_weights.bias
+transformer.decoder.layers.3.cross_attn.value_proj.weight
+transformer.decoder.layers.3.cross_attn.value_proj.bias
+transformer.decoder.layers.3.cross_attn.output_proj.weight
+transformer.decoder.layers.3.cross_attn.output_proj.bias
+transformer.decoder.layers.3.norm1.weight
+transformer.decoder.layers.3.norm1.bias
+transformer.decoder.layers.3.self_attn.in_proj_weight
+transformer.decoder.layers.3.self_attn.in_proj_bias
+transformer.decoder.layers.3.self_attn.out_proj.weight
+transformer.decoder.layers.3.self_attn.out_proj.bias
+transformer.decoder.layers.3.norm2.weight
+transformer.decoder.layers.3.norm2.bias
+transformer.decoder.layers.3.linear1.weight
+transformer.decoder.layers.3.linear1.bias
+transformer.decoder.layers.3.linear2.weight
+transformer.decoder.layers.3.linear2.bias
+transformer.decoder.layers.3.norm3.weight
+transformer.decoder.layers.3.norm3.bias
+transformer.decoder.layers.4.cross_attn.sampling_offsets.weight
+transformer.decoder.layers.4.cross_attn.sampling_offsets.bias
+transformer.decoder.layers.4.cross_attn.attention_weights.weight
+transformer.decoder.layers.4.cross_attn.attention_weights.bias
+transformer.decoder.layers.4.cross_attn.value_proj.weight
+transformer.decoder.layers.4.cross_attn.value_proj.bias
+transformer.decoder.layers.4.cross_attn.output_proj.weight
+transformer.decoder.layers.4.cross_attn.output_proj.bias
+transformer.decoder.layers.4.norm1.weight
+transformer.decoder.layers.4.norm1.bias
+transformer.decoder.layers.4.self_attn.in_proj_weight
+transformer.decoder.layers.4.self_attn.in_proj_bias
+transformer.decoder.layers.4.self_attn.out_proj.weight
+transformer.decoder.layers.4.self_attn.out_proj.bias
+transformer.decoder.layers.4.norm2.weight
+transformer.decoder.layers.4.norm2.bias
+transformer.decoder.layers.4.linear1.weight
+transformer.decoder.layers.4.linear1.bias
+transformer.decoder.layers.4.linear2.weight
+transformer.decoder.layers.4.linear2.bias
+transformer.decoder.layers.4.norm3.weight
+transformer.decoder.layers.4.norm3.bias
+transformer.decoder.layers.5.cross_attn.sampling_offsets.weight
+transformer.decoder.layers.5.cross_attn.sampling_offsets.bias
+transformer.decoder.layers.5.cross_attn.attention_weights.weight
+transformer.decoder.layers.5.cross_attn.attention_weights.bias
+transformer.decoder.layers.5.cross_attn.value_proj.weight
+transformer.decoder.layers.5.cross_attn.value_proj.bias
+transformer.decoder.layers.5.cross_attn.output_proj.weight
+transformer.decoder.layers.5.cross_attn.output_proj.bias
+transformer.decoder.layers.5.norm1.weight
+transformer.decoder.layers.5.norm1.bias
+transformer.decoder.layers.5.self_attn.in_proj_weight
+transformer.decoder.layers.5.self_attn.in_proj_bias
+transformer.decoder.layers.5.self_attn.out_proj.weight
+transformer.decoder.layers.5.self_attn.out_proj.bias
+transformer.decoder.layers.5.norm2.weight
+transformer.decoder.layers.5.norm2.bias
+transformer.decoder.layers.5.linear1.weight
+transformer.decoder.layers.5.linear1.bias
+transformer.decoder.layers.5.linear2.weight
+transformer.decoder.layers.5.linear2.bias
+transformer.decoder.layers.5.norm3.weight
+transformer.decoder.layers.5.norm3.bias
+transformer.reference_points.weight
+transformer.reference_points.bias
+class_embed.0.weight
+class_embed.0.bias
+bbox_embed.0.layers.0.weight
+bbox_embed.0.layers.0.bias
+bbox_embed.0.layers.1.weight
+bbox_embed.0.layers.1.bias
+bbox_embed.0.layers.2.weight
+bbox_embed.0.layers.2.bias
+query_embed.weight
+input_proj.0.0.weight
+input_proj.0.0.bias
+input_proj.0.1.weight
+input_proj.0.1.bias
+input_proj.1.0.weight
+input_proj.1.0.bias
+input_proj.1.1.weight
+input_proj.1.1.bias
+input_proj.2.0.weight
+input_proj.2.0.bias
+input_proj.2.1.weight
+input_proj.2.1.bias
+input_proj.3.0.weight
+input_proj.3.0.bias
+input_proj.3.1.weight
+input_proj.3.1.bias
+backbone.0.body.conv1.weight
+backbone.0.body.layer1.0.conv1.weight
+backbone.0.body.layer1.0.conv2.weight
+backbone.0.body.layer1.0.conv3.weight
+backbone.0.body.layer1.0.downsample.0.weight
+backbone.0.body.layer1.1.conv1.weight
+backbone.0.body.layer1.1.conv2.weight
+backbone.0.body.layer1.1.conv3.weight
+backbone.0.body.layer1.2.conv1.weight
+backbone.0.body.layer1.2.conv2.weight
+backbone.0.body.layer1.2.conv3.weight
+backbone.0.body.layer2.0.conv1.weight
+backbone.0.body.layer2.0.conv2.weight
+backbone.0.body.layer2.0.conv3.weight
+backbone.0.body.layer2.0.downsample.0.weight
+backbone.0.body.layer2.1.conv1.weight
+backbone.0.body.layer2.1.conv2.weight
+backbone.0.body.layer2.1.conv3.weight
+backbone.0.body.layer2.2.conv1.weight
+backbone.0.body.layer2.2.conv2.weight
+backbone.0.body.layer2.2.conv3.weight
+backbone.0.body.layer2.3.conv1.weight
+backbone.0.body.layer2.3.conv2.weight
+backbone.0.body.layer2.3.conv3.weight
+backbone.0.body.layer3.0.conv1.weight
+backbone.0.body.layer3.0.conv2.weight
+backbone.0.body.layer3.0.conv3.weight
+backbone.0.body.layer3.0.downsample.0.weight
+backbone.0.body.layer3.1.conv1.weight
+backbone.0.body.layer3.1.conv2.weight
+backbone.0.body.layer3.1.conv3.weight
+backbone.0.body.layer3.2.conv1.weight
+backbone.0.body.layer3.2.conv2.weight
+backbone.0.body.layer3.2.conv3.weight
+backbone.0.body.layer3.3.conv1.weight
+backbone.0.body.layer3.3.conv2.weight
+backbone.0.body.layer3.3.conv3.weight
+backbone.0.body.layer3.4.conv1.weight
+backbone.0.body.layer3.4.conv2.weight
+backbone.0.body.layer3.4.conv3.weight
+backbone.0.body.layer3.5.conv1.weight
+backbone.0.body.layer3.5.conv2.weight
+backbone.0.body.layer3.5.conv3.weight
+backbone.0.body.layer4.0.conv1.weight
+backbone.0.body.layer4.0.conv2.weight
+backbone.0.body.layer4.0.conv3.weight
+backbone.0.body.layer4.0.downsample.0.weight
+backbone.0.body.layer4.1.conv1.weight
+backbone.0.body.layer4.1.conv2.weight
+backbone.0.body.layer4.1.conv3.weight
+backbone.0.body.layer4.2.conv1.weight
+backbone.0.body.layer4.2.conv2.weight
+backbone.0.body.layer4.2.conv3.weight
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1724789220573/work/aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Test:  [   0/5000]  eta: 5:03:21  class_error: 25.00  loss: 1.9003 (1.9003)  loss_ce: 1.1313 (1.1313)  loss_bbox: 0.1496 (0.1496)  loss_giou: 0.6194 (0.6194)  loss_ce_unscaled: 0.5657 (0.5657)  class_error_unscaled: 25.0000 (25.0000)  loss_bbox_unscaled: 0.0299 (0.0299)  loss_giou_unscaled: 0.3097 (0.3097)  cardinality_error_unscaled: 280.0000 (280.0000)  time: 3.6403  data: 0.7960  max mem: 5174
+Test:  [  10/5000]  eta: 3:08:45  class_error: 18.18  loss: 4.5210 (6.7170)  loss_ce: 3.0984 (5.1722)  loss_bbox: 0.3971 (0.7421)  loss_giou: 0.7836 (0.8027)  loss_ce_unscaled: 1.5492 (2.5861)  class_error_unscaled: 18.1818 (20.9042)  loss_bbox_unscaled: 0.0794 (0.1484)  loss_giou_unscaled: 0.3918 (0.4013)  cardinality_error_unscaled: 296.0000 (291.7273)  time: 2.2697  data: 0.0896  max mem: 7320
+Test:  [  20/5000]  eta: 3:01:13  class_error: 50.00  loss: 6.2355 (7.2131)  loss_ce: 4.8146 (5.8471)  loss_bbox: 0.3006 (0.6332)  loss_giou: 0.6624 (0.7329)  loss_ce_unscaled: 2.4073 (2.9236)  class_error_unscaled: 25.0000 (29.3682)  loss_bbox_unscaled: 0.0601 (0.1266)  loss_giou_unscaled: 0.3312 (0.3664)  cardinality_error_unscaled: 296.0000 (293.0952)  time: 2.1106  data: 0.0195  max mem: 7320
+Test:  [  30/5000]  eta: 3:01:52  class_error: 0.00  loss: 6.2355 (7.3598)  loss_ce: 4.8146 (6.0673)  loss_bbox: 0.3220 (0.5809)  loss_giou: 0.6269 (0.7117)  loss_ce_unscaled: 2.4073 (3.0336)  class_error_unscaled: 20.0000 (25.2909)  loss_bbox_unscaled: 0.0644 (0.1162)  loss_giou_unscaled: 0.3134 (0.3559)  cardinality_error_unscaled: 295.0000 (292.9032)  time: 2.1549  data: 0.0195  max mem: 7759
+Test:  [  40/5000]  eta: 3:00:35  class_error: 25.00  loss: 7.7481 (7.7805)  loss_ce: 6.0359 (6.4404)  loss_bbox: 0.5185 (0.6100)  loss_giou: 0.7073 (0.7301)  loss_ce_unscaled: 3.0180 (3.2202)  class_error_unscaled: 20.0000 (33.0325)  loss_bbox_unscaled: 0.1037 (0.1220)  loss_giou_unscaled: 0.3537 (0.3651)  cardinality_error_unscaled: 295.0000 (293.0732)  time: 2.1856  data: 0.0183  max mem: 7780
+Test:  [  50/5000]  eta: 2:59:18  class_error: 0.00  loss: 7.0735 (7.5620)  loss_ce: 6.0359 (6.2559)  loss_bbox: 0.5221 (0.5973)  loss_giou: 0.7073 (0.7089)  loss_ce_unscaled: 3.0180 (3.1279)  class_error_unscaled: 15.7895 (30.1784)  loss_bbox_unscaled: 0.1044 (0.1195)  loss_giou_unscaled: 0.3537 (0.3544)  cardinality_error_unscaled: 297.0000 (292.7059)  time: 2.1391  data: 0.0185  max mem: 7780
+Test:  [  60/5000]  eta: 2:59:25  class_error: 0.00  loss: 8.7243 (8.5468)  loss_ce: 7.5246 (7.1966)  loss_bbox: 0.5221 (0.6221)  loss_giou: 0.7203 (0.7282)  loss_ce_unscaled: 3.7623 (3.5983)  class_error_unscaled: 11.7647 (30.5200)  loss_bbox_unscaled: 0.1044 (0.1244)  loss_giou_unscaled: 0.3602 (0.3641)  cardinality_error_unscaled: 297.0000 (293.1639)  time: 2.1683  data: 0.0183  max mem: 7780
+Test:  [  70/5000]  eta: 2:58:53  class_error: 60.00  loss: 8.5753 (8.9230)  loss_ce: 7.5246 (7.6210)  loss_bbox: 0.3725 (0.6039)  loss_giou: 0.6218 (0.6981)  loss_ce_unscaled: 3.7623 (3.8105)  class_error_unscaled: 25.0000 (31.9248)  loss_bbox_unscaled: 0.0745 (0.1208)  loss_giou_unscaled: 0.3109 (0.3491)  cardinality_error_unscaled: 296.0000 (293.2958)  time: 2.1868  data: 0.0182  max mem: 7780
+Test:  [  80/5000]  eta: 2:58:11  class_error: 0.00  loss: 7.6508 (9.0109)  loss_ce: 6.5578 (7.7014)  loss_bbox: 0.3882 (0.5947)  loss_giou: 0.6215 (0.7149)  loss_ce_unscaled: 3.2789 (3.8507)  class_error_unscaled: 28.5714 (32.6804)  loss_bbox_unscaled: 0.0776 (0.1189)  loss_giou_unscaled: 0.3107 (0.3574)  cardinality_error_unscaled: 294.0000 (293.1852)  time: 2.1544  data: 0.0198  max mem: 7780
+Test:  [  90/5000]  eta: 2:57:16  class_error: 14.29  loss: 6.2762 (8.7092)  loss_ce: 5.1671 (7.4054)  loss_bbox: 0.5672 (0.5850)  loss_giou: 0.8270 (0.7187)  loss_ce_unscaled: 2.5835 (3.7027)  class_error_unscaled: 16.6667 (31.1167)  loss_bbox_unscaled: 0.1134 (0.1170)  loss_giou_unscaled: 0.4135 (0.3594)  cardinality_error_unscaled: 293.0000 (293.2418)  time: 2.1271  data: 0.0186  max mem: 7780
+Test:  [ 100/5000]  eta: 2:56:08  class_error: 42.86  loss: 5.6666 (8.5649)  loss_ce: 4.5753 (7.2428)  loss_bbox: 0.5702 (0.5872)  loss_giou: 0.7458 (0.7349)  loss_ce_unscaled: 2.2877 (3.6214)  class_error_unscaled: 16.6667 (30.9059)  loss_bbox_unscaled: 0.1140 (0.1174)  loss_giou_unscaled: 0.3729 (0.3675)  cardinality_error_unscaled: 293.0000 (292.9010)  time: 2.0909  data: 0.0171  max mem: 7780
+Test:  [ 110/5000]  eta: 2:55:18  class_error: 20.00  loss: 7.1930 (9.0563)  loss_ce: 5.5364 (7.7414)  loss_bbox: 0.5818 (0.5913)  loss_giou: 0.6922 (0.7236)  loss_ce_unscaled: 2.7682 (3.8707)  class_error_unscaled: 20.0000 (30.9444)  loss_bbox_unscaled: 0.1164 (0.1183)  loss_giou_unscaled: 0.3461 (0.3618)  cardinality_error_unscaled: 295.0000 (293.1622)  time: 2.0821  data: 0.0179  max mem: 7780
+Test:  [ 120/5000]  eta: 2:55:02  class_error: 26.67  loss: 7.1930 (9.0122)  loss_ce: 5.5364 (7.7013)  loss_bbox: 0.5725 (0.5834)  loss_giou: 0.5919 (0.7276)  loss_ce_unscaled: 2.7682 (3.8506)  class_error_unscaled: 20.0000 (30.6322)  loss_bbox_unscaled: 0.1145 (0.1167)  loss_giou_unscaled: 0.2960 (0.3638)  cardinality_error_unscaled: 296.0000 (293.0165)  time: 2.1286  data: 0.0183  max mem: 7780
+Test:  [ 130/5000]  eta: 2:54:51  class_error: 25.00  loss: 5.9225 (9.0462)  loss_ce: 4.8660 (7.7381)  loss_bbox: 0.4121 (0.5886)  loss_giou: 0.6068 (0.7196)  loss_ce_unscaled: 2.4330 (3.8690)  class_error_unscaled: 25.0000 (30.8366)  loss_bbox_unscaled: 0.0824 (0.1177)  loss_giou_unscaled: 0.3034 (0.3598)  cardinality_error_unscaled: 294.0000 (292.9008)  time: 2.1730  data: 0.0182  max mem: 7780
+Test:  [ 140/5000]  eta: 2:54:45  class_error: 5.00  loss: 4.8474 (8.9992)  loss_ce: 3.3795 (7.7064)  loss_bbox: 0.3307 (0.5808)  loss_giou: 0.5532 (0.7120)  loss_ce_unscaled: 1.6898 (3.8532)  class_error_unscaled: 22.2222 (30.2331)  loss_bbox_unscaled: 0.0661 (0.1162)  loss_giou_unscaled: 0.2766 (0.3560)  cardinality_error_unscaled: 292.0000 (292.6383)  time: 2.1900  data: 0.0198  max mem: 7780
+Test:  [ 150/5000]  eta: 2:54:36  class_error: 100.00  loss: 6.6028 (9.3735)  loss_ce: 4.7547 (8.0660)  loss_bbox: 0.4295 (0.5973)  loss_giou: 0.5532 (0.7102)  loss_ce_unscaled: 2.3773 (4.0330)  class_error_unscaled: 21.0526 (31.5035)  loss_bbox_unscaled: 0.0859 (0.1195)  loss_giou_unscaled: 0.2766 (0.3551)  cardinality_error_unscaled: 295.0000 (292.8013)  time: 2.1969  data: 0.0194  max mem: 7780
+Test:  [ 160/5000]  eta: 2:54:16  class_error: 27.27  loss: 6.6028 (9.4628)  loss_ce: 5.1202 (8.1612)  loss_bbox: 0.3775 (0.5936)  loss_giou: 0.6211 (0.7080)  loss_ce_unscaled: 2.5601 (4.0806)  class_error_unscaled: 27.2727 (32.2164)  loss_bbox_unscaled: 0.0755 (0.1187)  loss_giou_unscaled: 0.3106 (0.3540)  cardinality_error_unscaled: 296.0000 (292.8075)  time: 2.1818  data: 0.0184  max mem: 7780
+Test:  [ 170/5000]  eta: 2:53:34  class_error: 75.00  loss: 8.5574 (9.6543)  loss_ce: 6.9150 (8.3321)  loss_bbox: 0.4553 (0.6091)  loss_giou: 0.7466 (0.7131)  loss_ce_unscaled: 3.4575 (4.1661)  class_error_unscaled: 27.2727 (32.7690)  loss_bbox_unscaled: 0.0911 (0.1218)  loss_giou_unscaled: 0.3733 (0.3565)  cardinality_error_unscaled: 296.0000 (292.9591)  time: 2.1280  data: 0.0184  max mem: 7780
+Test:  [ 180/5000]  eta: 2:52:58  class_error: 66.67  loss: 7.9440 (9.5037)  loss_ce: 6.7994 (8.1911)  loss_bbox: 0.4629 (0.6016)  loss_giou: 0.7324 (0.7110)  loss_ce_unscaled: 3.3997 (4.0956)  class_error_unscaled: 25.0000 (32.4883)  loss_bbox_unscaled: 0.0926 (0.1203)  loss_giou_unscaled: 0.3662 (0.3555)  cardinality_error_unscaled: 295.0000 (292.8122)  time: 2.0940  data: 0.0179  max mem: 7780
+Test:  [ 190/5000]  eta: 2:52:50  class_error: 0.00  loss: 5.3685 (9.5920)  loss_ce: 4.1327 (8.2630)  loss_bbox: 0.4629 (0.6119)  loss_giou: 0.7442 (0.7171)  loss_ce_unscaled: 2.0664 (4.1315)  class_error_unscaled: 21.4286 (31.8174)  loss_bbox_unscaled: 0.0926 (0.1224)  loss_giou_unscaled: 0.3721 (0.3585)  cardinality_error_unscaled: 292.0000 (292.5707)  time: 2.1544  data: 0.0193  max mem: 7780
+Test:  [ 200/5000]  eta: 2:52:18  class_error: 33.33  loss: 9.0724 (9.9390)  loss_ce: 8.1514 (8.5997)  loss_bbox: 0.6238 (0.6282)  loss_giou: 0.7165 (0.7111)  loss_ce_unscaled: 4.0757 (4.2999)  class_error_unscaled: 21.4286 (32.5893)  loss_bbox_unscaled: 0.1248 (0.1256)  loss_giou_unscaled: 0.3583 (0.3556)  cardinality_error_unscaled: 297.0000 (292.7562)  time: 2.1596  data: 0.0194  max mem: 7780
+Test:  [ 210/5000]  eta: 2:51:52  class_error: 33.33  loss: 9.7632 (9.9359)  loss_ce: 8.1514 (8.5989)  loss_bbox: 0.4986 (0.6254)  loss_giou: 0.6478 (0.7117)  loss_ce_unscaled: 4.0757 (4.2994)  class_error_unscaled: 33.3333 (32.3424)  loss_bbox_unscaled: 0.0997 (0.1251)  loss_giou_unscaled: 0.3239 (0.3558)  cardinality_error_unscaled: 297.0000 (292.7867)  time: 2.1219  data: 0.0179  max mem: 7780
+Test:  [ 220/5000]  eta: 2:51:18  class_error: 0.00  loss: 9.0829 (10.1187)  loss_ce: 6.9417 (8.7834)  loss_bbox: 0.5038 (0.6282)  loss_giou: 0.6431 (0.7071)  loss_ce_unscaled: 3.4708 (4.3917)  class_error_unscaled: 40.0000 (33.1640)  loss_bbox_unscaled: 0.1008 (0.1256)  loss_giou_unscaled: 0.3215 (0.3536)  cardinality_error_unscaled: 296.0000 (292.9683)  time: 2.1159  data: 0.0183  max mem: 7780
+Test:  [ 230/5000]  eta: 2:50:51  class_error: 14.29  loss: 10.8889 (10.2809)  loss_ce: 10.1060 (8.9549)  loss_bbox: 0.4575 (0.6214)  loss_giou: 0.5574 (0.7047)  loss_ce_unscaled: 5.0530 (4.4774)  class_error_unscaled: 40.0000 (33.7166)  loss_bbox_unscaled: 0.0915 (0.1243)  loss_giou_unscaled: 0.2787 (0.3523)  cardinality_error_unscaled: 297.0000 (293.1472)  time: 2.1114  data: 0.0199  max mem: 7780
+Test:  [ 240/5000]  eta: 2:50:37  class_error: 0.00  loss: 6.6305 (10.2167)  loss_ce: 5.8595 (8.8906)  loss_bbox: 0.4493 (0.6166)  loss_giou: 0.7674 (0.7096)  loss_ce_unscaled: 2.9297 (4.4453)  class_error_unscaled: 16.6667 (33.0295)  loss_bbox_unscaled: 0.0899 (0.1233)  loss_giou_unscaled: 0.3837 (0.3548)  cardinality_error_unscaled: 296.0000 (293.0415)  time: 2.1549  data: 0.0198  max mem: 7780
+Test:  [ 250/5000]  eta: 2:50:19  class_error: 100.00  loss: 6.0030 (10.2254)  loss_ce: 4.9479 (8.9042)  loss_bbox: 0.4617 (0.6142)  loss_giou: 0.6797 (0.7070)  loss_ce_unscaled: 2.4739 (4.4521)  class_error_unscaled: 25.0000 (33.1467)  loss_bbox_unscaled: 0.0923 (0.1228)  loss_giou_unscaled: 0.3399 (0.3535)  cardinality_error_unscaled: 294.0000 (293.0518)  time: 2.1759  data: 0.0190  max mem: 7780
+Test:  [ 260/5000]  eta: 2:50:04  class_error: 28.57  loss: 5.6581 (10.0216)  loss_ce: 4.4127 (8.7018)  loss_bbox: 0.4371 (0.6111)  loss_giou: 0.6797 (0.7087)  loss_ce_unscaled: 2.2063 (4.3509)  class_error_unscaled: 29.1667 (32.9885)  loss_bbox_unscaled: 0.0874 (0.1222)  loss_giou_unscaled: 0.3399 (0.3543)  cardinality_error_unscaled: 292.0000 (292.8659)  time: 2.1779  data: 0.0196  max mem: 7780
+Test:  [ 270/5000]  eta: 2:49:22  class_error: 0.00  loss: 6.7150 (10.1465)  loss_ce: 4.8755 (8.8357)  loss_bbox: 0.4338 (0.6067)  loss_giou: 0.6730 (0.7041)  loss_ce_unscaled: 2.4378 (4.4178)  class_error_unscaled: 30.0000 (33.1591)  loss_bbox_unscaled: 0.0868 (0.1213)  loss_giou_unscaled: 0.3365 (0.3520)  cardinality_error_unscaled: 294.0000 (292.9631)  time: 2.1129  data: 0.0192  max mem: 7780
+Test:  [ 280/5000]  eta: 2:48:58  class_error: 33.33  loss: 8.6295 (10.1149)  loss_ce: 7.2122 (8.8212)  loss_bbox: 0.2652 (0.5967)  loss_giou: 0.5386 (0.6970)  loss_ce_unscaled: 3.6061 (4.4106)  class_error_unscaled: 40.0000 (33.4530)  loss_bbox_unscaled: 0.0530 (0.1193)  loss_giou_unscaled: 0.2693 (0.3485)  cardinality_error_unscaled: 296.0000 (292.9893)  time: 2.0841  data: 0.0198  max mem: 7780
+Test:  [ 290/5000]  eta: 2:48:50  class_error: 13.46  loss: 6.0763 (10.1034)  loss_ce: 4.7136 (8.8043)  loss_bbox: 0.3235 (0.5975)  loss_giou: 0.6680 (0.7015)  loss_ce_unscaled: 2.3568 (4.4022)  class_error_unscaled: 27.2727 (33.1560)  loss_bbox_unscaled: 0.0647 (0.1195)  loss_giou_unscaled: 0.3340 (0.3508)  cardinality_error_unscaled: 295.0000 (292.8213)  time: 2.1833  data: 0.0210  max mem: 7780
+Test:  [ 300/5000]  eta: 2:48:25  class_error: 0.00  loss: 8.6118 (10.1737)  loss_ce: 7.4897 (8.8705)  loss_bbox: 0.4449 (0.5998)  loss_giou: 0.8344 (0.7034)  loss_ce_unscaled: 3.7448 (4.4353)  class_error_unscaled: 11.7647 (33.0290)  loss_bbox_unscaled: 0.0890 (0.1200)  loss_giou_unscaled: 0.4172 (0.3517)  cardinality_error_unscaled: 295.0000 (292.8372)  time: 2.1796  data: 0.0194  max mem: 7780
+Test:  [ 310/5000]  eta: 2:47:59  class_error: 11.11  loss: 8.7066 (10.2433)  loss_ce: 7.8772 (8.9234)  loss_bbox: 0.7174 (0.6102)  loss_giou: 0.7675 (0.7098)  loss_ce_unscaled: 3.9386 (4.4617)  class_error_unscaled: 15.3846 (32.7871)  loss_bbox_unscaled: 0.1435 (0.1220)  loss_giou_unscaled: 0.3837 (0.3549)  cardinality_error_unscaled: 296.0000 (292.8553)  time: 2.1243  data: 0.0188  max mem: 7780
+Test:  [ 320/5000]  eta: 2:47:37  class_error: 25.00  loss: 7.2550 (10.1743)  loss_ce: 6.1141 (8.8576)  loss_bbox: 0.4243 (0.6049)  loss_giou: 0.7167 (0.7118)  loss_ce_unscaled: 3.0570 (4.4288)  class_error_unscaled: 25.0000 (32.9378)  loss_bbox_unscaled: 0.0849 (0.1210)  loss_giou_unscaled: 0.3583 (0.3559)  cardinality_error_unscaled: 295.0000 (292.8255)  time: 2.1335  data: 0.0193  max mem: 7780
+Test:  [ 330/5000]  eta: 2:47:21  class_error: 66.67  loss: 7.2550 (10.1443)  loss_ce: 6.2104 (8.8187)  loss_bbox: 0.4243 (0.6085)  loss_giou: 0.7219 (0.7171)  loss_ce_unscaled: 3.1052 (4.4094)  class_error_unscaled: 33.3333 (33.4616)  loss_bbox_unscaled: 0.0849 (0.1217)  loss_giou_unscaled: 0.3610 (0.3586)  cardinality_error_unscaled: 294.0000 (292.8429)  time: 2.1664  data: 0.0191  max mem: 7780
+Test:  [ 340/5000]  eta: 2:47:06  class_error: 13.64  loss: 6.7327 (10.0963)  loss_ce: 6.2104 (8.7653)  loss_bbox: 0.5245 (0.6097)  loss_giou: 0.8551 (0.7213)  loss_ce_unscaled: 3.1052 (4.3826)  class_error_unscaled: 22.2222 (33.3683)  loss_bbox_unscaled: 0.1049 (0.1219)  loss_giou_unscaled: 0.4275 (0.3606)  cardinality_error_unscaled: 294.0000 (292.6862)  time: 2.1947  data: 0.0195  max mem: 7780
+Test:  [ 350/5000]  eta: 2:46:51  class_error: 0.00  loss: 6.2315 (10.0409)  loss_ce: 5.2878 (8.7168)  loss_bbox: 0.4227 (0.6042)  loss_giou: 0.6305 (0.7199)  loss_ce_unscaled: 2.6439 (4.3584)  class_error_unscaled: 18.3673 (33.2725)  loss_bbox_unscaled: 0.0845 (0.1208)  loss_giou_unscaled: 0.3153 (0.3600)  cardinality_error_unscaled: 295.0000 (292.6838)  time: 2.1975  data: 0.0193  max mem: 7780
+Test:  [ 360/5000]  eta: 2:46:31  class_error: 100.00  loss: 7.2059 (10.0337)  loss_ce: 5.2878 (8.7117)  loss_bbox: 0.3131 (0.6033)  loss_giou: 0.6000 (0.7187)  loss_ce_unscaled: 2.6439 (4.3558)  class_error_unscaled: 25.0000 (33.1945)  loss_bbox_unscaled: 0.0626 (0.1207)  loss_giou_unscaled: 0.3000 (0.3594)  cardinality_error_unscaled: 296.0000 (292.5817)  time: 2.1811  data: 0.0189  max mem: 7780
+Test:  [ 370/5000]  eta: 2:46:17  class_error: 100.00  loss: 5.7544 (10.0185)  loss_ce: 4.4262 (8.6991)  loss_bbox: 0.3948 (0.6027)  loss_giou: 0.6956 (0.7167)  loss_ce_unscaled: 2.2131 (4.3495)  class_error_unscaled: 25.0000 (33.1840)  loss_bbox_unscaled: 0.0790 (0.1205)  loss_giou_unscaled: 0.3478 (0.3584)  cardinality_error_unscaled: 294.0000 (292.6011)  time: 2.1890  data: 0.0190  max mem: 7780
+Test:  [ 380/5000]  eta: 2:45:48  class_error: 75.00  loss: 7.4345 (10.0440)  loss_ce: 6.3978 (8.7202)  loss_bbox: 0.4213 (0.6066)  loss_giou: 0.6738 (0.7173)  loss_ce_unscaled: 3.1989 (4.3601)  class_error_unscaled: 33.3333 (33.5422)  loss_bbox_unscaled: 0.0843 (0.1213)  loss_giou_unscaled: 0.3369 (0.3586)  cardinality_error_unscaled: 296.0000 (292.7034)  time: 2.1548  data: 0.0181  max mem: 7780
+Test:  [ 390/5000]  eta: 2:45:16  class_error: 20.00  loss: 7.6229 (10.0968)  loss_ce: 6.9165 (8.7748)  loss_bbox: 0.4413 (0.6051)  loss_giou: 0.5950 (0.7169)  loss_ce_unscaled: 3.4583 (4.3874)  class_error_unscaled: 33.3333 (33.9653)  loss_bbox_unscaled: 0.0883 (0.1210)  loss_giou_unscaled: 0.2975 (0.3585)  cardinality_error_unscaled: 296.0000 (292.7903)  time: 2.0791  data: 0.0179  max mem: 7780
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** JOB 912086 ON atl1-1-01-005-15-0 CANCELLED AT 2024-11-05T10:46:32 ***
+slurmstepd: error: *** STEP 912086.0 ON atl1-1-01-005-15-0 CANCELLED AT 2024-11-05T10:46:32 ***
+---------------------------------------
+Begin Slurm Epilog: Nov-05-2024 10:47:53
+Job ID:        912086
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      TOG_Plus_Deformable_DETR
+Resources:     cpu=1,gres/gpu:a100=1,mem=32G,node=1
+Rsrc Used:     cput=00:17:32,vmem=0,walltime=00:17:32,mem=6568K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-01-005-15-0
+---------------------------------------

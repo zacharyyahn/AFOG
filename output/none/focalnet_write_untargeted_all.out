@@ -1,0 +1,243 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-28-2024 22:17:48
+Job ID:    893406
+User ID:   zyahn3
+Account:   scs
+Job name:  TOG_Plus_FocalNet
+Partition: coc-gpu
+---------------------------------------
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:23: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:52: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+[10/28 22:17:54 detectron2]: Rank of current process: 0. World size: 1
+[10/28 22:17:56 detectron2]: Environment info:
+-------------------------------  ----------------------------------------------------------------------------------------
+sys.platform                     linux
+Python                           3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:12:24) [GCC 11.2.0]
+numpy                            1.26.4
+detectron2                       0.6 @/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detectron2/detectron2
+Compiler                         GCC 12.3
+CUDA compiler                    not available
+DETECTRON2_ENV_MODULE            <not set>
+PyTorch                          2.4.1 @/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch
+PyTorch debug build              False
+torch._C._GLIBCXX_USE_CXX11_ABI  False
+GPU available                    Yes
+GPU 0                            NVIDIA A100-PCIE-40GB (arch=8.0)
+Driver version                   555.42.02
+CUDA_HOME                        /usr/local/cuda
+Pillow                           10.4.0
+torchvision                      0.19.1 @/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torchvision
+torchvision arch flags           5.0, 6.0, 7.0, 7.5, 8.0, 8.6, 9.0
+fvcore                           0.1.5.post20221221
+iopath                           0.1.9
+cv2                              4.10.0
+-------------------------------  ----------------------------------------------------------------------------------------
+PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.4.2 (Git Hash 1137e04ec0b5251ca2b4400a4fd3c667ce843d67)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 12.4
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 90.1
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.4, CUDNN_VERSION=9.1.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.4.1, USE_CUDA=ON, USE_CUDNN=ON, USE_CUSPARSELT=1, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+[10/28 22:17:56 detectron2]: Command line arguments: Namespace(config_file='detrex/projects/dino/configs/dino-focal/dino_focalnet_large_lrf_384_fl4_5scale_36ep.py', resume=False, eval_only=True, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:53103', opts=['train.init_checkpoint=model_files/focalnet.pth', 'attack=attention', 'attack_mode=untargeted', 'sample=1.0', 'save_attack=1.0', 'save_dir=/home/hice1/zyahn3/scratch/TOG_plus/datasets/blackbox/focalnet_untargeted/', 'load_attack=0.0', 'load_dir='])
+[10/28 22:17:56 detectron2]: Contents of args.config_file=detrex/projects/dino/configs/dino-focal/dino_focalnet_large_lrf_384_fl4_5scale_36ep.py:
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15mdetrex[39m[38;5;15m.[39m[38;5;15mconfig[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mget_config[39m
+
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15mdino_focalnet_large_lrf_384_fl4_5scale_12ep[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15m([39m
+[38;5;15m    [39m[38;5;15mtrain[39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;15mdataloader[39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;15moptimizer[39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;15mmodel[39m[38;5;15m,[39m
+[38;5;15m)[39m
+
+[38;5;245m# using 36ep scheduler[39m
+[38;5;15mlr_multiplier[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/coco_schedule.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mlr_multiplier_36ep[39m
+
+[38;5;245m# modify training config[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mmax_iter[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m270000[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15minit_checkpoint[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186m/path/to/focalnet_large_lrf_384_fl4.pth[39m[38;5;186m"[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15moutput_dir[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186m./output/dino_focalnet_large_fl4_5scale_36ep[39m[38;5;186m"[39m
+
+[38;5;245m# using larger drop-path rate for longer training times[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mdrop_path_rate[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m0.4[39m
+
+[38;5;15mattack[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15mattack_mode[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15msample[39m[38;5;204m=[39m[38;5;141m1.0[39m
+[38;5;15msave_dir[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15msave_attack[39m[38;5;204m=[39m[38;5;81mNone[39m
+
+WARNING [10/28 22:17:56 d2.config.lazy]: The config contains objects that cannot serialize to a valid yaml. ./output/dino_focalnet_large_fl4_5scale_36ep/config.yaml is human-readable but cannot be loaded.
+WARNING [10/28 22:17:56 d2.config.lazy]: Config is saved using cloudpickle at ./output/dino_focalnet_large_fl4_5scale_36ep/config.yaml.pkl.
+[10/28 22:17:56 detectron2]: Full config saved to ./output/dino_focalnet_large_fl4_5scale_36ep/config.yaml
+[10/28 22:17:56 d2.utils.env]: Using a generated random seed 56824673
+[10/28 22:17:59 d2.checkpoint.detection_checkpoint]: [DetectionCheckpointer] Loading from model_files/focalnet.pth ...
+[10/28 22:17:59 fvcore.common.checkpoint]: [Checkpointer] Loading from model_files/focalnet.pth ...
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/fvcore/common/checkpoint.py:252: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(f, map_location=torch.device("cpu"))
+[10/28 22:17:59 detectron2]: Run evaluation under eval-only mode
+[10/28 22:17:59 detectron2]: Run evaluation without EMA.
+[10/28 22:17:59 d2.data.datasets.coco]: Loaded 5000 images in COCO format from datasets/coco/annotations/instances_val2017.json
+[10/28 22:18:00 d2.data.build]: Distribution of instances among all 80 categories:
+|   category    | #instances   |   category   | #instances   |   category    | #instances   |
+|:-------------:|:-------------|:------------:|:-------------|:-------------:|:-------------|
+|    person     | 10777        |   bicycle    | 314          |      car      | 1918         |
+|  motorcycle   | 367          |   airplane   | 143          |      bus      | 283          |
+|     train     | 190          |    truck     | 414          |     boat      | 424          |
+| traffic light | 634          | fire hydrant | 101          |   stop sign   | 75           |
+| parking meter | 60           |    bench     | 411          |     bird      | 427          |
+|      cat      | 202          |     dog      | 218          |     horse     | 272          |
+|     sheep     | 354          |     cow      | 372          |   elephant    | 252          |
+|     bear      | 71           |    zebra     | 266          |    giraffe    | 232          |
+|   backpack    | 371          |   umbrella   | 407          |    handbag    | 540          |
+|      tie      | 252          |   suitcase   | 299          |    frisbee    | 115          |
+|     skis      | 241          |  snowboard   | 69           |  sports ball  | 260          |
+|     kite      | 327          | baseball bat | 145          | baseball gl.. | 148          |
+|  skateboard   | 179          |  surfboard   | 267          | tennis racket | 225          |
+|    bottle     | 1013         |  wine glass  | 341          |      cup      | 895          |
+|     fork      | 215          |    knife     | 325          |     spoon     | 253          |
+|     bowl      | 623          |    banana    | 370          |     apple     | 236          |
+|   sandwich    | 177          |    orange    | 285          |   broccoli    | 312          |
+|    carrot     | 365          |   hot dog    | 125          |     pizza     | 284          |
+|     donut     | 328          |     cake     | 310          |     chair     | 1771         |
+|     couch     | 261          | potted plant | 342          |      bed      | 163          |
+| dining table  | 695          |    toilet    | 179          |      tv       | 288          |
+|    laptop     | 231          |    mouse     | 106          |    remote     | 283          |
+|   keyboard    | 153          |  cell phone  | 262          |   microwave   | 55           |
+|     oven      | 143          |   toaster    | 9            |     sink      | 225          |
+| refrigerator  | 126          |     book     | 1129         |     clock     | 267          |
+|     vase      | 274          |   scissors   | 36           |  teddy bear   | 190          |
+|  hair drier   | 11           |  toothbrush  | 57           |               |              |
+|     total     | 36335        |              |              |               |              |
+[10/28 22:18:00 d2.data.common]: Serializing the dataset using: <class 'detectron2.data.common._TorchSerializedList'>
+[10/28 22:18:00 d2.data.common]: Serializing 5000 elements to byte tensors and concatenating them all ...
+[10/28 22:18:00 d2.data.common]: Serialized dataset takes 19.10 MiB
+[10/28 22:18:00 d2.evaluation.evaluator]: Start inference on 5000 batches
+Doing attack: <function tog_attention at 0x1554a02dc400>
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1724789220573/work/aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+[10/28 22:18:13 d2.evaluation.evaluator]: Inference done 1/5000. Dataloading: 1.3728 s/iter. Inference: 11.6415 s/iter. Eval: 0.0003 s/iter. Total: 13.0165 s/iter. ETA=18:04:29
+[10/28 22:18:21 d2.evaluation.evaluator]: Inference done 2/5000. Dataloading: 0.6870 s/iter. Inference: 9.6469 s/iter. Eval: 0.0003 s/iter. Total: 10.3361 s/iter. ETA=14:20:59
+[10/28 22:18:29 d2.evaluation.evaluator]: Inference done 3/5000. Dataloading: 0.4583 s/iter. Inference: 9.3703 s/iter. Eval: 0.0003 s/iter. Total: 9.8303 s/iter. ETA=13:38:42
+[10/28 22:18:38 d2.evaluation.evaluator]: Inference done 4/5000. Dataloading: 0.3440 s/iter. Inference: 9.1548 s/iter. Eval: 0.0003 s/iter. Total: 9.5002 s/iter. ETA=13:11:03
+[10/28 22:18:48 d2.evaluation.evaluator]: Inference done 5/5000. Dataloading: 0.2754 s/iter. Inference: 9.2462 s/iter. Eval: 0.0003 s/iter. Total: 9.5232 s/iter. ETA=13:12:48
+[10/28 22:18:57 d2.evaluation.evaluator]: Inference done 6/5000. Dataloading: 0.0000 s/iter. Inference: 9.7050 s/iter. Eval: 0.0003 s/iter. Total: 9.7053 s/iter. ETA=13:27:48
+[10/28 22:19:07 d2.evaluation.evaluator]: Inference done 7/5000. Dataloading: 0.0006 s/iter. Inference: 9.7524 s/iter. Eval: 0.0003 s/iter. Total: 9.7534 s/iter. ETA=13:31:38
+[10/28 22:19:14 d2.evaluation.evaluator]: Inference done 8/5000. Dataloading: 0.0009 s/iter. Inference: 8.7685 s/iter. Eval: 0.0003 s/iter. Total: 8.7699 s/iter. ETA=12:09:39
+[10/28 22:19:24 d2.evaluation.evaluator]: Inference done 9/5000. Dataloading: 0.0010 s/iter. Inference: 9.0062 s/iter. Eval: 0.0003 s/iter. Total: 9.0077 s/iter. ETA=12:29:17
+[10/28 22:19:32 d2.evaluation.evaluator]: Inference done 10/5000. Dataloading: 0.0010 s/iter. Inference: 8.9456 s/iter. Eval: 0.0003 s/iter. Total: 8.9471 s/iter. ETA=12:24:06
+[10/28 22:19:42 d2.evaluation.evaluator]: Inference done 11/5000. Dataloading: 0.0010 s/iter. Inference: 9.0803 s/iter. Eval: 0.0003 s/iter. Total: 9.0819 s/iter. ETA=12:35:09
+[10/28 22:19:52 d2.evaluation.evaluator]: Inference done 12/5000. Dataloading: 0.0010 s/iter. Inference: 9.1792 s/iter. Eval: 0.0003 s/iter. Total: 9.1808 s/iter. ETA=12:43:13
+[10/28 22:20:01 d2.evaluation.evaluator]: Inference done 13/5000. Dataloading: 0.0011 s/iter. Inference: 9.1224 s/iter. Eval: 0.0003 s/iter. Total: 9.1240 s/iter. ETA=12:38:21
+[10/28 22:20:09 d2.evaluation.evaluator]: Inference done 14/5000. Dataloading: 0.0011 s/iter. Inference: 9.0188 s/iter. Eval: 0.0003 s/iter. Total: 9.0204 s/iter. ETA=12:29:35
+[10/28 22:20:18 d2.evaluation.evaluator]: Inference done 15/5000. Dataloading: 0.0011 s/iter. Inference: 9.0001 s/iter. Eval: 0.0003 s/iter. Total: 9.0017 s/iter. ETA=12:27:53
+[10/28 22:20:26 d2.evaluation.evaluator]: Inference done 16/5000. Dataloading: 0.0011 s/iter. Inference: 8.9703 s/iter. Eval: 0.0003 s/iter. Total: 8.9719 s/iter. ETA=12:25:16
+[10/28 22:20:35 d2.evaluation.evaluator]: Inference done 17/5000. Dataloading: 0.0011 s/iter. Inference: 8.9449 s/iter. Eval: 0.0003 s/iter. Total: 8.9465 s/iter. ETA=12:23:00
+[10/28 22:20:42 d2.evaluation.evaluator]: Inference done 18/5000. Dataloading: 0.0011 s/iter. Inference: 8.7667 s/iter. Eval: 0.0003 s/iter. Total: 8.7684 s/iter. ETA=12:08:03
+[10/28 22:20:50 d2.evaluation.evaluator]: Inference done 19/5000. Dataloading: 0.0011 s/iter. Inference: 8.7573 s/iter. Eval: 0.0003 s/iter. Total: 8.7590 s/iter. ETA=12:07:08
+[10/28 22:21:00 d2.evaluation.evaluator]: Inference done 20/5000. Dataloading: 0.0011 s/iter. Inference: 8.8230 s/iter. Eval: 0.0003 s/iter. Total: 8.8246 s/iter. ETA=12:12:26
+[10/28 22:21:10 d2.evaluation.evaluator]: Inference done 21/5000. Dataloading: 0.0011 s/iter. Inference: 8.8857 s/iter. Eval: 0.0003 s/iter. Total: 8.8874 s/iter. ETA=12:17:30
+[10/28 22:21:20 d2.evaluation.evaluator]: Inference done 22/5000. Dataloading: 0.0011 s/iter. Inference: 8.9511 s/iter. Eval: 0.0003 s/iter. Total: 8.9527 s/iter. ETA=12:22:46
+[10/28 22:21:28 d2.evaluation.evaluator]: Inference done 23/5000. Dataloading: 0.0011 s/iter. Inference: 8.9334 s/iter. Eval: 0.0003 s/iter. Total: 8.9351 s/iter. ETA=12:21:09
+[10/28 22:21:38 d2.evaluation.evaluator]: Inference done 24/5000. Dataloading: 0.0011 s/iter. Inference: 8.9707 s/iter. Eval: 0.0003 s/iter. Total: 8.9724 s/iter. ETA=12:24:06
+[10/28 22:21:47 d2.evaluation.evaluator]: Inference done 25/5000. Dataloading: 0.0011 s/iter. Inference: 8.9536 s/iter. Eval: 0.0003 s/iter. Total: 8.9552 s/iter. ETA=12:22:32
+[10/28 22:21:56 d2.evaluation.evaluator]: Inference done 26/5000. Dataloading: 0.0011 s/iter. Inference: 8.9926 s/iter. Eval: 0.0003 s/iter. Total: 8.9943 s/iter. ETA=12:25:37
+[10/28 22:22:06 d2.evaluation.evaluator]: Inference done 27/5000. Dataloading: 0.0011 s/iter. Inference: 9.0217 s/iter. Eval: 0.0003 s/iter. Total: 9.0234 s/iter. ETA=12:27:53
+[10/28 22:22:17 d2.evaluation.evaluator]: Inference done 28/5000. Dataloading: 0.0011 s/iter. Inference: 9.1163 s/iter. Eval: 0.0003 s/iter. Total: 9.1180 s/iter. ETA=12:35:34
+[10/28 22:22:26 d2.evaluation.evaluator]: Inference done 29/5000. Dataloading: 0.0011 s/iter. Inference: 9.1136 s/iter. Eval: 0.0003 s/iter. Total: 9.1152 s/iter. ETA=12:35:11
+[10/28 22:22:36 d2.evaluation.evaluator]: Inference done 30/5000. Dataloading: 0.0011 s/iter. Inference: 9.1353 s/iter. Eval: 0.0003 s/iter. Total: 9.1370 s/iter. ETA=12:36:50
+[10/28 22:22:45 d2.evaluation.evaluator]: Inference done 31/5000. Dataloading: 0.0011 s/iter. Inference: 9.1143 s/iter. Eval: 0.0003 s/iter. Total: 9.1160 s/iter. ETA=12:34:57
+[10/28 22:22:53 d2.evaluation.evaluator]: Inference done 32/5000. Dataloading: 0.0011 s/iter. Inference: 9.0963 s/iter. Eval: 0.0003 s/iter. Total: 9.0980 s/iter. ETA=12:33:18
+[10/28 22:23:03 d2.evaluation.evaluator]: Inference done 33/5000. Dataloading: 0.0011 s/iter. Inference: 9.1337 s/iter. Eval: 0.0003 s/iter. Total: 9.1354 s/iter. ETA=12:36:15
+[10/28 22:23:11 d2.evaluation.evaluator]: Inference done 34/5000. Dataloading: 0.0011 s/iter. Inference: 9.0847 s/iter. Eval: 0.0003 s/iter. Total: 9.0864 s/iter. ETA=12:32:02
+[10/28 22:23:20 d2.evaluation.evaluator]: Inference done 35/5000. Dataloading: 0.0011 s/iter. Inference: 9.0708 s/iter. Eval: 0.0003 s/iter. Total: 9.0725 s/iter. ETA=12:30:44
+[10/28 22:23:29 d2.evaluation.evaluator]: Inference done 36/5000. Dataloading: 0.0011 s/iter. Inference: 9.0782 s/iter. Eval: 0.0003 s/iter. Total: 9.0799 s/iter. ETA=12:31:12
+[10/28 22:23:39 d2.evaluation.evaluator]: Inference done 37/5000. Dataloading: 0.0011 s/iter. Inference: 9.1126 s/iter. Eval: 0.0003 s/iter. Total: 9.1142 s/iter. ETA=12:33:53
+[10/28 22:23:46 d2.evaluation.evaluator]: Inference done 38/5000. Dataloading: 0.0011 s/iter. Inference: 9.0361 s/iter. Eval: 0.0003 s/iter. Total: 9.0378 s/iter. ETA=12:27:25
+[10/28 22:23:55 d2.evaluation.evaluator]: Inference done 39/5000. Dataloading: 0.0011 s/iter. Inference: 9.0529 s/iter. Eval: 0.0003 s/iter. Total: 9.0546 s/iter. ETA=12:28:39
+[10/28 22:24:06 d2.evaluation.evaluator]: Inference done 40/5000. Dataloading: 0.0011 s/iter. Inference: 9.1007 s/iter. Eval: 0.0003 s/iter. Total: 9.1024 s/iter. ETA=12:32:27
+[10/28 22:24:15 d2.evaluation.evaluator]: Inference done 41/5000. Dataloading: 0.0011 s/iter. Inference: 9.0876 s/iter. Eval: 0.0003 s/iter. Total: 9.0893 s/iter. ETA=12:31:13
+[10/28 22:24:23 d2.evaluation.evaluator]: Inference done 42/5000. Dataloading: 0.0011 s/iter. Inference: 9.0753 s/iter. Eval: 0.0003 s/iter. Total: 9.0770 s/iter. ETA=12:30:03
+[10/28 22:24:33 d2.evaluation.evaluator]: Inference done 43/5000. Dataloading: 0.0011 s/iter. Inference: 9.1011 s/iter. Eval: 0.0003 s/iter. Total: 9.1028 s/iter. ETA=12:32:02
+[10/28 22:24:43 d2.evaluation.evaluator]: Inference done 44/5000. Dataloading: 0.0011 s/iter. Inference: 9.1174 s/iter. Eval: 0.0003 s/iter. Total: 9.1191 s/iter. ETA=12:33:14
+[10/28 22:24:52 d2.evaluation.evaluator]: Inference done 45/5000. Dataloading: 0.0011 s/iter. Inference: 9.1047 s/iter. Eval: 0.0003 s/iter. Total: 9.1064 s/iter. ETA=12:32:01
+[10/28 22:24:58 d2.evaluation.evaluator]: Inference done 46/5000. Dataloading: 0.0011 s/iter. Inference: 9.0428 s/iter. Eval: 0.0003 s/iter. Total: 9.0445 s/iter. ETA=12:26:46
+[10/28 22:25:07 d2.evaluation.evaluator]: Inference done 47/5000. Dataloading: 0.0011 s/iter. Inference: 9.0322 s/iter. Eval: 0.0003 s/iter. Total: 9.0339 s/iter. ETA=12:25:45
+[10/28 22:25:16 d2.evaluation.evaluator]: Inference done 48/5000. Dataloading: 0.0011 s/iter. Inference: 9.0251 s/iter. Eval: 0.0003 s/iter. Total: 9.0268 s/iter. ETA=12:25:00
+[10/28 22:25:25 d2.evaluation.evaluator]: Inference done 49/5000. Dataloading: 0.0011 s/iter. Inference: 9.0405 s/iter. Eval: 0.0003 s/iter. Total: 9.0422 s/iter. ETA=12:26:07
+[10/28 22:25:34 d2.evaluation.evaluator]: Inference done 50/5000. Dataloading: 0.0011 s/iter. Inference: 9.0313 s/iter. Eval: 0.0003 s/iter. Total: 9.0330 s/iter. ETA=12:25:13
+[10/28 22:25:44 d2.evaluation.evaluator]: Inference done 51/5000. Dataloading: 0.0011 s/iter. Inference: 9.0462 s/iter. Eval: 0.0003 s/iter. Total: 9.0479 s/iter. ETA=12:26:17
+[10/28 22:25:54 d2.evaluation.evaluator]: Inference done 52/5000. Dataloading: 0.0011 s/iter. Inference: 9.0638 s/iter. Eval: 0.0003 s/iter. Total: 9.0654 s/iter. ETA=12:27:35
+[10/28 22:26:03 d2.evaluation.evaluator]: Inference done 53/5000. Dataloading: 0.0011 s/iter. Inference: 9.0776 s/iter. Eval: 0.0003 s/iter. Total: 9.0793 s/iter. ETA=12:28:35
+[10/28 22:26:13 d2.evaluation.evaluator]: Inference done 54/5000. Dataloading: 0.0011 s/iter. Inference: 9.0824 s/iter. Eval: 0.0003 s/iter. Total: 9.0841 s/iter. ETA=12:28:49
+[10/28 22:26:21 d2.evaluation.evaluator]: Inference done 55/5000. Dataloading: 0.0011 s/iter. Inference: 9.0758 s/iter. Eval: 0.0003 s/iter. Total: 9.0775 s/iter. ETA=12:28:08
+[10/28 22:26:32 d2.evaluation.evaluator]: Inference done 56/5000. Dataloading: 0.0011 s/iter. Inference: 9.0961 s/iter. Eval: 0.0003 s/iter. Total: 9.0978 s/iter. ETA=12:29:39
+[10/28 22:26:41 d2.evaluation.evaluator]: Inference done 57/5000. Dataloading: 0.0011 s/iter. Inference: 9.1069 s/iter. Eval: 0.0003 s/iter. Total: 9.1086 s/iter. ETA=12:30:23
+[10/28 22:26:49 d2.evaluation.evaluator]: Inference done 58/5000. Dataloading: 0.0011 s/iter. Inference: 9.0837 s/iter. Eval: 0.0003 s/iter. Total: 9.0854 s/iter. ETA=12:28:19
+[10/28 22:26:59 d2.evaluation.evaluator]: Inference done 59/5000. Dataloading: 0.0011 s/iter. Inference: 9.0980 s/iter. Eval: 0.0003 s/iter. Total: 9.0997 s/iter. ETA=12:29:21
+[10/28 22:27:09 d2.evaluation.evaluator]: Inference done 60/5000. Dataloading: 0.0011 s/iter. Inference: 9.1097 s/iter. Eval: 0.0003 s/iter. Total: 9.1114 s/iter. ETA=12:30:10
+[10/28 22:27:18 d2.evaluation.evaluator]: Inference done 61/5000. Dataloading: 0.0011 s/iter. Inference: 9.1195 s/iter. Eval: 0.0003 s/iter. Total: 9.1212 s/iter. ETA=12:30:49
+[10/28 22:27:28 d2.evaluation.evaluator]: Inference done 62/5000. Dataloading: 0.0011 s/iter. Inference: 9.1297 s/iter. Eval: 0.0003 s/iter. Total: 9.1314 s/iter. ETA=12:31:30
+[10/28 22:27:36 d2.evaluation.evaluator]: Inference done 63/5000. Dataloading: 0.0011 s/iter. Inference: 9.1137 s/iter. Eval: 0.0003 s/iter. Total: 9.1154 s/iter. ETA=12:30:02
+[10/28 22:27:46 d2.evaluation.evaluator]: Inference done 64/5000. Dataloading: 0.0011 s/iter. Inference: 9.1300 s/iter. Eval: 0.0003 s/iter. Total: 9.1317 s/iter. ETA=12:31:14
+[10/28 22:27:55 d2.evaluation.evaluator]: Inference done 65/5000. Dataloading: 0.0011 s/iter. Inference: 9.1218 s/iter. Eval: 0.0003 s/iter. Total: 9.1235 s/iter. ETA=12:30:24
+[10/28 22:28:05 d2.evaluation.evaluator]: Inference done 66/5000. Dataloading: 0.0011 s/iter. Inference: 9.1303 s/iter. Eval: 0.0003 s/iter. Total: 9.1320 s/iter. ETA=12:30:57
+[10/28 22:28:14 d2.evaluation.evaluator]: Inference done 67/5000. Dataloading: 0.0011 s/iter. Inference: 9.1391 s/iter. Eval: 0.0003 s/iter. Total: 9.1408 s/iter. ETA=12:31:31
+[10/28 22:28:23 d2.evaluation.evaluator]: Inference done 68/5000. Dataloading: 0.0011 s/iter. Inference: 9.1311 s/iter. Eval: 0.0003 s/iter. Total: 9.1328 s/iter. ETA=12:30:42
+[10/28 22:28:32 d2.evaluation.evaluator]: Inference done 69/5000. Dataloading: 0.0011 s/iter. Inference: 9.1229 s/iter. Eval: 0.0003 s/iter. Total: 9.1246 s/iter. ETA=12:29:53
+[10/28 22:28:40 d2.evaluation.evaluator]: Inference done 70/5000. Dataloading: 0.0011 s/iter. Inference: 9.1152 s/iter. Eval: 0.0003 s/iter. Total: 9.1169 s/iter. ETA=12:29:06
+[10/28 22:28:50 d2.evaluation.evaluator]: Inference done 71/5000. Dataloading: 0.0011 s/iter. Inference: 9.1238 s/iter. Eval: 0.0003 s/iter. Total: 9.1256 s/iter. ETA=12:29:39
+[10/28 22:28:58 d2.evaluation.evaluator]: Inference done 72/5000. Dataloading: 0.0011 s/iter. Inference: 9.1157 s/iter. Eval: 0.0003 s/iter. Total: 9.1174 s/iter. ETA=12:28:50
+[10/28 22:29:08 d2.evaluation.evaluator]: Inference done 73/5000. Dataloading: 0.0011 s/iter. Inference: 9.1295 s/iter. Eval: 0.0003 s/iter. Total: 9.1313 s/iter. ETA=12:29:49
+[10/28 22:29:18 d2.evaluation.evaluator]: Inference done 74/5000. Dataloading: 0.0011 s/iter. Inference: 9.1371 s/iter. Eval: 0.0003 s/iter. Total: 9.1388 s/iter. ETA=12:30:17
+[10/28 22:29:27 d2.evaluation.evaluator]: Inference done 75/5000. Dataloading: 0.0011 s/iter. Inference: 9.1303 s/iter. Eval: 0.0003 s/iter. Total: 9.1320 s/iter. ETA=12:29:35
+[10/28 22:29:35 d2.evaluation.evaluator]: Inference done 76/5000. Dataloading: 0.0011 s/iter. Inference: 9.1244 s/iter. Eval: 0.0003 s/iter. Total: 9.1261 s/iter. ETA=12:28:56
+[10/28 22:29:44 d2.evaluation.evaluator]: Inference done 77/5000. Dataloading: 0.0011 s/iter. Inference: 9.1171 s/iter. Eval: 0.0003 s/iter. Total: 9.1188 s/iter. ETA=12:28:11
+[10/28 22:29:54 d2.evaluation.evaluator]: Inference done 78/5000. Dataloading: 0.0011 s/iter. Inference: 9.1242 s/iter. Eval: 0.0003 s/iter. Total: 9.1259 s/iter. ETA=12:28:37
+[10/28 22:30:03 d2.evaluation.evaluator]: Inference done 79/5000. Dataloading: 0.0011 s/iter. Inference: 9.1308 s/iter. Eval: 0.0003 s/iter. Total: 9.1326 s/iter. ETA=12:29:01
+[10/28 22:30:13 d2.evaluation.evaluator]: Inference done 80/5000. Dataloading: 0.0011 s/iter. Inference: 9.1380 s/iter. Eval: 0.0003 s/iter. Total: 9.1397 s/iter. ETA=12:29:27
+[10/28 22:30:20 d2.evaluation.evaluator]: Inference done 81/5000. Dataloading: 0.0011 s/iter. Inference: 9.1053 s/iter. Eval: 0.0003 s/iter. Total: 9.1070 s/iter. ETA=12:26:37
+[10/28 22:30:29 d2.evaluation.evaluator]: Inference done 82/5000. Dataloading: 0.0011 s/iter. Inference: 9.1124 s/iter. Eval: 0.0003 s/iter. Total: 9.1142 s/iter. ETA=12:27:03
+[10/28 22:30:40 d2.evaluation.evaluator]: Inference done 83/5000. Dataloading: 0.0011 s/iter. Inference: 9.1268 s/iter. Eval: 0.0003 s/iter. Total: 9.1286 s/iter. ETA=12:28:05
+[10/28 22:30:48 d2.evaluation.evaluator]: Inference done 84/5000. Dataloading: 0.0011 s/iter. Inference: 9.1203 s/iter. Eval: 0.0003 s/iter. Total: 9.1221 s/iter. ETA=12:27:24
+[10/28 22:30:57 d2.evaluation.evaluator]: Inference done 85/5000. Dataloading: 0.0011 s/iter. Inference: 9.1187 s/iter. Eval: 0.0003 s/iter. Total: 9.1204 s/iter. ETA=12:27:06
+Traceback (most recent call last):
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/attack_detrex.py", line 317, in <module>
+    launch(
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detectron2/detectron2/engine/launch.py", line 84, in launch
+    main_func(*args)
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/attack_detrex.py", line 310, in main
+    print(do_test(cfg, model, eval_only=True, attack=attack, attack_mode=cfg.attack_mode))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/attack_detrex.py", line 163, in do_test
+    ret = inference_on_dataset(
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detectron2/detectron2/evaluation/evaluator.py", line 257, in inference_on_dataset
+    np.save(path, arr)
+  File "/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/numpy/lib/npyio.py", line 546, in save
+    format.write_array(fid, arr, allow_pickle=allow_pickle,
+  File "/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/numpy/lib/format.py", line 730, in write_array
+    array.tofile(fp)
+OSError: 1920000 requested and 0 written
+---------------------------------------
+Begin Slurm Epilog: Oct-28-2024 22:31:05
+Job ID:        893406
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      TOG_Plus_FocalNet
+Resources:     cpu=1,gres/gpu:a100=1,mem=128G,node=1
+Rsrc Used:     cput=00:13:17,vmem=0,walltime=00:13:17,mem=3379580K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-03-007-35-0
+---------------------------------------
