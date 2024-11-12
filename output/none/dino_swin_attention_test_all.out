@@ -1,0 +1,186 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-22-2024 18:30:28
+Job ID:    879989
+User ID:   zyahn3
+Account:   scs
+Job name:  TOG_Plus_Swin
+Partition: coc-gpu
+---------------------------------------
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:23: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:52: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+[10/22 18:30:37 detectron2]: Rank of current process: 0. World size: 1
+[10/22 18:30:39 detectron2]: Environment info:
+-------------------------------  ----------------------------------------------------------------------------------------
+sys.platform                     linux
+Python                           3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:12:24) [GCC 11.2.0]
+numpy                            1.26.4
+detectron2                       0.6 @/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detectron2/detectron2
+Compiler                         GCC 12.3
+CUDA compiler                    not available
+DETECTRON2_ENV_MODULE            <not set>
+PyTorch                          2.4.1 @/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch
+PyTorch debug build              False
+torch._C._GLIBCXX_USE_CXX11_ABI  False
+GPU available                    Yes
+GPU 0                            NVIDIA A100 80GB PCIe (arch=8.0)
+Driver version                   555.42.02
+CUDA_HOME                        /usr/local/cuda
+Pillow                           10.4.0
+torchvision                      0.19.1 @/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torchvision
+torchvision arch flags           5.0, 6.0, 7.0, 7.5, 8.0, 8.6, 9.0
+fvcore                           0.1.5.post20221221
+iopath                           0.1.9
+cv2                              4.10.0
+-------------------------------  ----------------------------------------------------------------------------------------
+PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.4.2 (Git Hash 1137e04ec0b5251ca2b4400a4fd3c667ce843d67)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 12.4
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 90.1
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.4, CUDNN_VERSION=9.1.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.4.1, USE_CUDA=ON, USE_CUDNN=ON, USE_CUSPARSELT=1, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+[10/22 18:30:39 detectron2]: Command line arguments: Namespace(config_file='detrex/projects/dino/configs/dino-swin/dino_swin_large_384_4scale_36ep.py', resume=False, eval_only=True, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:53103', opts=['train.init_checkpoint=model_files/dino_swin_large_384_4scale_36ep.pth', 'attack=attention', 'attack_mode=untargeted', 'sample=0.005'])
+[10/22 18:30:39 detectron2]: Contents of args.config_file=detrex/projects/dino/configs/dino-swin/dino_swin_large_384_4scale_36ep.py:
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15mdetrex[39m[38;5;15m.[39m[38;5;15mconfig[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mget_config[39m
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15m.[39m[38;5;15mmodels[39m[38;5;15m.[39m[38;5;15mdino_swin_large_384[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mmodel[39m
+
+[38;5;245m# get default config[39m
+[38;5;15mdataloader[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/data/coco_detr.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mdataloader[39m
+[38;5;15moptimizer[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/optim.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mAdamW[39m
+[38;5;15mlr_multiplier[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/coco_schedule.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mlr_multiplier_36ep[39m
+[38;5;15mtrain[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/train.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mtrain[39m
+
+[38;5;245m# modify training config[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15minit_checkpoint[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186m/path/to/swin_large_patch4_window12_384_22kto1k.pth[39m[38;5;186m"[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15moutput_dir[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186m./output/dino_swin_large_384_4scale_36ep[39m[38;5;186m"[39m
+
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mmax_iter[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m270000[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15meval_period[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m5000[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mlog_period[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m20[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mcheckpointer[39m[38;5;204m.[39m[38;5;15mperiod[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m5000[39m
+
+[38;5;245m# gradient clipping for training[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15menabled[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mTrue[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mmax_norm[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m0.1[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mnorm_type[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m2[39m
+
+[38;5;245m# set training devices[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mdevice[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mcuda[39m[38;5;186m"[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mdevice[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mdevice[39m
+
+[38;5;245m# modify optimizer config[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mlr[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1e-4[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mbetas[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15m([39m[38;5;141m0.9[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m0.999[39m[38;5;15m)[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mweight_decay[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1e-4[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mlr_factor_func[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mlambda[39m[38;5;15m [39m[38;5;15mmodule_name[39m[38;5;15m:[39m[38;5;15m [39m[38;5;141m0.1[39m[38;5;15m [39m[38;5;81mif[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mbackbone[39m[38;5;186m"[39m[38;5;15m [39m[38;5;204min[39m[38;5;15m [39m[38;5;15mmodule_name[39m[38;5;15m [39m[38;5;81melse[39m[38;5;15m [39m[38;5;141m1[39m
+
+[38;5;245m# modify dataloader config[39m
+[38;5;15mdataloader[39m[38;5;204m.[39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mnum_workers[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m16[39m
+
+[38;5;245m# please notice that this is total batch size.[39m
+[38;5;245m# surpose you're using 4 gpus for training and the batch size for[39m
+[38;5;245m# each gpu is 16/4 = 4[39m
+[38;5;15mdataloader[39m[38;5;204m.[39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mtotal_batch_size[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m16[39m
+
+WARNING [10/22 18:30:39 d2.config.lazy]: The config contains objects that cannot serialize to a valid yaml. ./output/dino_swin_large_384_4scale_36ep/config.yaml is human-readable but cannot be loaded.
+WARNING [10/22 18:30:39 d2.config.lazy]: Config is saved using cloudpickle at ./output/dino_swin_large_384_4scale_36ep/config.yaml.pkl.
+[10/22 18:30:39 detectron2]: Full config saved to ./output/dino_swin_large_384_4scale_36ep/config.yaml
+[10/22 18:30:39 d2.utils.env]: Using a generated random seed 40110439
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1724789220573/work/aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+[10/22 18:30:42 d2.checkpoint.detection_checkpoint]: [DetectionCheckpointer] Loading from model_files/dino_swin_large_384_4scale_36ep.pth ...
+[10/22 18:30:42 fvcore.common.checkpoint]: [Checkpointer] Loading from model_files/dino_swin_large_384_4scale_36ep.pth ...
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/fvcore/common/checkpoint.py:252: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(f, map_location=torch.device("cpu"))
+[10/22 18:30:44 detectron2]: Run evaluation under eval-only mode
+[10/22 18:30:44 detectron2]: Run evaluation without EMA.
+[10/22 18:30:44 d2.data.datasets.coco]: Loaded 5000 images in COCO format from datasets/coco/annotations/instances_val2017.json
+[10/22 18:30:45 d2.data.build]: Distribution of instances among all 80 categories:
+|   category    | #instances   |   category   | #instances   |   category    | #instances   |
+|:-------------:|:-------------|:------------:|:-------------|:-------------:|:-------------|
+|    person     | 10777        |   bicycle    | 314          |      car      | 1918         |
+|  motorcycle   | 367          |   airplane   | 143          |      bus      | 283          |
+|     train     | 190          |    truck     | 414          |     boat      | 424          |
+| traffic light | 634          | fire hydrant | 101          |   stop sign   | 75           |
+| parking meter | 60           |    bench     | 411          |     bird      | 427          |
+|      cat      | 202          |     dog      | 218          |     horse     | 272          |
+|     sheep     | 354          |     cow      | 372          |   elephant    | 252          |
+|     bear      | 71           |    zebra     | 266          |    giraffe    | 232          |
+|   backpack    | 371          |   umbrella   | 407          |    handbag    | 540          |
+|      tie      | 252          |   suitcase   | 299          |    frisbee    | 115          |
+|     skis      | 241          |  snowboard   | 69           |  sports ball  | 260          |
+|     kite      | 327          | baseball bat | 145          | baseball gl.. | 148          |
+|  skateboard   | 179          |  surfboard   | 267          | tennis racket | 225          |
+|    bottle     | 1013         |  wine glass  | 341          |      cup      | 895          |
+|     fork      | 215          |    knife     | 325          |     spoon     | 253          |
+|     bowl      | 623          |    banana    | 370          |     apple     | 236          |
+|   sandwich    | 177          |    orange    | 285          |   broccoli    | 312          |
+|    carrot     | 365          |   hot dog    | 125          |     pizza     | 284          |
+|     donut     | 328          |     cake     | 310          |     chair     | 1771         |
+|     couch     | 261          | potted plant | 342          |      bed      | 163          |
+| dining table  | 695          |    toilet    | 179          |      tv       | 288          |
+|    laptop     | 231          |    mouse     | 106          |    remote     | 283          |
+|   keyboard    | 153          |  cell phone  | 262          |   microwave   | 55           |
+|     oven      | 143          |   toaster    | 9            |     sink      | 225          |
+| refrigerator  | 126          |     book     | 1129         |     clock     | 267          |
+|     vase      | 274          |   scissors   | 36           |  teddy bear   | 190          |
+|  hair drier   | 11           |  toothbrush  | 57           |               |              |
+|     total     | 36335        |              |              |               |              |
+[10/22 18:30:45 d2.data.common]: Serializing the dataset using: <class 'detectron2.data.common._TorchSerializedList'>
+[10/22 18:30:45 d2.data.common]: Serializing 5000 elements to byte tensors and concatenating them all ...
+[10/22 18:30:45 d2.data.common]: Serialized dataset takes 19.10 MiB
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 1, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+[10/22 18:30:45 d2.evaluation.evaluator]: Start inference on 5000 batches
+Doing attack: <function tog_attention at 0x1554a02dc400>
+Traceback (most recent call last):
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/attack_detrex.py", line 317, in <module>
+    launch(
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detectron2/detectron2/engine/launch.py", line 84, in launch
+    main_func(*args)
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/attack_detrex.py", line 310, in main
+    print(do_test(cfg, model, eval_only=True, attack=attack, attack_mode=cfg.attack_mode))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/attack_detrex.py", line 163, in do_test
+    ret = inference_on_dataset(
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detectron2/detectron2/evaluation/evaluator.py", line 224, in inference_on_dataset
+    output_image = attack(model, x_query = inputs[0]["image"], mode=attack_mode, meta=inputs[0])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/tog/attacks.py", line 23, in tog_attention
+    detections_query = victim.detect(x_query, meta=meta)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/detrex/projects/dino/modeling/dino.py", line 325, in detect
+    return self.forward(formatted_inputs, give_logits)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/detrex/projects/dino/modeling/dino.py", line 182, in forward
+    images, img_size = self.preprocess_image(batched_inputs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/storage/ice1/5/9/zyahn3/TOG_plus/detrex/projects/dino/modeling/dino.py", line 633, in preprocess_image
+    self.backbone.size_divisibility,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1729, in __getattr__
+    raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
+AttributeError: 'SwinTransformer' object has no attribute 'size_divisibility'. Did you mean: '_size_devisibility'?
+---------------------------------------
+Begin Slurm Epilog: Oct-22-2024 18:30:49
+Job ID:        879989
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      TOG_Plus_Swin
+Resources:     cpu=1,gres/gpu:a100=1,mem=128G,node=1
+Rsrc Used:     cput=00:00:21,vmem=0,walltime=00:00:21,mem=857932K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-01-005-13-0
+---------------------------------------

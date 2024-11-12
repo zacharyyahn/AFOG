@@ -70,6 +70,7 @@ class COCOVisualizer():
         ax = plt.gca()
         img = renorm(img).permute(1, 2, 0)
         ax.imshow(img)
+        ax.set_axis_off()
         
         self.addtgt(tgt)
         if show_in_console:
@@ -123,7 +124,7 @@ class COCOVisualizer():
                 _string = str(bl)
                 bbox_x, bbox_y, bbox_w, bbox_h = boxes[idx]
                 # ax.text(bbox_x, bbox_y, _string, color='black', bbox={'facecolor': 'yellow', 'alpha': 1.0, 'pad': 1})
-                ax.text(bbox_x, bbox_y, _string, color='black', bbox={'facecolor': color[idx], 'alpha': 0.6, 'pad': 1})
+                ax.text(bbox_x, bbox_y, _string, fontsize=16, color='black', bbox={'facecolor': color[idx], 'alpha': 0.6, 'pad': 1})
 
         if 'caption' in tgt:
             ax.set_title(tgt['caption'], wrap=True)

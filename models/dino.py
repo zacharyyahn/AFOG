@@ -465,7 +465,7 @@ class DINO(nn.Module):
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
         #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
-        unt_loss = -(loss_ce + loss_bbox) + int(norm) * loss_norm
+        unt_loss = -(loss_ce + loss_bbox/(0.01 + loss_bbox/(0.01 + loss_ce))) + int(norm) * loss_norm
         #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)
@@ -501,7 +501,7 @@ class DINO(nn.Module):
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
         #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
-        unt_loss = (loss_ce + loss_bbox) + int(norm) * loss_norm
+        unt_loss = (loss_ce + loss_bbox / (0.01 + loss_bbox / (0.01 + loss_ce))) + int(norm) * loss_norm
         #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)
@@ -536,7 +536,7 @@ class DINO(nn.Module):
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
         #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
-        unt_loss = (loss_ce + loss_bbox) + int(norm) * loss_norm
+        unt_loss = (loss_ce + loss_bbox/(0.01 + loss_bbox / (0.01 + loss_ce))) + int(norm) * loss_norm
         #print("Attention loss:", unt_loss)
         #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)

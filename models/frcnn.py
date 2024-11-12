@@ -276,7 +276,7 @@ class FRCNN(nn.Module):
         detections_query = np.concatenate([_labels, _scores, _logits, _bboxes], axis=-1)
         return detections_query
 
-    def compute_object_attention_gradient(self, x, x_orig, detections):
+    def compute_object_attention_gradient(self, x, x_orig, detections, norm=False):
         x_local = x.copy() * 255
 
         x_tensor = t.from_numpy(preprocess(x_local[0].transpose((2, 0, 1))))[None].cuda().float()
@@ -310,7 +310,7 @@ class FRCNN(nn.Module):
             losses.object_fabrication_loss.backward()
         return x_tensor.grad.data.cpu().numpy().transpose((0, 2, 3, 1))
     
-    def compute_object_untargeted_gradient(self, x, detections):
+    def compute_object_untargeted_gradient(self, x, detections, norm=False):
         x_local = x.copy() * 255
 
         x_tensor = t.from_numpy(preprocess(x_local[0].transpose((2, 0, 1))))[None].cuda().float()
@@ -356,7 +356,7 @@ class FRCNN(nn.Module):
             losses.object_fabrication_loss.backward()
         return x_tensor.grad.data.cpu().numpy().transpose((0, 2, 3, 1))
 
-    def compute_object_vanishing_gradient(self, x, detections=None):
+    def compute_object_vanishing_gradient(self, x, detections=None, norm=False):
         x_local = x.copy() * 255
 
         x_tensor = t.from_numpy(preprocess(x_local[0].transpose((2, 0, 1))))[None].cuda().float()
@@ -373,7 +373,7 @@ class FRCNN(nn.Module):
 
         return x_tensor.grad.data.cpu().numpy().transpose((0, 2, 3, 1))
 
-    def compute_object_fabrication_gradient(self, x, detections=None):
+    def compute_object_fabrication_gradient(self, x, detections=None, norm=False):
         x_local = x.copy() * 255
 
         x_tensor = t.from_numpy(preprocess(x_local[0].transpose((2, 0, 1))))[None].cuda().float()

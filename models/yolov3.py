@@ -154,7 +154,7 @@ class YOLOv3(object):
             loss += xy_loss + wh_loss + confidence_loss + class_loss
         return -loss
 
-    def compute_object_untargeted_gradient(self, x, detections):
+    def compute_object_untargeted_gradient(self, x, detections, norm=False):
         detections_ = np.asarray([detections[:, [-4, -3, -2, -1, 0]] if len(detections) > 0 else detections])
         encoded_labels = preprocess_true_boxes(detections_, input_shape=self.model_img_size,
                                                anchors=self.anchors, num_classes=self.num_classes)
@@ -175,7 +175,7 @@ class YOLOv3(object):
             confidence_loss += K.sum(K.binary_crossentropy(object_mask, raw_pred[..., 4:5], from_logits=True))
         return confidence_loss
 
-    def compute_object_vanishing_gradient(self, x, detections=None):
+    def compute_object_vanishing_gradient(self, x, detections=None, norm=False):
         detections_ = np.asarray([])
         encoded_labels = preprocess_true_boxes(detections_, input_shape=self.model_img_size,
                                                anchors=self.anchors, num_classes=self.num_classes)
@@ -184,7 +184,7 @@ class YOLOv3(object):
                                                                               self.encoded_labels[2]: encoded_labels[2],
                                                                               self.model.input: x})
 
-    def compute_object_vanishing_gradient_and_loss(self, x, detections=None):
+    def compute_object_vanishing_gradient_and_loss(self, x, detections=None, norm=False):
         detections_ = np.asarray([])
         encoded_labels = preprocess_true_boxes(detections_, input_shape=self.model_img_size,
                                                anchors=self.anchors, num_classes=self.num_classes)
@@ -197,7 +197,7 @@ class YOLOv3(object):
     def build_object_fabrication_loss(self):
         return self.build_object_vanishing_loss()
 
-    def compute_object_fabrication_gradient(self, x, detections=None):
+    def compute_object_fabrication_gradient(self, x, detections=None, norm=False):
         detections_ = np.asarray([])
         encoded_labels = preprocess_true_boxes(detections_, input_shape=self.model_img_size,
                                                anchors=self.anchors, num_classes=self.num_classes)

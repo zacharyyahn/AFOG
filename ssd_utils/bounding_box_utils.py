@@ -57,7 +57,7 @@ def convert_coordinates(tensor, start_index, conversion, border_pixels='half'):
         d = -1
 
     ind = start_index
-    tensor1 = np.copy(tensor).astype(np.float32)
+    tensor1 = np.copy(tensor).astype(np.float)
     if conversion == 'minmax2centroids':
         tensor1[..., ind] = (tensor[..., ind] + tensor[..., ind+1]) / 2.0 # Set cx
         tensor1[..., ind+1] = (tensor[..., ind+2] + tensor[..., ind+3]) / 2.0 # Set cy
@@ -98,7 +98,7 @@ def convert_coordinates2(tensor, start_index, conversion):
     For details please refer to the documentation of `convert_coordinates()`.
     '''
     ind = start_index
-    tensor1 = np.copy(tensor).astype(np.float32)
+    tensor1 = np.copy(tensor).astype(np.float)
     if conversion == 'minmax2centroids':
         M = np.array([[0.5, 0. , -1.,  0.],
                       [0.5, 0. ,  1.,  0.],

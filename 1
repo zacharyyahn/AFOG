@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH -JAFOG_InternImage
+#SBATCH -N1 --gres=gpu:A100:1 --ntasks-per-node=1 --mem-per-gpu=128G
+#SBATCH -t16:00:00
+#SBATCH -ooutput/none/internimage_afog_write_all.out
+
+module load anaconda3
+conda init
+conda deactivate
+conda activate AFOG
+
+#export DETECTRON2_DATASETS=/home/hice1/zyahn3/scratch/TOG_plus/datasets/mini_coco/
+
+ATTACK="afog"
+MODE="baseline"
+CONFIG="detrex/projects/dino/configs/dino-internimage/dino_internimage_large_4scale_12ep.py"
+CHECKPOINT="model_files/internimage.pth"
+SAMPLE=1.0
+SAVE_ATTACK=1.0
+SAVE_DIR="datasets/blackbox/internimage/"
+LOAD_ATTACK=0.0
+LOAD_DIR="datasets/blackbox/focalnet_vanishing/"
+
+python attack_detrex.py --config-file $CONFIG --eval-only  train.init_checkpoint=$CHECKPOINT attack=$ATTACK attack_mode=$MODE sample=$SAMPLE save_attack=$SAVE_ATTACK save_dir=$SAVE_DIR load_attack=$LOAD_ATTACK load_dir=$LOAD_DIR
+

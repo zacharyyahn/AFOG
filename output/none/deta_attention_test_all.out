@@ -1,0 +1,231 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-23-2024 14:15:03
+Job ID:    881478
+User ID:   zyahn3
+Account:   scs
+Job name:  TOG_Plus_DETA
+Partition: coc-gpu
+---------------------------------------
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:23: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:52: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+[10/23 14:15:11 detectron2]: Rank of current process: 0. World size: 1
+[10/23 14:15:12 detectron2]: Environment info:
+-------------------------------  ----------------------------------------------------------------------------------------
+sys.platform                     linux
+Python                           3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:12:24) [GCC 11.2.0]
+numpy                            1.26.4
+detectron2                       0.6 @/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detectron2/detectron2
+Compiler                         GCC 12.3
+CUDA compiler                    not available
+DETECTRON2_ENV_MODULE            <not set>
+PyTorch                          2.4.1 @/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch
+PyTorch debug build              False
+torch._C._GLIBCXX_USE_CXX11_ABI  False
+GPU available                    Yes
+GPU 0                            NVIDIA A100 80GB PCIe (arch=8.0)
+Driver version                   555.42.02
+CUDA_HOME                        /usr/local/cuda
+Pillow                           10.4.0
+torchvision                      0.19.1 @/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torchvision
+torchvision arch flags           5.0, 6.0, 7.0, 7.5, 8.0, 8.6, 9.0
+fvcore                           0.1.5.post20221221
+iopath                           0.1.9
+cv2                              4.10.0
+-------------------------------  ----------------------------------------------------------------------------------------
+PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.4.2 (Git Hash 1137e04ec0b5251ca2b4400a4fd3c667ce843d67)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 12.4
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 90.1
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.4, CUDNN_VERSION=9.1.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.4.1, USE_CUDA=ON, USE_CUDNN=ON, USE_CUSPARSELT=1, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+[10/23 14:15:12 detectron2]: Command line arguments: Namespace(config_file='detrex/projects/deta/configs/deta_swin_large_finetune_24ep.py', resume=False, eval_only=True, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:53103', opts=['train.init_checkpoint=model_files/deta.pth', 'attack=attention', 'attack_mode=untargeted', 'sample=0.005'])
+[10/23 14:15:12 detectron2]: Contents of args.config_file=detrex/projects/deta/configs/deta_swin_large_finetune_24ep.py:
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15mdetrex[39m[38;5;15m.[39m[38;5;15mconfig[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mget_config[39m
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15mdeta_r50_5scale_12ep[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15m([39m
+[38;5;15m    [39m[38;5;15mtrain[39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;15moptimizer[39m[38;5;15m,[39m
+[38;5;15m)[39m
+
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15mmodels[39m[38;5;15m.[39m[38;5;15mdeta_swin[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mmodel[39m
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15mdata[39m[38;5;15m.[39m[38;5;15mcoco_detr_larger[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mdataloader[39m
+
+[38;5;245m# 24ep for finetuning[39m
+[38;5;15mlr_multiplier[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/coco_schedule.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mlr_multiplier_24ep[39m
+
+[38;5;245m# modify learning rate[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mlr[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m5e-5[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mlr_factor_func[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mlambda[39m[38;5;15m [39m[38;5;15mmodule_name[39m[38;5;15m:[39m[38;5;15m [39m[38;5;141m0.1[39m[38;5;15m [39m[38;5;81mif[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mbackbone[39m[38;5;186m"[39m[38;5;15m [39m[38;5;204min[39m[38;5;15m [39m[38;5;15mmodule_name[39m[38;5;15m [39m[38;5;81melse[39m[38;5;15m [39m[38;5;141m1[39m
+
+[38;5;15mattack[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15mattack_mode[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15msample[39m[38;5;204m=[39m[38;5;141m1.0[39m
+
+WARNING [10/23 14:15:12 d2.config.lazy]: The config contains objects that cannot serialize to a valid yaml. ./output/deta_r50_5scale_12ep/config.yaml is human-readable but cannot be loaded.
+WARNING [10/23 14:15:12 d2.config.lazy]: Config is saved using cloudpickle at ./output/deta_r50_5scale_12ep/config.yaml.pkl.
+[10/23 14:15:12 detectron2]: Full config saved to ./output/deta_r50_5scale_12ep/config.yaml
+[10/23 14:15:12 d2.utils.env]: Using a generated random seed 13852993
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1724789220573/work/aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+[10/23 14:15:15 d2.checkpoint.detection_checkpoint]: [DetectionCheckpointer] Loading from model_files/deta.pth ...
+[10/23 14:15:15 fvcore.common.checkpoint]: [Checkpointer] Loading from model_files/deta.pth ...
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/fvcore/common/checkpoint.py:252: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(f, map_location=torch.device("cpu"))
+[10/23 14:15:19 detectron2]: Run evaluation under eval-only mode
+[10/23 14:15:19 detectron2]: Run evaluation without EMA.
+[10/23 14:15:20 d2.data.datasets.coco]: Loaded 5000 images in COCO format from datasets/coco/annotations/instances_val2017.json
+[10/23 14:15:20 d2.data.build]: Distribution of instances among all 80 categories:
+|   category    | #instances   |   category   | #instances   |   category    | #instances   |
+|:-------------:|:-------------|:------------:|:-------------|:-------------:|:-------------|
+|    person     | 10777        |   bicycle    | 314          |      car      | 1918         |
+|  motorcycle   | 367          |   airplane   | 143          |      bus      | 283          |
+|     train     | 190          |    truck     | 414          |     boat      | 424          |
+| traffic light | 634          | fire hydrant | 101          |   stop sign   | 75           |
+| parking meter | 60           |    bench     | 411          |     bird      | 427          |
+|      cat      | 202          |     dog      | 218          |     horse     | 272          |
+|     sheep     | 354          |     cow      | 372          |   elephant    | 252          |
+|     bear      | 71           |    zebra     | 266          |    giraffe    | 232          |
+|   backpack    | 371          |   umbrella   | 407          |    handbag    | 540          |
+|      tie      | 252          |   suitcase   | 299          |    frisbee    | 115          |
+|     skis      | 241          |  snowboard   | 69           |  sports ball  | 260          |
+|     kite      | 327          | baseball bat | 145          | baseball gl.. | 148          |
+|  skateboard   | 179          |  surfboard   | 267          | tennis racket | 225          |
+|    bottle     | 1013         |  wine glass  | 341          |      cup      | 895          |
+|     fork      | 215          |    knife     | 325          |     spoon     | 253          |
+|     bowl      | 623          |    banana    | 370          |     apple     | 236          |
+|   sandwich    | 177          |    orange    | 285          |   broccoli    | 312          |
+|    carrot     | 365          |   hot dog    | 125          |     pizza     | 284          |
+|     donut     | 328          |     cake     | 310          |     chair     | 1771         |
+|     couch     | 261          | potted plant | 342          |      bed      | 163          |
+| dining table  | 695          |    toilet    | 179          |      tv       | 288          |
+|    laptop     | 231          |    mouse     | 106          |    remote     | 283          |
+|   keyboard    | 153          |  cell phone  | 262          |   microwave   | 55           |
+|     oven      | 143          |   toaster    | 9            |     sink      | 225          |
+| refrigerator  | 126          |     book     | 1129         |     clock     | 267          |
+|     vase      | 274          |   scissors   | 36           |  teddy bear   | 190          |
+|  hair drier   | 11           |  toothbrush  | 57           |               |              |
+|     total     | 36335        |              |              |               |              |
+[10/23 14:15:20 d2.data.common]: Serializing the dataset using: <class 'detectron2.data.common._TorchSerializedList'>
+[10/23 14:15:20 d2.data.common]: Serializing 5000 elements to byte tensors and concatenating them all ...
+[10/23 14:15:20 d2.data.common]: Serialized dataset takes 19.10 MiB
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 1, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+[10/23 14:15:21 d2.evaluation.evaluator]: Start inference on 5000 batches
+Doing attack: <function tog_attention at 0x1554a02dc540>
+[10/23 14:15:41 d2.evaluation.evaluator]: Inference done 118/5000. Dataloading: 0.0488 s/iter. Inference: 0.1338 s/iter. Eval: 0.0000 s/iter. Total: 0.1826 s/iter. ETA=0:14:51
+[10/23 14:15:57 d2.evaluation.evaluator]: Inference done 213/5000. Dataloading: 0.0407 s/iter. Inference: 0.1355 s/iter. Eval: 0.0000 s/iter. Total: 0.1762 s/iter. ETA=0:14:03
+[10/23 14:16:11 d2.evaluation.evaluator]: Inference done 269/5000. Dataloading: 0.0383 s/iter. Inference: 0.1514 s/iter. Eval: 0.0000 s/iter. Total: 0.1898 s/iter. ETA=0:14:57
+[10/23 14:16:48 d2.evaluation.evaluator]: Inference done 993/5000. Dataloading: 0.0345 s/iter. Inference: 0.0537 s/iter. Eval: 0.0000 s/iter. Total: 0.0882 s/iter. ETA=0:05:53
+[10/23 14:17:07 d2.evaluation.evaluator]: Inference done 1194/5000. Dataloading: 0.0342 s/iter. Inference: 0.0556 s/iter. Eval: 0.0000 s/iter. Total: 0.0898 s/iter. ETA=0:05:41
+[10/23 14:17:22 d2.evaluation.evaluator]: Inference done 1287/5000. Dataloading: 0.0341 s/iter. Inference: 0.0608 s/iter. Eval: 0.0000 s/iter. Total: 0.0949 s/iter. ETA=0:05:52
+[10/23 14:17:37 d2.evaluation.evaluator]: Inference done 1375/5000. Dataloading: 0.0339 s/iter. Inference: 0.0655 s/iter. Eval: 0.0000 s/iter. Total: 0.0994 s/iter. ETA=0:06:00
+[10/23 14:17:50 d2.evaluation.evaluator]: Inference done 1377/5000. Dataloading: 0.0338 s/iter. Inference: 0.0750 s/iter. Eval: 0.0000 s/iter. Total: 0.1088 s/iter. ETA=0:06:34
+[10/23 14:18:04 d2.evaluation.evaluator]: Inference done 1441/5000. Dataloading: 0.0336 s/iter. Inference: 0.0799 s/iter. Eval: 0.0000 s/iter. Total: 0.1136 s/iter. ETA=0:06:44
+[10/23 14:18:21 d2.evaluation.evaluator]: Inference done 1618/5000. Dataloading: 0.0335 s/iter. Inference: 0.0786 s/iter. Eval: 0.0000 s/iter. Total: 0.1121 s/iter. ETA=0:06:18
+[10/23 14:18:37 d2.evaluation.evaluator]: Inference done 1696/5000. Dataloading: 0.0334 s/iter. Inference: 0.0828 s/iter. Eval: 0.0000 s/iter. Total: 0.1162 s/iter. ETA=0:06:23
+[10/23 14:19:05 d2.evaluation.evaluator]: Inference done 2186/5000. Dataloading: 0.0333 s/iter. Inference: 0.0698 s/iter. Eval: 0.0000 s/iter. Total: 0.1031 s/iter. ETA=0:04:50
+[10/23 14:19:21 d2.evaluation.evaluator]: Inference done 2278/5000. Dataloading: 0.0332 s/iter. Inference: 0.0728 s/iter. Eval: 0.0000 s/iter. Total: 0.1060 s/iter. ETA=0:04:48
+[10/23 14:19:37 d2.evaluation.evaluator]: Inference done 2449/5000. Dataloading: 0.0332 s/iter. Inference: 0.0717 s/iter. Eval: 0.0000 s/iter. Total: 0.1049 s/iter. ETA=0:04:27
+[10/23 14:19:51 d2.evaluation.evaluator]: Inference done 2481/5000. Dataloading: 0.0331 s/iter. Inference: 0.0761 s/iter. Eval: 0.0000 s/iter. Total: 0.1091 s/iter. ETA=0:04:34
+[10/23 14:20:06 d2.evaluation.evaluator]: Inference done 2553/5000. Dataloading: 0.0330 s/iter. Inference: 0.0791 s/iter. Eval: 0.0000 s/iter. Total: 0.1121 s/iter. ETA=0:04:34
+[10/23 14:20:24 d2.evaluation.evaluator]: Inference done 2728/5000. Dataloading: 0.0330 s/iter. Inference: 0.0783 s/iter. Eval: 0.0000 s/iter. Total: 0.1113 s/iter. ETA=0:04:12
+[10/23 14:20:39 d2.evaluation.evaluator]: Inference done 2787/5000. Dataloading: 0.0329 s/iter. Inference: 0.0814 s/iter. Eval: 0.0000 s/iter. Total: 0.1143 s/iter. ETA=0:04:13
+[10/23 14:20:53 d2.evaluation.evaluator]: Inference done 2822/5000. Dataloading: 0.0328 s/iter. Inference: 0.0852 s/iter. Eval: 0.0000 s/iter. Total: 0.1180 s/iter. ETA=0:04:17
+[10/23 14:21:15 d2.evaluation.evaluator]: Inference done 3132/5000. Dataloading: 0.0329 s/iter. Inference: 0.0805 s/iter. Eval: 0.0000 s/iter. Total: 0.1134 s/iter. ETA=0:03:31
+[10/23 14:21:36 d2.evaluation.evaluator]: Inference done 3475/5000. Dataloading: 0.0329 s/iter. Inference: 0.0752 s/iter. Eval: 0.0000 s/iter. Total: 0.1082 s/iter. ETA=0:02:44
+[10/23 14:22:24 d2.evaluation.evaluator]: Inference done 4594/5000. Dataloading: 0.0331 s/iter. Inference: 0.0592 s/iter. Eval: 0.0000 s/iter. Total: 0.0923 s/iter. ETA=0:00:37
+[10/23 14:22:41 d2.evaluation.evaluator]: Inference done 4735/5000. Dataloading: 0.0331 s/iter. Inference: 0.0599 s/iter. Eval: 0.0000 s/iter. Total: 0.0930 s/iter. ETA=0:00:24
+[10/23 14:22:58 d2.evaluation.evaluator]: Inference done 4861/5000. Dataloading: 0.0331 s/iter. Inference: 0.0611 s/iter. Eval: 0.0000 s/iter. Total: 0.0941 s/iter. ETA=0:00:13
+[10/23 14:23:02 d2.evaluation.evaluator]: Total inference time: 0:07:41.604845 (0.092413 s / iter per device, on 1 devices)
+[10/23 14:23:02 d2.evaluation.evaluator]: Total inference pure compute time: 0:04:56 (0.059359 s / iter per device, on 1 devices)
+[10/23 14:23:02 d2.evaluation.coco_evaluation]: Preparing results for COCO format ...
+[10/23 14:23:02 d2.evaluation.coco_evaluation]: Evaluating predictions with unofficial COCO API...
+Loading and preparing results...
+DONE (t=0.00s)
+creating index...
+index created!
+[10/23 14:23:02 d2.evaluation.fast_eval_api]: Evaluate annotation type *bbox*
+[10/23 14:23:06 d2.evaluation.fast_eval_api]: COCOeval_opt.evaluate() finished in 3.98 seconds.
+[10/23 14:23:06 d2.evaluation.fast_eval_api]: Accumulating evaluation results...
+[10/23 14:23:07 d2.evaluation.fast_eval_api]: COCOeval_opt.accumulate() finished in 0.29 seconds.
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.004
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.005
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.004
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.003
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.004
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.002
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.001
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.002
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.002
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.002
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.004
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.002
+[10/23 14:23:07 d2.evaluation.coco_evaluation]: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 0.350 | 0.483  | 0.350  | 0.257 | 0.409 | 0.193 |
+[10/23 14:23:07 d2.evaluation.coco_evaluation]: Per-category bbox AP: 
+| category      | AP    | category     | AP    | category       | AP    |
+|:--------------|:------|:-------------|:------|:---------------|:------|
+| person        | 0.990 | bicycle      | 0.000 | car            | 0.649 |
+| motorcycle    | 0.950 | airplane     | 0.000 | bus            | 0.363 |
+| train         | 0.891 | truck        | 0.000 | boat           | 0.000 |
+| traffic light | 0.792 | fire hydrant | 0.000 | stop sign      | 0.000 |
+| parking meter | 0.000 | bench        | 0.891 | bird           | 0.000 |
+| cat           | 0.000 | dog          | 0.891 | horse          | 0.000 |
+| sheep         | 0.792 | cow          | 0.000 | elephant       | 0.000 |
+| bear          | 0.000 | zebra        | 0.000 | giraffe        | 0.000 |
+| backpack      | 0.099 | umbrella     | 0.000 | handbag        | 0.096 |
+| tie           | 0.990 | suitcase     | 0.083 | frisbee        | 0.000 |
+| skis          | 0.297 | snowboard    | 0.000 | sports ball    | 0.990 |
+| kite          | 1.386 | baseball bat | 0.050 | baseball glove | 0.297 |
+| skateboard    | 0.693 | surfboard    | 0.000 | tennis racket  | 0.000 |
+| bottle        | 0.891 | wine glass   | 1.518 | cup            | 0.002 |
+| fork          | 0.891 | knife        | 0.891 | spoon          | 0.495 |
+| bowl          | 0.792 | banana       | 0.000 | apple          | 0.892 |
+| sandwich      | 0.000 | orange       | 0.903 | broccoli       | 0.000 |
+| carrot        | 0.433 | hot dog      | 0.000 | pizza          | 0.891 |
+| donut         | 0.000 | cake         | 0.000 | chair          | 0.000 |
+| couch         | 0.990 | potted plant | 0.693 | bed            | 0.000 |
+| dining table  | 0.021 | toilet       | 0.000 | tv             | 0.000 |
+| laptop        | 0.990 | mouse        | 0.000 | remote         | 0.891 |
+| keyboard      | 0.000 | cell phone   | 0.264 | microwave      | 0.000 |
+| oven          | 0.297 | toaster      | 0.000 | sink           | 0.223 |
+| refrigerator  | 0.990 | book         | 0.891 | clock          | 0.033 |
+| vase          | 0.960 | scissors     | 0.000 | teddy bear     | 0.000 |
+| hair drier    | 0.000 | toothbrush   | 0.000 |                |       |
+
+
+------- Similarity and Timing Metrics -------
+Average Attack Time: 19.2335
+Average L2 Norm: 12295.6055
+Max Difference in Images: 8.0000
+------------------------------------------------
+
+
+[10/23 14:23:07 d2.evaluation.testing]: copypaste: Task: bbox
+[10/23 14:23:07 d2.evaluation.testing]: copypaste: AP,AP50,AP75,APs,APm,APl
+[10/23 14:23:07 d2.evaluation.testing]: copypaste: 0.3504,0.4833,0.3504,0.2572,0.4089,0.1926
+OrderedDict({'bbox': {'AP': 0.35040704628896635, 'AP50': 0.4832560748003776, 'AP75': 0.3503640840274504, 'APs': 0.25721308738016657, 'APm': 0.4089310270312746, 'APl': 0.1925882543611504, 'AP-person': 0.9900990099009901, 'AP-bicycle': 0.0, 'AP-car': 0.6487692247485618, 'AP-motorcycle': 0.9504950495049507, 'AP-airplane': 0.0, 'AP-bus': 0.36303630363036304, 'AP-train': 0.891089108910891, 'AP-truck': 0.0, 'AP-boat': 0.0, 'AP-traffic light': 0.7920792079207921, 'AP-fire hydrant': 0.0, 'AP-stop sign': 0.0, 'AP-parking meter': 0.0, 'AP-bench': 0.891089108910891, 'AP-bird': 0.0, 'AP-cat': 0.0, 'AP-dog': 0.891089108910891, 'AP-horse': 0.0, 'AP-sheep': 0.7920792079207921, 'AP-cow': 0.0, 'AP-elephant': 0.0, 'AP-bear': 0.0, 'AP-zebra': 0.0, 'AP-giraffe': 0.0, 'AP-backpack': 0.09900990099009901, 'AP-umbrella': 0.0, 'AP-handbag': 0.09562494711009563, 'AP-tie': 0.9900990099009901, 'AP-suitcase': 0.0825082508250825, 'AP-frisbee': 0.0, 'AP-skis': 0.297029702970297, 'AP-snowboard': 0.0, 'AP-sports ball': 0.9900990099009901, 'AP-kite': 1.3861386138613863, 'AP-baseball bat': 0.04950495049504951, 'AP-baseball glove': 0.297029702970297, 'AP-skateboard': 0.6930693069306931, 'AP-surfboard': 0.0, 'AP-tennis racket': 0.0, 'AP-bottle': 0.891089108910891, 'AP-wine glass': 1.518151815181518, 'AP-cup': 0.001678133915086424, 'AP-fork': 0.891089108910891, 'AP-knife': 0.891089108910891, 'AP-spoon': 0.49504950495049505, 'AP-bowl': 0.7920792079207921, 'AP-banana': 0.0, 'AP-apple': 0.8921424057299346, 'AP-sandwich': 0.0, 'AP-orange': 0.9029702970297031, 'AP-broccoli': 0.0, 'AP-carrot': 0.4328509774054329, 'AP-hot dog': 0.0, 'AP-pizza': 0.891089108910891, 'AP-donut': 0.0, 'AP-cake': 0.0, 'AP-chair': 0.0, 'AP-couch': 0.9900990099009901, 'AP-potted plant': 0.6930693069306931, 'AP-bed': 0.0, 'AP-dining table': 0.020573921798959557, 'AP-toilet': 0.0, 'AP-tv': 0.0, 'AP-laptop': 0.9900990099009901, 'AP-mouse': 0.0, 'AP-remote': 0.891089108910891, 'AP-keyboard': 0.0, 'AP-cell phone': 0.26402640264026406, 'AP-microwave': 0.0, 'AP-oven': 0.297029702970297, 'AP-toaster': 0.0, 'AP-sink': 0.22277227722772275, 'AP-refrigerator': 0.9900990099009901, 'AP-book': 0.891089108910891, 'AP-clock': 0.033003300330033, 'AP-vase': 0.9603960396039604, 'AP-scissors': 0.0, 'AP-teddy bear': 0.0, 'AP-hair drier': 0.0, 'AP-toothbrush': 0.0}})
+---------------------------------------
+Begin Slurm Epilog: Oct-23-2024 14:23:08
+Job ID:        881478
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      TOG_Plus_DETA
+Resources:     cpu=1,gres/gpu:a100=1,mem=128G,node=1
+Rsrc Used:     cput=00:08:05,vmem=0,walltime=00:08:05,mem=3462744K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-01-005-13-0
+---------------------------------------

@@ -1,44 +1,0 @@
----------------------------------------
-Begin Slurm Prolog: Sep-16-2024 18:55:22
-Job ID:    657026
-User ID:   zyahn3
-Account:   scs
-Job name:  TOG_Plus
-Partition: coc-gpu
----------------------------------------
-/storage/ice1/5/9/zyahn3/TOG_plus/frcnn_utils/utils/nms/non_maximum_suppression.py:9: UserWarning: 
-    the python code for non_maximum_suppression is about 2x slow
-    It is strongly recommended to build cython code: 
-    `cd model/utils/nms/; python3 build.py build_ext --inplace
-  warnings.warn('''
-/storage/ice1/5/9/zyahn3/TOG_plus/models/frcnn.py:253: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
-  state_dict = t.load(path)
----- n_iter = 10 ----
-  0%|          | 0/434 [00:00<?, ?it/s]  0%|          | 1/434 [00:20<2:29:15, 20.68s/it]  0%|          | 2/434 [00:23<1:13:19, 10.18s/it]  1%|          | 3/434 [00:26<48:04,  6.69s/it]    1%|          | 4/434 [00:28<36:24,  5.08s/it]  1%|          | 5/434 [00:31<31:08,  4.36s/it]  1%|▏         | 6/434 [00:34<26:51,  3.76s/it]  2%|▏         | 7/434 [00:37<24:26,  3.44s/it]  2%|▏         | 8/434 [00:39<22:24,  3.16s/it]  2%|▏         | 9/434 [00:42<21:46,  3.07s/it]  2%|▏         | 10/434 [00:45<20:30,  2.90s/it]  3%|▎         | 11/434 [00:47<20:15,  2.87s/it]  3%|▎         | 12/434 [00:50<19:57,  2.84s/it]  3%|▎         | 13/434 [00:53<20:22,  2.90s/it]  3%|▎         | 14/434 [00:56<20:07,  2.88s/it]  3%|▎         | 14/434 [00:56<28:15,  4.04s/it]
-Traceback (most recent call last):
-  File "/storage/ice1/5/9/zyahn3/TOG_plus/try_iterations.py", line 35, in <module>
-    scores = evaluate_dataset(detector, mini_path, annot_path, num_examples=-1, attack=tog_untargeted, attack_params={"n_iter": n_iter, "eps": eps, "eps_iter":eps_iter}, flag_attack_fail=False)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/storage/ice1/5/9/zyahn3/TOG_plus/dataset_utils/eval.py", line 217, in evaluate_dataset
-    this_tpfp = evaluate_image(detector, im_path, annot_path, path, attack, attack_params, flag_attack_fail=flag_attack_fail)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/storage/ice1/5/9/zyahn3/TOG_plus/dataset_utils/eval.py", line 253, in evaluate_image
-    im = Image.open(im_path + im_num)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/PIL/Image.py", line 3431, in open
-    fp = builtins.open(filename, "rb")
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-IsADirectoryError: [Errno 21] Is a directory: '/storage/ice1/5/9/zyahn3/TOG_plus/dataset/MiniVOC/.ipynb_checkpoints'
-srun: error: atl1-1-03-007-35-0: task 0: Exited with exit code 1
----------------------------------------
-Begin Slurm Epilog: Sep-16-2024 18:58:02
-Job ID:        657026
-Array Job ID:  _4294967294
-User ID:       zyahn3
-Account:       scs
-Job name:      TOG_Plus
-Resources:     cpu=1,gres/gpu:a100=1,mem=4G,node=1
-Rsrc Used:     cput=00:02:40,vmem=0,walltime=00:02:40,mem=6540K,energy_used=0
-Partition:     coc-gpu
-Nodes:         atl1-1-03-007-35-0
----------------------------------------

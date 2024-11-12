@@ -16,8 +16,9 @@
 .*.swp
 **/__pycache__/**
 .ipynb_checkpoints/
-dataset/coco/
-dataset/VOCdevkit/
+datasets/coco/
+datasets/VOCdevkit/
+datasets/
 experiment-*
 *.tmp
 *.pkl

@@ -4,10 +4,13 @@ import xml.etree.ElementTree as ET
 import numpy as np
 from collections import defaultdict
 from tqdm import tqdm
-import torchmetrics
+#import torchmetrics
 from frcnn_utils.eval_tool import eval_detection_voc
 import torch
 import os
+import time
+
+from skimage.metrics import structural_similarity as ssim
 
 IOU_START = 0.0
 IOU_END = 1.0
@@ -48,7 +51,14 @@ def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1
     gt_bboxes_total = []
     gt_labels_total = []
     
+    total_ssim = 0.0
+    total_l0 = 0.0
+    total_l2 = 0.0
+    total_time = 0.0
+    count = 0.0
+    
     for path in tqdm(os.listdir(im_path)[:num_examples]):
+        count += 1.0
         
         # Preprocess the image
         try:
@@ -58,9 +68,11 @@ def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1
             continue
         
         im, meta = letterbox_image_padded(im, size=detector.model_img_size)
+        orig = im.copy()
 
         # Run the attack, if any
         if attack is not None:
+            start = time.perf_counter()
             im = attack(
                 victim=detector, 
                 x_query=im, 
@@ -68,6 +80,22 @@ def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1
                 eps=attack_params["eps"], 
                 eps_iter=attack_params["eps_iter"]
             )
+            end = time.perf_counter()
+            im_copy = im.copy()
+            orig = (orig - np.min(orig)) / (np.max(orig) - np.min(orig))
+            im_copy = (im_copy - np.min(im_copy)) / (np.max(im_copy) - np.min(im_copy))
+            total_time += (end - start)
+        l0 = np.count_nonzero(orig - im_copy) / (orig.shape[1] * orig.shape[2] * orig.shape[3])
+        total_l0 += l0
+        l2 = np.sqrt(np.sum(np.multiply(orig - im_copy, orig - im_copy))) / (10e-3 * orig.shape[1] * orig.shape[2] * orig.shape[3])
+        print("Got L2", l2)
+        total_l2 += l2
+
+        orig_squeezed = orig.squeeze()
+        im_squeezed = im_copy.squeeze()
+        this_ssim = ssim(orig_squeezed, im_squeezed, data_range=(1.0), multichannel=True, channel_axis=2)
+        print("Got SSIM", this_ssim)
+        total_ssim += this_ssim
 
         # Make detections on the image
         detections = detector.detect(im, conf_threshold=detector.confidence_thresh_default)
@@ -125,6 +153,13 @@ def evaluate_dataset_with_builtin(detector, im_path, annot_path, num_examples=-1
 #     print(pred_labels_total)
 #     print(gt_bboxes_total)
 #     print(gt_labels_total)
+
+    print("\n\n------- Similarity Metrics -------")
+    print(f"Average Attack Time: %0.4f" % (total_time / count))
+    print(f"Average L2 Norm: %0.4f" % (total_l2 / count))
+    print(f"Average L0 Norm: %0.4f" % (total_l0 / count))
+    print(f"Average SSIM: %0.4f" % (total_ssim / count))
+    print("--------------------------------------\n\n")
         
     scores = eval_detection_voc(pred_bboxes=pred_bboxes_total, pred_labels=pred_labels_total, pred_scores=pred_scores_total, gt_bboxes=gt_bboxes_total, gt_labels=gt_labels_total, iou_thresh=0.5
                                 , use_07_metric=True)

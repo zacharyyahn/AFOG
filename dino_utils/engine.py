@@ -11,6 +11,9 @@ from typing import Iterable
 from dino_utils.utils import slprint, to_device
 
 import torch
+import time
+from skimage.metrics import structural_similarity as ssim
+import numpy as np
 
 import dino_utils.misc as utils
 from dataset_utils.coco.coco_eval import CocoEvaluator
@@ -155,12 +158,46 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, out
 
     _cnt = 0
     output_state_dict = {} # for debug only
+    total_time = 0.0
+    total_l2 = 0.0
+    total_l0 = 0.0
+    total_mean_pert = 0.0
+    total_median_pert = 0.0
+    total_ssim = 0.0
+    max_diff = 0.0
+    i = 0
     for samples, targets in metric_logger.log_every(data_loader, 10, header, logger=logger):
+        if float(args.load_attack) == 1.0:
+            import numpy as np
+            im_id = str(targets[0]["image_id"][0].item())
+            im_name = "0" * (12 - len(im_id)) + im_id + ".npz"
+            arr = np.load(args.load_dir + im_name)["arr_0"]
+            arr = torch.tensor(np.resize(arr, samples.tensors[0].shape)) / 255.0
+            samples.tensors[0] += arr
+
         # sampling function to enable testing large models on low compute environments
         if torch.rand(1)[0] < (1 - args.sample_rate):
             continue
+        i += 1
+
+        orig_image = samples.tensors[0].clone()
+
         if attack != None:
+            mult = 1.0 / torch.max(orig_image).item()
+            start_time = time.perf_counter()
             samples = attack(model, samples.tensors, mode=args.attack_mode)
+            end_time = time.perf_counter()
+            
+            # Calculate the metrics
+            max_diff = max(torch.max(torch.abs(mult * orig_image - mult * samples)), max_diff)
+            total_mean_pert += torch.mean(torch.abs(mult * orig_image - mult * samples))
+            total_median_pert += torch.median(torch.abs(mult * orig_image - mult * samples))
+            np_orig = mult * orig_image.clone().detach().cpu().numpy()
+            np_sample = mult * samples.clone().squeeze().detach().cpu().numpy()
+            total_ssim += ssim(np_orig, np_sample, data_range=(1.0), channel_axis=0)
+            total_l2 += torch.linalg.vector_norm(mult * orig_image - mult * samples, 2) / (10e-3 * orig_image.shape[0] * orig_image.shape[1] * orig_image.shape[2])
+            total_l0 += torch.count_nonzero(orig_image - samples) / (float(orig_image.shape[0]) * orig_image.shape[1] * orig_image.shape[2])
+            total_time += (end_time - start_time)
             samples = samples.float()
         
         samples = samples.to(device)
@@ -270,6 +307,16 @@ def evaluate(model, criterion, postprocessors, data_loader, base_ds, device, out
         savepath = osp.join(args.output_dir, 'results-{}.pkl'.format(utils.get_rank()))
         print("Saving res to {}".format(savepath))
         torch.save(output_state_dict, savepath)
+
+    print("\n\n------- Similarity and Timing Metrics -------")
+    print(f"Average Attack Time: %0.4f" % (total_time / i))
+    print(f"Average L2 Norm: %0.4f" % (total_l2 / i))
+    print(f"Average L0 Norm: %0.4f" % (total_l0 / i))
+    print(f"Average SSIM %0.4f" % (total_ssim / i))
+    print(f"Mean Difference in Images: %0.4f" % (total_mean_pert / i))
+    print(f"Median Difference in Images: %0.4f" % (total_median_pert / i))
+    print(f"Max Difference in Images: %0.4f" % max_diff)
+    print("------------------------------------------------\n\n")
 
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()

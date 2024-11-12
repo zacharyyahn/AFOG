@@ -19,7 +19,7 @@ import time
 import torch
 from torch.nn.parallel import DataParallel, DistributedDataParallel
 
-from tog.attacks import *
+from afog.attacks import *
 
 from detectron2.config import LazyConfig, instantiate
 from detectron2.engine import (
@@ -161,7 +161,7 @@ def do_test(cfg, model, eval_only=False, attack=None, attack_mode=None):
             logger.info("Run evaluation without EMA.")
         if "evaluator" in cfg.dataloader:
             ret = inference_on_dataset(
-                model, instantiate(cfg.dataloader.test), instantiate(cfg.dataloader.evaluator), attack=attack, attack_mode=attack_mode, sample=cfg.sample
+                model, instantiate(cfg.dataloader.test), instantiate(cfg.dataloader.evaluator), attack=attack, attack_mode=attack_mode, sample=cfg.sample, save_attack=cfg.save_attack, save_dir=cfg.save_dir, load_attack=cfg.load_attack, load_dir = cfg.load_dir
             )
             print_csv_format(ret)
         return ret
@@ -169,7 +169,7 @@ def do_test(cfg, model, eval_only=False, attack=None, attack_mode=None):
     logger.info("Run evaluation without EMA.")
     if "evaluator" in cfg.dataloader:
         ret = inference_on_dataset(
-            model, instantiate(cfg.dataloader.test), instantiate(cfg.dataloader.evaluator), attack=attack, attack_mode=attack_mode, sample=cfg.sample
+            model, instantiate(cfg.dataloader.test), instantiate(cfg.dataloader.evaluator), attack=attack, attack_mode=attack_mode, sample=cfg.sample, save_attack=cfg.save_attack, save_dir=cfg.save_dir, load_attack = cfg.load_attack, load_dir=cfg.load_dir
         )
         print_csv_format(ret)
 
@@ -178,7 +178,7 @@ def do_test(cfg, model, eval_only=False, attack=None, attack_mode=None):
             with ema.apply_model_ema_and_restore(model):
                 if "evaluator" in cfg.dataloader:
                     ema_ret = inference_on_dataset(
-                        model, instantiate(cfg.dataloader.test), instantiate(cfg.dataloader.evaluator), attack=attack, attack_mode=attack_mode, sample=cfg.sample
+                        model, instantiate(cfg.dataloader.test), instantiate(cfg.dataloader.evaluator), attack=attack, attack_mode=attack_mode, sample=cfg.sample, save_attack=cfg.save_attack, save_dir=cfg.save_dir, load_attack=cfg.load_attack, load_dir=cfg.load_dir
                     )
                     print_csv_format(ema_ret)
                     ret.update(ema_ret)
@@ -303,8 +303,8 @@ def main(args):
             ema.apply_model_ema(model)
         
         attack = None
-        if cfg.attack == "attention":
-            attack = tog_attention
+        if cfg.attack == "afog":
+            attack = afog
         if cfg.attack == "untargeted":
             attack = tog_untargeted
         print(do_test(cfg, model, eval_only=True, attack=attack, attack_mode=cfg.attack_mode))

@@ -1,0 +1,962 @@
+---------------------------------------
+Begin Slurm Prolog: Oct-24-2024 10:45:06
+Job ID:    883161
+User ID:   zyahn3
+Account:   scs
+Job name:  TOG_Plus_R50
+Partition: coc-gpu
+---------------------------------------
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:23: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detrex/layers/dcn_v3.py:52: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+[10/24 10:45:16 detectron2]: Rank of current process: 0. World size: 1
+[10/24 10:45:17 detectron2]: Environment info:
+-------------------------------  ----------------------------------------------------------------------------------------
+sys.platform                     linux
+Python                           3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:12:24) [GCC 11.2.0]
+numpy                            1.26.4
+detectron2                       0.6 @/storage/ice1/5/9/zyahn3/TOG_plus/detrex/detectron2/detectron2
+Compiler                         GCC 12.3
+CUDA compiler                    not available
+DETECTRON2_ENV_MODULE            <not set>
+PyTorch                          2.4.1 @/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch
+PyTorch debug build              False
+torch._C._GLIBCXX_USE_CXX11_ABI  False
+GPU available                    Yes
+GPU 0                            Tesla V100-PCIE-16GB (arch=7.0)
+Driver version                   555.42.02
+CUDA_HOME                        /usr/local/cuda
+Pillow                           10.4.0
+torchvision                      0.19.1 @/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torchvision
+torchvision arch flags           5.0, 6.0, 7.0, 7.5, 8.0, 8.6, 9.0
+fvcore                           0.1.5.post20221221
+iopath                           0.1.9
+cv2                              4.10.0
+-------------------------------  ----------------------------------------------------------------------------------------
+PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.4.2 (Git Hash 1137e04ec0b5251ca2b4400a4fd3c667ce843d67)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 12.4
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 90.1
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.4, CUDNN_VERSION=9.1.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.4.1, USE_CUDA=ON, USE_CUDNN=ON, USE_CUSPARSELT=1, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+[10/24 10:45:17 detectron2]: Command line arguments: Namespace(config_file='detrex/projects/dino_eva/configs/dino-eva-01/dino_eva_01_1280_4scale_12ep.py', resume=False, eval_only=True, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:53103', opts=['train.init_checkpoint=model_files/checkpoint0011_4scale.pth', 'attack=none', 'attack_mode=vanishing', 'sample=0.005'])
+[10/24 10:45:17 detectron2]: Contents of args.config_file=detrex/projects/dino_eva/configs/dino-eva-01/dino_eva_01_1280_4scale_12ep.py:
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15mfunctools[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mpartial[39m
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15mdetrex[39m[38;5;15m.[39m[38;5;15mconfig[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mget_config[39m
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15mdetrex[39m[38;5;15m.[39m[38;5;15mmodeling[39m[38;5;15m.[39m[38;5;15mbackbone[39m[38;5;15m.[39m[38;5;15meva[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mget_vit_lr_decay_rate[39m
+
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15m.[39m[38;5;15mcommon[39m[38;5;15m.[39m[38;5;15mcoco_loader_lsj_1280[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mdataloader[39m
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15m.[39m[38;5;15mmodels[39m[38;5;15m.[39m[38;5;15mdino_eva_01[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mmodel[39m
+
+[38;5;245m# get default config[39m
+[38;5;15moptimizer[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/optim.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mAdamW[39m
+[38;5;15mlr_multiplier[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/coco_schedule.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mlr_multiplier_12ep[39m
+[38;5;15mtrain[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/train.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mtrain[39m
+
+
+[38;5;245m# modify model config[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mbeit_like_qkv_bias[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mTrue[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mbeit_like_gamma[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mFalse[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mfreeze_patch_embed[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mTrue[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15msquare_pad[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1280[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mimg_size[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1280[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mpatch_size[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m16[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mwindow_size[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m16[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15membed_dim[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1408[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mdepth[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m40[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mnum_heads[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m16[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mmlp_ratio[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m6144[39m[38;5;15m [39m[38;5;204m/[39m[38;5;15m [39m[38;5;141m1408[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15muse_act_checkpoint[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mTrue[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mdrop_path_rate[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m0.6[39m[38;5;15m  [39m[38;5;245m# 0.5 --> 0.6[39m
+[38;5;245m# global attention for every 4 blocks[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mbackbone[39m[38;5;204m.[39m[38;5;15mnet[39m[38;5;204m.[39m[38;5;15mwindow_block_indexes[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15m([39m
+[38;5;15m    [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m0[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m3[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m [39m[38;5;204m+[39m[38;5;15m [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m4[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m7[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m [39m[38;5;204m+[39m[38;5;15m [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m8[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m11[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m [39m[38;5;204m+[39m[38;5;15m [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m12[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m15[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m [39m[38;5;204m+[39m[38;5;15m [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m16[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m19[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m [39m[38;5;204m+[39m
+[38;5;15m    [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m20[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m23[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m [39m[38;5;204m+[39m[38;5;15m [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m24[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m27[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m [39m[38;5;204m+[39m[38;5;15m [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m28[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m31[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m [39m[38;5;204m+[39m[38;5;15m [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m32[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m35[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m [39m[38;5;204m+[39m[38;5;15m [39m[38;5;15mlist[39m[38;5;15m([39m[38;5;15mrange[39m[38;5;15m([39m[38;5;141m36[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m39[39m[38;5;15m)[39m[38;5;15m)[39m
+[38;5;15m)[39m
+
+[38;5;15mattack[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mNone[39m
+[38;5;15mattack_mode[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mNone[39m
+[38;5;15msample[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1.0[39m
+
+[38;5;245m# modify training config[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15minit_checkpoint[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186m/path/to/eva_o365.pth[39m[38;5;186m"[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15moutput_dir[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186m./output/dino_eva_01_4scale_12ep[39m[38;5;186m"[39m
+
+[38;5;245m# max training iterations[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mmax_iter[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m90000[39m
+
+
+[38;5;245m# gradient clipping for training[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15menabled[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mTrue[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mmax_norm[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m0.1[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mnorm_type[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m2[39m
+
+[38;5;245m# set training devices[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mdevice[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mcuda[39m[38;5;186m"[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mdevice[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mdevice[39m
+
+[38;5;245m# modify optimizer config[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mlr[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1e-4[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mbetas[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15m([39m[38;5;141m0.9[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m0.999[39m[38;5;15m)[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mweight_decay[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1e-4[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mlr_factor_func[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mpartial[39m[38;5;15m([39m[38;5;15mget_vit_lr_decay_rate[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mlr_decay_rate[39m[38;5;204m=[39m[38;5;141m0.9[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mnum_layers[39m[38;5;204m=[39m[38;5;141m40[39m[38;5;15m)[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15moverrides[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15m{[39m[38;5;15m}[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mweight_decay_norm[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mNone[39m
+
+[38;5;245m# modify dataloader config[39m
+[38;5;15mdataloader[39m[38;5;204m.[39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mnum_workers[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m2[39m
+
+[38;5;245m# please notice that this is total batch size.[39m
+[38;5;245m# surpose you're using 4 gpus for training and the batch size for[39m
+[38;5;245m# each gpu is 16/4 = 4[39m
+[38;5;15mdataloader[39m[38;5;204m.[39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mtotal_batch_size[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1[39m
+
+[10/24 10:45:17 detectron2]: Full config saved to ./output/dino_eva_01_4scale_12ep/config.yaml
+[10/24 10:45:17 d2.utils.env]: Using a generated random seed 21288082
+[10/24 10:45:34 d2.checkpoint.detection_checkpoint]: [DetectionCheckpointer] Loading from model_files/checkpoint0011_4scale.pth ...
+[10/24 10:45:34 fvcore.common.checkpoint]: [Checkpointer] Loading from model_files/checkpoint0011_4scale.pth ...
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/fvcore/common/checkpoint.py:252: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(f, map_location=torch.device("cpu"))
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.0.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.0.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.1.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.1.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.2.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.2.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.3.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.3.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.4.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.4.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.5.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'transformer.decoder.class_embed.5.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'label_enc.weight' to the model due to incompatible shapes: (92, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.0.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.0.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.1.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.1.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.2.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.2.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.3.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.3.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.4.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.4.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.5.weight' to the model due to incompatible shapes: (91, 256) in the checkpoint but (80, 256) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Skip loading parameter 'class_embed.5.bias' to the model due to incompatible shapes: (91,) in the checkpoint but (80,) in the model! You might want to double check if this is expected.
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: Some model parameters or buffers are not found in the checkpoint:
+backbone.net.blocks.0.attn.proj.{bias, weight}
+backbone.net.blocks.0.attn.qkv.weight
+backbone.net.blocks.0.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.0.mlp.fc1.{bias, weight}
+backbone.net.blocks.0.mlp.fc2.{bias, weight}
+backbone.net.blocks.0.norm1.{bias, weight}
+backbone.net.blocks.0.norm2.{bias, weight}
+backbone.net.blocks.1.attn.proj.{bias, weight}
+backbone.net.blocks.1.attn.qkv.weight
+backbone.net.blocks.1.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.1.mlp.fc1.{bias, weight}
+backbone.net.blocks.1.mlp.fc2.{bias, weight}
+backbone.net.blocks.1.norm1.{bias, weight}
+backbone.net.blocks.1.norm2.{bias, weight}
+backbone.net.blocks.10.attn.proj.{bias, weight}
+backbone.net.blocks.10.attn.qkv.weight
+backbone.net.blocks.10.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.10.mlp.fc1.{bias, weight}
+backbone.net.blocks.10.mlp.fc2.{bias, weight}
+backbone.net.blocks.10.norm1.{bias, weight}
+backbone.net.blocks.10.norm2.{bias, weight}
+backbone.net.blocks.11.attn.proj.{bias, weight}
+backbone.net.blocks.11.attn.qkv.weight
+backbone.net.blocks.11.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.11.mlp.fc1.{bias, weight}
+backbone.net.blocks.11.mlp.fc2.{bias, weight}
+backbone.net.blocks.11.norm1.{bias, weight}
+backbone.net.blocks.11.norm2.{bias, weight}
+backbone.net.blocks.12.attn.proj.{bias, weight}
+backbone.net.blocks.12.attn.qkv.weight
+backbone.net.blocks.12.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.12.mlp.fc1.{bias, weight}
+backbone.net.blocks.12.mlp.fc2.{bias, weight}
+backbone.net.blocks.12.norm1.{bias, weight}
+backbone.net.blocks.12.norm2.{bias, weight}
+backbone.net.blocks.13.attn.proj.{bias, weight}
+backbone.net.blocks.13.attn.qkv.weight
+backbone.net.blocks.13.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.13.mlp.fc1.{bias, weight}
+backbone.net.blocks.13.mlp.fc2.{bias, weight}
+backbone.net.blocks.13.norm1.{bias, weight}
+backbone.net.blocks.13.norm2.{bias, weight}
+backbone.net.blocks.14.attn.proj.{bias, weight}
+backbone.net.blocks.14.attn.qkv.weight
+backbone.net.blocks.14.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.14.mlp.fc1.{bias, weight}
+backbone.net.blocks.14.mlp.fc2.{bias, weight}
+backbone.net.blocks.14.norm1.{bias, weight}
+backbone.net.blocks.14.norm2.{bias, weight}
+backbone.net.blocks.15.attn.proj.{bias, weight}
+backbone.net.blocks.15.attn.qkv.weight
+backbone.net.blocks.15.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.15.mlp.fc1.{bias, weight}
+backbone.net.blocks.15.mlp.fc2.{bias, weight}
+backbone.net.blocks.15.norm1.{bias, weight}
+backbone.net.blocks.15.norm2.{bias, weight}
+backbone.net.blocks.16.attn.proj.{bias, weight}
+backbone.net.blocks.16.attn.qkv.weight
+backbone.net.blocks.16.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.16.mlp.fc1.{bias, weight}
+backbone.net.blocks.16.mlp.fc2.{bias, weight}
+backbone.net.blocks.16.norm1.{bias, weight}
+backbone.net.blocks.16.norm2.{bias, weight}
+backbone.net.blocks.17.attn.proj.{bias, weight}
+backbone.net.blocks.17.attn.qkv.weight
+backbone.net.blocks.17.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.17.mlp.fc1.{bias, weight}
+backbone.net.blocks.17.mlp.fc2.{bias, weight}
+backbone.net.blocks.17.norm1.{bias, weight}
+backbone.net.blocks.17.norm2.{bias, weight}
+backbone.net.blocks.18.attn.proj.{bias, weight}
+backbone.net.blocks.18.attn.qkv.weight
+backbone.net.blocks.18.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.18.mlp.fc1.{bias, weight}
+backbone.net.blocks.18.mlp.fc2.{bias, weight}
+backbone.net.blocks.18.norm1.{bias, weight}
+backbone.net.blocks.18.norm2.{bias, weight}
+backbone.net.blocks.19.attn.proj.{bias, weight}
+backbone.net.blocks.19.attn.qkv.weight
+backbone.net.blocks.19.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.19.mlp.fc1.{bias, weight}
+backbone.net.blocks.19.mlp.fc2.{bias, weight}
+backbone.net.blocks.19.norm1.{bias, weight}
+backbone.net.blocks.19.norm2.{bias, weight}
+backbone.net.blocks.2.attn.proj.{bias, weight}
+backbone.net.blocks.2.attn.qkv.weight
+backbone.net.blocks.2.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.2.mlp.fc1.{bias, weight}
+backbone.net.blocks.2.mlp.fc2.{bias, weight}
+backbone.net.blocks.2.norm1.{bias, weight}
+backbone.net.blocks.2.norm2.{bias, weight}
+backbone.net.blocks.20.attn.proj.{bias, weight}
+backbone.net.blocks.20.attn.qkv.weight
+backbone.net.blocks.20.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.20.mlp.fc1.{bias, weight}
+backbone.net.blocks.20.mlp.fc2.{bias, weight}
+backbone.net.blocks.20.norm1.{bias, weight}
+backbone.net.blocks.20.norm2.{bias, weight}
+backbone.net.blocks.21.attn.proj.{bias, weight}
+backbone.net.blocks.21.attn.qkv.weight
+backbone.net.blocks.21.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.21.mlp.fc1.{bias, weight}
+backbone.net.blocks.21.mlp.fc2.{bias, weight}
+backbone.net.blocks.21.norm1.{bias, weight}
+backbone.net.blocks.21.norm2.{bias, weight}
+backbone.net.blocks.22.attn.proj.{bias, weight}
+backbone.net.blocks.22.attn.qkv.weight
+backbone.net.blocks.22.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.22.mlp.fc1.{bias, weight}
+backbone.net.blocks.22.mlp.fc2.{bias, weight}
+backbone.net.blocks.22.norm1.{bias, weight}
+backbone.net.blocks.22.norm2.{bias, weight}
+backbone.net.blocks.23.attn.proj.{bias, weight}
+backbone.net.blocks.23.attn.qkv.weight
+backbone.net.blocks.23.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.23.mlp.fc1.{bias, weight}
+backbone.net.blocks.23.mlp.fc2.{bias, weight}
+backbone.net.blocks.23.norm1.{bias, weight}
+backbone.net.blocks.23.norm2.{bias, weight}
+backbone.net.blocks.24.attn.proj.{bias, weight}
+backbone.net.blocks.24.attn.qkv.weight
+backbone.net.blocks.24.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.24.mlp.fc1.{bias, weight}
+backbone.net.blocks.24.mlp.fc2.{bias, weight}
+backbone.net.blocks.24.norm1.{bias, weight}
+backbone.net.blocks.24.norm2.{bias, weight}
+backbone.net.blocks.25.attn.proj.{bias, weight}
+backbone.net.blocks.25.attn.qkv.weight
+backbone.net.blocks.25.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.25.mlp.fc1.{bias, weight}
+backbone.net.blocks.25.mlp.fc2.{bias, weight}
+backbone.net.blocks.25.norm1.{bias, weight}
+backbone.net.blocks.25.norm2.{bias, weight}
+backbone.net.blocks.26.attn.proj.{bias, weight}
+backbone.net.blocks.26.attn.qkv.weight
+backbone.net.blocks.26.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.26.mlp.fc1.{bias, weight}
+backbone.net.blocks.26.mlp.fc2.{bias, weight}
+backbone.net.blocks.26.norm1.{bias, weight}
+backbone.net.blocks.26.norm2.{bias, weight}
+backbone.net.blocks.27.attn.proj.{bias, weight}
+backbone.net.blocks.27.attn.qkv.weight
+backbone.net.blocks.27.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.27.mlp.fc1.{bias, weight}
+backbone.net.blocks.27.mlp.fc2.{bias, weight}
+backbone.net.blocks.27.norm1.{bias, weight}
+backbone.net.blocks.27.norm2.{bias, weight}
+backbone.net.blocks.28.attn.proj.{bias, weight}
+backbone.net.blocks.28.attn.qkv.weight
+backbone.net.blocks.28.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.28.mlp.fc1.{bias, weight}
+backbone.net.blocks.28.mlp.fc2.{bias, weight}
+backbone.net.blocks.28.norm1.{bias, weight}
+backbone.net.blocks.28.norm2.{bias, weight}
+backbone.net.blocks.29.attn.proj.{bias, weight}
+backbone.net.blocks.29.attn.qkv.weight
+backbone.net.blocks.29.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.29.mlp.fc1.{bias, weight}
+backbone.net.blocks.29.mlp.fc2.{bias, weight}
+backbone.net.blocks.29.norm1.{bias, weight}
+backbone.net.blocks.29.norm2.{bias, weight}
+backbone.net.blocks.3.attn.proj.{bias, weight}
+backbone.net.blocks.3.attn.qkv.weight
+backbone.net.blocks.3.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.3.mlp.fc1.{bias, weight}
+backbone.net.blocks.3.mlp.fc2.{bias, weight}
+backbone.net.blocks.3.norm1.{bias, weight}
+backbone.net.blocks.3.norm2.{bias, weight}
+backbone.net.blocks.30.attn.proj.{bias, weight}
+backbone.net.blocks.30.attn.qkv.weight
+backbone.net.blocks.30.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.30.mlp.fc1.{bias, weight}
+backbone.net.blocks.30.mlp.fc2.{bias, weight}
+backbone.net.blocks.30.norm1.{bias, weight}
+backbone.net.blocks.30.norm2.{bias, weight}
+backbone.net.blocks.31.attn.proj.{bias, weight}
+backbone.net.blocks.31.attn.qkv.weight
+backbone.net.blocks.31.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.31.mlp.fc1.{bias, weight}
+backbone.net.blocks.31.mlp.fc2.{bias, weight}
+backbone.net.blocks.31.norm1.{bias, weight}
+backbone.net.blocks.31.norm2.{bias, weight}
+backbone.net.blocks.32.attn.proj.{bias, weight}
+backbone.net.blocks.32.attn.qkv.weight
+backbone.net.blocks.32.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.32.mlp.fc1.{bias, weight}
+backbone.net.blocks.32.mlp.fc2.{bias, weight}
+backbone.net.blocks.32.norm1.{bias, weight}
+backbone.net.blocks.32.norm2.{bias, weight}
+backbone.net.blocks.33.attn.proj.{bias, weight}
+backbone.net.blocks.33.attn.qkv.weight
+backbone.net.blocks.33.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.33.mlp.fc1.{bias, weight}
+backbone.net.blocks.33.mlp.fc2.{bias, weight}
+backbone.net.blocks.33.norm1.{bias, weight}
+backbone.net.blocks.33.norm2.{bias, weight}
+backbone.net.blocks.34.attn.proj.{bias, weight}
+backbone.net.blocks.34.attn.qkv.weight
+backbone.net.blocks.34.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.34.mlp.fc1.{bias, weight}
+backbone.net.blocks.34.mlp.fc2.{bias, weight}
+backbone.net.blocks.34.norm1.{bias, weight}
+backbone.net.blocks.34.norm2.{bias, weight}
+backbone.net.blocks.35.attn.proj.{bias, weight}
+backbone.net.blocks.35.attn.qkv.weight
+backbone.net.blocks.35.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.35.mlp.fc1.{bias, weight}
+backbone.net.blocks.35.mlp.fc2.{bias, weight}
+backbone.net.blocks.35.norm1.{bias, weight}
+backbone.net.blocks.35.norm2.{bias, weight}
+backbone.net.blocks.36.attn.proj.{bias, weight}
+backbone.net.blocks.36.attn.qkv.weight
+backbone.net.blocks.36.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.36.mlp.fc1.{bias, weight}
+backbone.net.blocks.36.mlp.fc2.{bias, weight}
+backbone.net.blocks.36.norm1.{bias, weight}
+backbone.net.blocks.36.norm2.{bias, weight}
+backbone.net.blocks.37.attn.proj.{bias, weight}
+backbone.net.blocks.37.attn.qkv.weight
+backbone.net.blocks.37.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.37.mlp.fc1.{bias, weight}
+backbone.net.blocks.37.mlp.fc2.{bias, weight}
+backbone.net.blocks.37.norm1.{bias, weight}
+backbone.net.blocks.37.norm2.{bias, weight}
+backbone.net.blocks.38.attn.proj.{bias, weight}
+backbone.net.blocks.38.attn.qkv.weight
+backbone.net.blocks.38.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.38.mlp.fc1.{bias, weight}
+backbone.net.blocks.38.mlp.fc2.{bias, weight}
+backbone.net.blocks.38.norm1.{bias, weight}
+backbone.net.blocks.38.norm2.{bias, weight}
+backbone.net.blocks.39.attn.proj.{bias, weight}
+backbone.net.blocks.39.attn.qkv.weight
+backbone.net.blocks.39.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.39.mlp.fc1.{bias, weight}
+backbone.net.blocks.39.mlp.fc2.{bias, weight}
+backbone.net.blocks.39.norm1.{bias, weight}
+backbone.net.blocks.39.norm2.{bias, weight}
+backbone.net.blocks.4.attn.proj.{bias, weight}
+backbone.net.blocks.4.attn.qkv.weight
+backbone.net.blocks.4.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.4.mlp.fc1.{bias, weight}
+backbone.net.blocks.4.mlp.fc2.{bias, weight}
+backbone.net.blocks.4.norm1.{bias, weight}
+backbone.net.blocks.4.norm2.{bias, weight}
+backbone.net.blocks.5.attn.proj.{bias, weight}
+backbone.net.blocks.5.attn.qkv.weight
+backbone.net.blocks.5.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.5.mlp.fc1.{bias, weight}
+backbone.net.blocks.5.mlp.fc2.{bias, weight}
+backbone.net.blocks.5.norm1.{bias, weight}
+backbone.net.blocks.5.norm2.{bias, weight}
+backbone.net.blocks.6.attn.proj.{bias, weight}
+backbone.net.blocks.6.attn.qkv.weight
+backbone.net.blocks.6.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.6.mlp.fc1.{bias, weight}
+backbone.net.blocks.6.mlp.fc2.{bias, weight}
+backbone.net.blocks.6.norm1.{bias, weight}
+backbone.net.blocks.6.norm2.{bias, weight}
+backbone.net.blocks.7.attn.proj.{bias, weight}
+backbone.net.blocks.7.attn.qkv.weight
+backbone.net.blocks.7.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.7.mlp.fc1.{bias, weight}
+backbone.net.blocks.7.mlp.fc2.{bias, weight}
+backbone.net.blocks.7.norm1.{bias, weight}
+backbone.net.blocks.7.norm2.{bias, weight}
+backbone.net.blocks.8.attn.proj.{bias, weight}
+backbone.net.blocks.8.attn.qkv.weight
+backbone.net.blocks.8.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.8.mlp.fc1.{bias, weight}
+backbone.net.blocks.8.mlp.fc2.{bias, weight}
+backbone.net.blocks.8.norm1.{bias, weight}
+backbone.net.blocks.8.norm2.{bias, weight}
+backbone.net.blocks.9.attn.proj.{bias, weight}
+backbone.net.blocks.9.attn.qkv.weight
+backbone.net.blocks.9.attn.{q_bias, rel_pos_h, rel_pos_w, v_bias}
+backbone.net.blocks.9.mlp.fc1.{bias, weight}
+backbone.net.blocks.9.mlp.fc2.{bias, weight}
+backbone.net.blocks.9.norm1.{bias, weight}
+backbone.net.blocks.9.norm2.{bias, weight}
+backbone.net.patch_embed.proj.{bias, weight}
+backbone.net.pos_embed
+backbone.simfp_3.0.{bias, weight}
+backbone.simfp_3.1.norm.{bias, weight}
+backbone.simfp_3.1.weight
+backbone.simfp_3.2.norm.{bias, weight}
+backbone.simfp_3.2.weight
+backbone.simfp_4.0.norm.{bias, weight}
+backbone.simfp_4.0.weight
+backbone.simfp_4.1.norm.{bias, weight}
+backbone.simfp_4.1.weight
+backbone.simfp_5.1.norm.{bias, weight}
+backbone.simfp_5.1.weight
+backbone.simfp_5.2.norm.{bias, weight}
+backbone.simfp_5.2.weight
+bbox_embed.6.layers.0.{bias, weight}
+bbox_embed.6.layers.1.{bias, weight}
+bbox_embed.6.layers.2.{bias, weight}
+class_embed.0.{bias, weight}
+class_embed.1.{bias, weight}
+class_embed.2.{bias, weight}
+class_embed.3.{bias, weight}
+class_embed.4.{bias, weight}
+class_embed.5.{bias, weight}
+class_embed.6.{bias, weight}
+label_enc.weight
+neck.convs.0.conv.{bias, weight}
+neck.convs.0.norm.{bias, weight}
+neck.convs.1.conv.{bias, weight}
+neck.convs.1.norm.{bias, weight}
+neck.convs.2.conv.{bias, weight}
+neck.convs.2.norm.{bias, weight}
+neck.convs.3.conv.{bias, weight}
+neck.convs.3.norm.{bias, weight}
+transformer.decoder.bbox_embed.6.layers.0.{bias, weight}
+transformer.decoder.bbox_embed.6.layers.1.{bias, weight}
+transformer.decoder.bbox_embed.6.layers.2.{bias, weight}
+transformer.decoder.class_embed.0.{bias, weight}
+transformer.decoder.class_embed.1.{bias, weight}
+transformer.decoder.class_embed.2.{bias, weight}
+transformer.decoder.class_embed.3.{bias, weight}
+transformer.decoder.class_embed.4.{bias, weight}
+transformer.decoder.class_embed.5.{bias, weight}
+transformer.decoder.class_embed.6.{bias, weight}
+transformer.decoder.layers.0.attentions.0.attn.out_proj.{bias, weight}
+transformer.decoder.layers.0.attentions.0.attn.{in_proj_bias, in_proj_weight}
+transformer.decoder.layers.0.attentions.1.attention_weights.{bias, weight}
+transformer.decoder.layers.0.attentions.1.output_proj.{bias, weight}
+transformer.decoder.layers.0.attentions.1.sampling_offsets.{bias, weight}
+transformer.decoder.layers.0.attentions.1.value_proj.{bias, weight}
+transformer.decoder.layers.0.ffns.0.layers.0.0.{bias, weight}
+transformer.decoder.layers.0.ffns.0.layers.1.{bias, weight}
+transformer.decoder.layers.0.norms.0.{bias, weight}
+transformer.decoder.layers.0.norms.1.{bias, weight}
+transformer.decoder.layers.0.norms.2.{bias, weight}
+transformer.decoder.layers.1.attentions.0.attn.out_proj.{bias, weight}
+transformer.decoder.layers.1.attentions.0.attn.{in_proj_bias, in_proj_weight}
+transformer.decoder.layers.1.attentions.1.attention_weights.{bias, weight}
+transformer.decoder.layers.1.attentions.1.output_proj.{bias, weight}
+transformer.decoder.layers.1.attentions.1.sampling_offsets.{bias, weight}
+transformer.decoder.layers.1.attentions.1.value_proj.{bias, weight}
+transformer.decoder.layers.1.ffns.0.layers.0.0.{bias, weight}
+transformer.decoder.layers.1.ffns.0.layers.1.{bias, weight}
+transformer.decoder.layers.1.norms.0.{bias, weight}
+transformer.decoder.layers.1.norms.1.{bias, weight}
+transformer.decoder.layers.1.norms.2.{bias, weight}
+transformer.decoder.layers.2.attentions.0.attn.out_proj.{bias, weight}
+transformer.decoder.layers.2.attentions.0.attn.{in_proj_bias, in_proj_weight}
+transformer.decoder.layers.2.attentions.1.attention_weights.{bias, weight}
+transformer.decoder.layers.2.attentions.1.output_proj.{bias, weight}
+transformer.decoder.layers.2.attentions.1.sampling_offsets.{bias, weight}
+transformer.decoder.layers.2.attentions.1.value_proj.{bias, weight}
+transformer.decoder.layers.2.ffns.0.layers.0.0.{bias, weight}
+transformer.decoder.layers.2.ffns.0.layers.1.{bias, weight}
+transformer.decoder.layers.2.norms.0.{bias, weight}
+transformer.decoder.layers.2.norms.1.{bias, weight}
+transformer.decoder.layers.2.norms.2.{bias, weight}
+transformer.decoder.layers.3.attentions.0.attn.out_proj.{bias, weight}
+transformer.decoder.layers.3.attentions.0.attn.{in_proj_bias, in_proj_weight}
+transformer.decoder.layers.3.attentions.1.attention_weights.{bias, weight}
+transformer.decoder.layers.3.attentions.1.output_proj.{bias, weight}
+transformer.decoder.layers.3.attentions.1.sampling_offsets.{bias, weight}
+transformer.decoder.layers.3.attentions.1.value_proj.{bias, weight}
+transformer.decoder.layers.3.ffns.0.layers.0.0.{bias, weight}
+transformer.decoder.layers.3.ffns.0.layers.1.{bias, weight}
+transformer.decoder.layers.3.norms.0.{bias, weight}
+transformer.decoder.layers.3.norms.1.{bias, weight}
+transformer.decoder.layers.3.norms.2.{bias, weight}
+transformer.decoder.layers.4.attentions.0.attn.out_proj.{bias, weight}
+transformer.decoder.layers.4.attentions.0.attn.{in_proj_bias, in_proj_weight}
+transformer.decoder.layers.4.attentions.1.attention_weights.{bias, weight}
+transformer.decoder.layers.4.attentions.1.output_proj.{bias, weight}
+transformer.decoder.layers.4.attentions.1.sampling_offsets.{bias, weight}
+transformer.decoder.layers.4.attentions.1.value_proj.{bias, weight}
+transformer.decoder.layers.4.ffns.0.layers.0.0.{bias, weight}
+transformer.decoder.layers.4.ffns.0.layers.1.{bias, weight}
+transformer.decoder.layers.4.norms.0.{bias, weight}
+transformer.decoder.layers.4.norms.1.{bias, weight}
+transformer.decoder.layers.4.norms.2.{bias, weight}
+transformer.decoder.layers.5.attentions.0.attn.out_proj.{bias, weight}
+transformer.decoder.layers.5.attentions.0.attn.{in_proj_bias, in_proj_weight}
+transformer.decoder.layers.5.attentions.1.attention_weights.{bias, weight}
+transformer.decoder.layers.5.attentions.1.output_proj.{bias, weight}
+transformer.decoder.layers.5.attentions.1.sampling_offsets.{bias, weight}
+transformer.decoder.layers.5.attentions.1.value_proj.{bias, weight}
+transformer.decoder.layers.5.ffns.0.layers.0.0.{bias, weight}
+transformer.decoder.layers.5.ffns.0.layers.1.{bias, weight}
+transformer.decoder.layers.5.norms.0.{bias, weight}
+transformer.decoder.layers.5.norms.1.{bias, weight}
+transformer.decoder.layers.5.norms.2.{bias, weight}
+transformer.encoder.layers.0.attentions.0.attention_weights.{bias, weight}
+transformer.encoder.layers.0.attentions.0.output_proj.{bias, weight}
+transformer.encoder.layers.0.attentions.0.sampling_offsets.{bias, weight}
+transformer.encoder.layers.0.attentions.0.value_proj.{bias, weight}
+transformer.encoder.layers.0.ffns.0.layers.0.0.{bias, weight}
+transformer.encoder.layers.0.ffns.0.layers.1.{bias, weight}
+transformer.encoder.layers.0.norms.0.{bias, weight}
+transformer.encoder.layers.0.norms.1.{bias, weight}
+transformer.encoder.layers.1.attentions.0.attention_weights.{bias, weight}
+transformer.encoder.layers.1.attentions.0.output_proj.{bias, weight}
+transformer.encoder.layers.1.attentions.0.sampling_offsets.{bias, weight}
+transformer.encoder.layers.1.attentions.0.value_proj.{bias, weight}
+transformer.encoder.layers.1.ffns.0.layers.0.0.{bias, weight}
+transformer.encoder.layers.1.ffns.0.layers.1.{bias, weight}
+transformer.encoder.layers.1.norms.0.{bias, weight}
+transformer.encoder.layers.1.norms.1.{bias, weight}
+transformer.encoder.layers.2.attentions.0.attention_weights.{bias, weight}
+transformer.encoder.layers.2.attentions.0.output_proj.{bias, weight}
+transformer.encoder.layers.2.attentions.0.sampling_offsets.{bias, weight}
+transformer.encoder.layers.2.attentions.0.value_proj.{bias, weight}
+transformer.encoder.layers.2.ffns.0.layers.0.0.{bias, weight}
+transformer.encoder.layers.2.ffns.0.layers.1.{bias, weight}
+transformer.encoder.layers.2.norms.0.{bias, weight}
+transformer.encoder.layers.2.norms.1.{bias, weight}
+transformer.encoder.layers.3.attentions.0.attention_weights.{bias, weight}
+transformer.encoder.layers.3.attentions.0.output_proj.{bias, weight}
+transformer.encoder.layers.3.attentions.0.sampling_offsets.{bias, weight}
+transformer.encoder.layers.3.attentions.0.value_proj.{bias, weight}
+transformer.encoder.layers.3.ffns.0.layers.0.0.{bias, weight}
+transformer.encoder.layers.3.ffns.0.layers.1.{bias, weight}
+transformer.encoder.layers.3.norms.0.{bias, weight}
+transformer.encoder.layers.3.norms.1.{bias, weight}
+transformer.encoder.layers.4.attentions.0.attention_weights.{bias, weight}
+transformer.encoder.layers.4.attentions.0.output_proj.{bias, weight}
+transformer.encoder.layers.4.attentions.0.sampling_offsets.{bias, weight}
+transformer.encoder.layers.4.attentions.0.value_proj.{bias, weight}
+transformer.encoder.layers.4.ffns.0.layers.0.0.{bias, weight}
+transformer.encoder.layers.4.ffns.0.layers.1.{bias, weight}
+transformer.encoder.layers.4.norms.0.{bias, weight}
+transformer.encoder.layers.4.norms.1.{bias, weight}
+transformer.encoder.layers.5.attentions.0.attention_weights.{bias, weight}
+transformer.encoder.layers.5.attentions.0.output_proj.{bias, weight}
+transformer.encoder.layers.5.attentions.0.sampling_offsets.{bias, weight}
+transformer.encoder.layers.5.attentions.0.value_proj.{bias, weight}
+transformer.encoder.layers.5.ffns.0.layers.0.0.{bias, weight}
+transformer.encoder.layers.5.ffns.0.layers.1.{bias, weight}
+transformer.encoder.layers.5.norms.0.{bias, weight}
+transformer.encoder.layers.5.norms.1.{bias, weight}
+transformer.level_embeds
+WARNING [10/24 10:45:37 fvcore.common.checkpoint]: The checkpoint state_dict contains keys that are not used by the model:
+  input_proj.0.0.{bias, weight}
+  input_proj.0.1.{bias, weight}
+  input_proj.1.0.{bias, weight}
+  input_proj.1.1.{bias, weight}
+  input_proj.2.0.{bias, weight}
+  input_proj.2.1.{bias, weight}
+  input_proj.3.0.{bias, weight}
+  input_proj.3.1.{bias, weight}
+  backbone.0.body.conv1.weight
+  backbone.0.body.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.0.conv1.weight
+  backbone.0.body.layer1.0.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.0.conv2.weight
+  backbone.0.body.layer1.0.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.0.conv3.weight
+  backbone.0.body.layer1.0.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.0.downsample.0.weight
+  backbone.0.body.layer1.0.downsample.1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.1.conv1.weight
+  backbone.0.body.layer1.1.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.1.conv2.weight
+  backbone.0.body.layer1.1.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.1.conv3.weight
+  backbone.0.body.layer1.1.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.2.conv1.weight
+  backbone.0.body.layer1.2.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.2.conv2.weight
+  backbone.0.body.layer1.2.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer1.2.conv3.weight
+  backbone.0.body.layer1.2.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.0.conv1.weight
+  backbone.0.body.layer2.0.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.0.conv2.weight
+  backbone.0.body.layer2.0.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.0.conv3.weight
+  backbone.0.body.layer2.0.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.0.downsample.0.weight
+  backbone.0.body.layer2.0.downsample.1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.1.conv1.weight
+  backbone.0.body.layer2.1.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.1.conv2.weight
+  backbone.0.body.layer2.1.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.1.conv3.weight
+  backbone.0.body.layer2.1.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.2.conv1.weight
+  backbone.0.body.layer2.2.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.2.conv2.weight
+  backbone.0.body.layer2.2.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.2.conv3.weight
+  backbone.0.body.layer2.2.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.3.conv1.weight
+  backbone.0.body.layer2.3.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.3.conv2.weight
+  backbone.0.body.layer2.3.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer2.3.conv3.weight
+  backbone.0.body.layer2.3.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.0.conv1.weight
+  backbone.0.body.layer3.0.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.0.conv2.weight
+  backbone.0.body.layer3.0.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.0.conv3.weight
+  backbone.0.body.layer3.0.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.0.downsample.0.weight
+  backbone.0.body.layer3.0.downsample.1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.1.conv1.weight
+  backbone.0.body.layer3.1.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.1.conv2.weight
+  backbone.0.body.layer3.1.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.1.conv3.weight
+  backbone.0.body.layer3.1.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.2.conv1.weight
+  backbone.0.body.layer3.2.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.2.conv2.weight
+  backbone.0.body.layer3.2.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.2.conv3.weight
+  backbone.0.body.layer3.2.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.3.conv1.weight
+  backbone.0.body.layer3.3.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.3.conv2.weight
+  backbone.0.body.layer3.3.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.3.conv3.weight
+  backbone.0.body.layer3.3.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.4.conv1.weight
+  backbone.0.body.layer3.4.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.4.conv2.weight
+  backbone.0.body.layer3.4.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.4.conv3.weight
+  backbone.0.body.layer3.4.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.5.conv1.weight
+  backbone.0.body.layer3.5.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.5.conv2.weight
+  backbone.0.body.layer3.5.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer3.5.conv3.weight
+  backbone.0.body.layer3.5.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.0.conv1.weight
+  backbone.0.body.layer4.0.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.0.conv2.weight
+  backbone.0.body.layer4.0.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.0.conv3.weight
+  backbone.0.body.layer4.0.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.0.downsample.0.weight
+  backbone.0.body.layer4.0.downsample.1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.1.conv1.weight
+  backbone.0.body.layer4.1.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.1.conv2.weight
+  backbone.0.body.layer4.1.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.1.conv3.weight
+  backbone.0.body.layer4.1.bn3.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.2.conv1.weight
+  backbone.0.body.layer4.2.bn1.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.2.conv2.weight
+  backbone.0.body.layer4.2.bn2.{bias, running_mean, running_var, weight}
+  backbone.0.body.layer4.2.conv3.weight
+  backbone.0.body.layer4.2.bn3.{bias, running_mean, running_var, weight}
+  transformer.level_embed
+  transformer.enc_out_bbox_embed.layers.0.{bias, weight}
+  transformer.enc_out_bbox_embed.layers.1.{bias, weight}
+  transformer.enc_out_bbox_embed.layers.2.{bias, weight}
+  transformer.enc_out_class_embed.{bias, weight}
+  transformer.encoder.layers.0.self_attn.sampling_offsets.{bias, weight}
+  transformer.encoder.layers.0.self_attn.attention_weights.{bias, weight}
+  transformer.encoder.layers.0.self_attn.value_proj.{bias, weight}
+  transformer.encoder.layers.0.self_attn.output_proj.{bias, weight}
+  transformer.encoder.layers.0.norm1.{bias, weight}
+  transformer.encoder.layers.0.linear1.{bias, weight}
+  transformer.encoder.layers.0.linear2.{bias, weight}
+  transformer.encoder.layers.0.norm2.{bias, weight}
+  transformer.encoder.layers.1.self_attn.sampling_offsets.{bias, weight}
+  transformer.encoder.layers.1.self_attn.attention_weights.{bias, weight}
+  transformer.encoder.layers.1.self_attn.value_proj.{bias, weight}
+  transformer.encoder.layers.1.self_attn.output_proj.{bias, weight}
+  transformer.encoder.layers.1.norm1.{bias, weight}
+  transformer.encoder.layers.1.linear1.{bias, weight}
+  transformer.encoder.layers.1.linear2.{bias, weight}
+  transformer.encoder.layers.1.norm2.{bias, weight}
+  transformer.encoder.layers.2.self_attn.sampling_offsets.{bias, weight}
+  transformer.encoder.layers.2.self_attn.attention_weights.{bias, weight}
+  transformer.encoder.layers.2.self_attn.value_proj.{bias, weight}
+  transformer.encoder.layers.2.self_attn.output_proj.{bias, weight}
+  transformer.encoder.layers.2.norm1.{bias, weight}
+  transformer.encoder.layers.2.linear1.{bias, weight}
+  transformer.encoder.layers.2.linear2.{bias, weight}
+  transformer.encoder.layers.2.norm2.{bias, weight}
+  transformer.encoder.layers.3.self_attn.sampling_offsets.{bias, weight}
+  transformer.encoder.layers.3.self_attn.attention_weights.{bias, weight}
+  transformer.encoder.layers.3.self_attn.value_proj.{bias, weight}
+  transformer.encoder.layers.3.self_attn.output_proj.{bias, weight}
+  transformer.encoder.layers.3.norm1.{bias, weight}
+  transformer.encoder.layers.3.linear1.{bias, weight}
+  transformer.encoder.layers.3.linear2.{bias, weight}
+  transformer.encoder.layers.3.norm2.{bias, weight}
+  transformer.encoder.layers.4.self_attn.sampling_offsets.{bias, weight}
+  transformer.encoder.layers.4.self_attn.attention_weights.{bias, weight}
+  transformer.encoder.layers.4.self_attn.value_proj.{bias, weight}
+  transformer.encoder.layers.4.self_attn.output_proj.{bias, weight}
+  transformer.encoder.layers.4.norm1.{bias, weight}
+  transformer.encoder.layers.4.linear1.{bias, weight}
+  transformer.encoder.layers.4.linear2.{bias, weight}
+  transformer.encoder.layers.4.norm2.{bias, weight}
+  transformer.encoder.layers.5.self_attn.sampling_offsets.{bias, weight}
+  transformer.encoder.layers.5.self_attn.attention_weights.{bias, weight}
+  transformer.encoder.layers.5.self_attn.value_proj.{bias, weight}
+  transformer.encoder.layers.5.self_attn.output_proj.{bias, weight}
+  transformer.encoder.layers.5.norm1.{bias, weight}
+  transformer.encoder.layers.5.linear1.{bias, weight}
+  transformer.encoder.layers.5.linear2.{bias, weight}
+  transformer.encoder.layers.5.norm2.{bias, weight}
+  transformer.decoder.layers.0.cross_attn.sampling_offsets.{bias, weight}
+  transformer.decoder.layers.0.cross_attn.attention_weights.{bias, weight}
+  transformer.decoder.layers.0.cross_attn.value_proj.{bias, weight}
+  transformer.decoder.layers.0.cross_attn.output_proj.{bias, weight}
+  transformer.decoder.layers.0.norm1.{bias, weight}
+  transformer.decoder.layers.0.self_attn.{in_proj_bias, in_proj_weight}
+  transformer.decoder.layers.0.self_attn.out_proj.{bias, weight}
+  transformer.decoder.layers.0.norm2.{bias, weight}
+  transformer.decoder.layers.0.linear1.{bias, weight}
+  transformer.decoder.layers.0.linear2.{bias, weight}
+  transformer.decoder.layers.0.norm3.{bias, weight}
+  transformer.decoder.layers.1.cross_attn.sampling_offsets.{bias, weight}
+  transformer.decoder.layers.1.cross_attn.attention_weights.{bias, weight}
+  transformer.decoder.layers.1.cross_attn.value_proj.{bias, weight}
+  transformer.decoder.layers.1.cross_attn.output_proj.{bias, weight}
+  transformer.decoder.layers.1.norm1.{bias, weight}
+  transformer.decoder.layers.1.self_attn.{in_proj_bias, in_proj_weight}
+  transformer.decoder.layers.1.self_attn.out_proj.{bias, weight}
+  transformer.decoder.layers.1.norm2.{bias, weight}
+  transformer.decoder.layers.1.linear1.{bias, weight}
+  transformer.decoder.layers.1.linear2.{bias, weight}
+  transformer.decoder.layers.1.norm3.{bias, weight}
+  transformer.decoder.layers.2.cross_attn.sampling_offsets.{bias, weight}
+  transformer.decoder.layers.2.cross_attn.attention_weights.{bias, weight}
+  transformer.decoder.layers.2.cross_attn.value_proj.{bias, weight}
+  transformer.decoder.layers.2.cross_attn.output_proj.{bias, weight}
+  transformer.decoder.layers.2.norm1.{bias, weight}
+  transformer.decoder.layers.2.self_attn.{in_proj_bias, in_proj_weight}
+  transformer.decoder.layers.2.self_attn.out_proj.{bias, weight}
+  transformer.decoder.layers.2.norm2.{bias, weight}
+  transformer.decoder.layers.2.linear1.{bias, weight}
+  transformer.decoder.layers.2.linear2.{bias, weight}
+  transformer.decoder.layers.2.norm3.{bias, weight}
+  transformer.decoder.layers.3.cross_attn.sampling_offsets.{bias, weight}
+  transformer.decoder.layers.3.cross_attn.attention_weights.{bias, weight}
+  transformer.decoder.layers.3.cross_attn.value_proj.{bias, weight}
+  transformer.decoder.layers.3.cross_attn.output_proj.{bias, weight}
+  transformer.decoder.layers.3.norm1.{bias, weight}
+  transformer.decoder.layers.3.self_attn.{in_proj_bias, in_proj_weight}
+  transformer.decoder.layers.3.self_attn.out_proj.{bias, weight}
+  transformer.decoder.layers.3.norm2.{bias, weight}
+  transformer.decoder.layers.3.linear1.{bias, weight}
+  transformer.decoder.layers.3.linear2.{bias, weight}
+  transformer.decoder.layers.3.norm3.{bias, weight}
+  transformer.decoder.layers.4.cross_attn.sampling_offsets.{bias, weight}
+  transformer.decoder.layers.4.cross_attn.attention_weights.{bias, weight}
+  transformer.decoder.layers.4.cross_attn.value_proj.{bias, weight}
+  transformer.decoder.layers.4.cross_attn.output_proj.{bias, weight}
+  transformer.decoder.layers.4.norm1.{bias, weight}
+  transformer.decoder.layers.4.self_attn.{in_proj_bias, in_proj_weight}
+  transformer.decoder.layers.4.self_attn.out_proj.{bias, weight}
+  transformer.decoder.layers.4.norm2.{bias, weight}
+  transformer.decoder.layers.4.linear1.{bias, weight}
+  transformer.decoder.layers.4.linear2.{bias, weight}
+  transformer.decoder.layers.4.norm3.{bias, weight}
+  transformer.decoder.layers.5.cross_attn.sampling_offsets.{bias, weight}
+  transformer.decoder.layers.5.cross_attn.attention_weights.{bias, weight}
+  transformer.decoder.layers.5.cross_attn.value_proj.{bias, weight}
+  transformer.decoder.layers.5.cross_attn.output_proj.{bias, weight}
+  transformer.decoder.layers.5.norm1.{bias, weight}
+  transformer.decoder.layers.5.self_attn.{in_proj_bias, in_proj_weight}
+  transformer.decoder.layers.5.self_attn.out_proj.{bias, weight}
+  transformer.decoder.layers.5.norm2.{bias, weight}
+  transformer.decoder.layers.5.linear1.{bias, weight}
+  transformer.decoder.layers.5.linear2.{bias, weight}
+  transformer.decoder.layers.5.norm3.{bias, weight}
+[10/24 10:45:37 detectron2]: Run evaluation under eval-only mode
+[10/24 10:45:37 detectron2]: Run evaluation without EMA.
+[10/24 10:45:38 d2.data.datasets.coco]: Loaded 1000 images in COCO format from /home/hice1/zyahn3/scratch/TOG_plus/datasets/mini_coco/coco/annotations/instances_val2017.json
+[10/24 10:45:38 d2.data.build]: Distribution of instances among all 80 categories:
+|   category    | #instances   |   category   | #instances   |   category    | #instances   |
+|:-------------:|:-------------|:------------:|:-------------|:-------------:|:-------------|
+|    person     | 2065         |   bicycle    | 53           |      car      | 388          |
+|  motorcycle   | 88           |   airplane   | 32           |      bus      | 45           |
+|     train     | 30           |    truck     | 79           |     boat      | 58           |
+| traffic light | 133          | fire hydrant | 21           |   stop sign   | 20           |
+| parking meter | 9            |    bench     | 96           |     bird      | 101          |
+|      cat      | 44           |     dog      | 35           |     horse     | 31           |
+|     sheep     | 50           |     cow      | 118          |   elephant    | 44           |
+|     bear      | 7            |    zebra     | 45           |    giraffe    | 57           |
+|   backpack    | 62           |   umbrella   | 111          |    handbag    | 106          |
+|      tie      | 52           |   suitcase   | 12           |    frisbee    | 18           |
+|     skis      | 37           |  snowboard   | 18           |  sports ball  | 56           |
+|     kite      | 59           | baseball bat | 37           | baseball gl.. | 53           |
+|  skateboard   | 24           |  surfboard   | 58           | tennis racket | 41           |
+|    bottle     | 237          |  wine glass  | 77           |      cup      | 182          |
+|     fork      | 50           |    knife     | 83           |     spoon     | 49           |
+|     bowl      | 141          |    banana    | 53           |     apple     | 35           |
+|   sandwich    | 41           |    orange    | 42           |   broccoli    | 74           |
+|    carrot     | 66           |   hot dog    | 28           |     pizza     | 59           |
+|     donut     | 74           |     cake     | 61           |     chair     | 411          |
+|     couch     | 37           | potted plant | 77           |      bed      | 23           |
+| dining table  | 149          |    toilet    | 53           |      tv       | 45           |
+|    laptop     | 43           |    mouse     | 28           |    remote     | 43           |
+|   keyboard    | 34           |  cell phone  | 60           |   microwave   | 10           |
+|     oven      | 28           |   toaster    | 4            |     sink      | 63           |
+| refrigerator  | 34           |     book     | 297          |     clock     | 57           |
+|     vase      | 47           |   scissors   | 5            |  teddy bear   | 53           |
+|  hair drier   | 3            |  toothbrush  | 19           |               |              |
+|     total     | 7368         |              |              |               |              |
+[10/24 10:45:38 d2.data.dataset_mapper]: [DatasetMapper] Augmentations used in inference: [ResizeShortestEdge(short_edge_length=(1280, 1280), max_size=1280)]
+[10/24 10:45:38 d2.data.common]: Serializing the dataset using: <class 'detectron2.data.common._TorchSerializedList'>
+[10/24 10:45:38 d2.data.common]: Serializing 1000 elements to byte tensors and concatenating them all ...
+[10/24 10:45:38 d2.data.common]: Serialized dataset takes 3.87 MiB
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 4 worker processes in total. Our suggested max number of worker in current system is 1, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(_create_warning_msg(
+[10/24 10:45:38 d2.evaluation.evaluator]: Start inference on 1000 batches
+Doing attack: None
+/home/hice1/zyahn3/.conda/envs/TOG_test/lib/python3.12/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1724789220573/work/aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+[10/24 10:45:44 d2.evaluation.evaluator]: Inference done 82/1000. Dataloading: 0.0440 s/iter. Inference: 0.0375 s/iter. Eval: 0.0002 s/iter. Total: 0.0816 s/iter. ETA=0:01:14
+[10/24 10:45:53 d2.evaluation.evaluator]: Inference done 259/1000. Dataloading: 0.0347 s/iter. Inference: 0.0258 s/iter. Eval: 0.0001 s/iter. Total: 0.0605 s/iter. ETA=0:00:44
+[10/24 10:45:58 d2.evaluation.evaluator]: Inference done 369/1000. Dataloading: 0.0334 s/iter. Inference: 0.0230 s/iter. Eval: 0.0000 s/iter. Total: 0.0565 s/iter. ETA=0:00:35
+[10/24 10:46:09 d2.evaluation.evaluator]: Inference done 557/1000. Dataloading: 0.0320 s/iter. Inference: 0.0252 s/iter. Eval: 0.0000 s/iter. Total: 0.0572 s/iter. ETA=0:00:25
+[10/24 10:46:20 d2.evaluation.evaluator]: Inference done 855/1000. Dataloading: 0.0314 s/iter. Inference: 0.0186 s/iter. Eval: 0.0000 s/iter. Total: 0.0500 s/iter. ETA=0:00:07
+[10/24 10:46:25 d2.evaluation.evaluator]: Inference done 905/1000. Dataloading: 0.0311 s/iter. Inference: 0.0217 s/iter. Eval: 0.0000 s/iter. Total: 0.0528 s/iter. ETA=0:00:05
+[10/24 10:46:32 d2.evaluation.evaluator]: Total inference time: 0:00:53.852138 (0.054123 s / iter per device, on 1 devices)
+[10/24 10:46:32 d2.evaluation.evaluator]: Total inference pure compute time: 0:00:23 (0.023384 s / iter per device, on 1 devices)
+[10/24 10:46:32 d2.evaluation.coco_evaluation]: Preparing results for COCO format ...
+[10/24 10:46:32 d2.evaluation.coco_evaluation]: Evaluating predictions with unofficial COCO API...
+Loading and preparing results...
+DONE (t=0.00s)
+creating index...
+index created!
+[10/24 10:46:32 d2.evaluation.fast_eval_api]: Evaluate annotation type *bbox*
+[10/24 10:46:33 d2.evaluation.fast_eval_api]: COCOeval_opt.evaluate() finished in 0.98 seconds.
+[10/24 10:46:33 d2.evaluation.fast_eval_api]: Accumulating evaluation results...
+[10/24 10:46:33 d2.evaluation.fast_eval_api]: COCOeval_opt.accumulate() finished in 0.24 seconds.
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.000
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.000
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.000
+[10/24 10:46:33 d2.evaluation.coco_evaluation]: Evaluation results for bbox: 
+|  AP   |  AP50  |  AP75  |  APs  |  APm  |  APl  |
+|:-----:|:------:|:------:|:-----:|:-----:|:-----:|
+| 0.000 | 0.000  | 0.000  | 0.000 | 0.000 | 0.000 |
+[10/24 10:46:33 d2.evaluation.coco_evaluation]: Per-category bbox AP: 
+| category      | AP    | category     | AP    | category       | AP    |
+|:--------------|:------|:-------------|:------|:---------------|:------|
+| person        | 0.000 | bicycle      | 0.000 | car            | 0.000 |
+| motorcycle    | 0.000 | airplane     | 0.000 | bus            | 0.000 |
+| train         | 0.000 | truck        | 0.000 | boat           | 0.000 |
+| traffic light | 0.000 | fire hydrant | 0.000 | stop sign      | 0.000 |
+| parking meter | 0.000 | bench        | 0.000 | bird           | 0.000 |
+| cat           | 0.000 | dog          | 0.000 | horse          | 0.000 |
+| sheep         | 0.000 | cow          | 0.000 | elephant       | 0.000 |
+| bear          | 0.000 | zebra        | 0.000 | giraffe        | 0.000 |
+| backpack      | 0.000 | umbrella     | 0.000 | handbag        | 0.000 |
+| tie           | 0.000 | suitcase     | 0.000 | frisbee        | 0.000 |
+| skis          | 0.000 | snowboard    | 0.000 | sports ball    | 0.000 |
+| kite          | 0.000 | baseball bat | 0.000 | baseball glove | 0.000 |
+| skateboard    | 0.000 | surfboard    | 0.000 | tennis racket  | 0.000 |
+| bottle        | 0.000 | wine glass   | 0.000 | cup            | 0.000 |
+| fork          | 0.000 | knife        | 0.000 | spoon          | 0.000 |
+| bowl          | 0.000 | banana       | 0.000 | apple          | 0.000 |
+| sandwich      | 0.000 | orange       | 0.000 | broccoli       | 0.000 |
+| carrot        | 0.000 | hot dog      | 0.000 | pizza          | 0.000 |
+| donut         | 0.000 | cake         | 0.000 | chair          | 0.000 |
+| couch         | 0.000 | potted plant | 0.000 | bed            | 0.000 |
+| dining table  | 0.000 | toilet       | 0.000 | tv             | 0.000 |
+| laptop        | 0.000 | mouse        | 0.000 | remote         | 0.000 |
+| keyboard      | 0.000 | cell phone   | 0.000 | microwave      | 0.000 |
+| oven          | 0.000 | toaster      | 0.000 | sink           | 0.000 |
+| refrigerator  | 0.000 | book         | 0.000 | clock          | 0.000 |
+| vase          | 0.000 | scissors     | 0.000 | teddy bear     | 0.000 |
+| hair drier    | 0.000 | toothbrush   | 0.000 |                |       |
+
+
+------- Similarity and Timing Metrics -------
+Total Parameters: 1037215116
+Average Attack Time: 4.4877
+Average L2 Norm: 0.0000
+Max Difference in Images: 0.0000
+------------------------------------------------
+
+
+[10/24 10:46:33 d2.evaluation.testing]: copypaste: Task: bbox
+[10/24 10:46:33 d2.evaluation.testing]: copypaste: AP,AP50,AP75,APs,APm,APl
+[10/24 10:46:33 d2.evaluation.testing]: copypaste: 0.0000,0.0000,0.0000,0.0000,0.0000,0.0000
+OrderedDict({'bbox': {'AP': 0.0, 'AP50': 0.0, 'AP75': 0.0, 'APs': 0.0, 'APm': 0.0, 'APl': 0.0, 'AP-person': 0.0, 'AP-bicycle': 0.0, 'AP-car': 0.0, 'AP-motorcycle': 0.0, 'AP-airplane': 0.0, 'AP-bus': 0.0, 'AP-train': 0.0, 'AP-truck': 0.0, 'AP-boat': 0.0, 'AP-traffic light': 0.0, 'AP-fire hydrant': 0.0, 'AP-stop sign': 0.0, 'AP-parking meter': 0.0, 'AP-bench': 0.0, 'AP-bird': 0.0, 'AP-cat': 0.0, 'AP-dog': 0.0, 'AP-horse': 0.0, 'AP-sheep': 0.0, 'AP-cow': 0.0, 'AP-elephant': 0.0, 'AP-bear': 0.0, 'AP-zebra': 0.0, 'AP-giraffe': 0.0, 'AP-backpack': 0.0, 'AP-umbrella': 0.0, 'AP-handbag': 0.0, 'AP-tie': 0.0, 'AP-suitcase': 0.0, 'AP-frisbee': 0.0, 'AP-skis': 0.0, 'AP-snowboard': 0.0, 'AP-sports ball': 0.0, 'AP-kite': 0.0, 'AP-baseball bat': 0.0, 'AP-baseball glove': 0.0, 'AP-skateboard': 0.0, 'AP-surfboard': 0.0, 'AP-tennis racket': 0.0, 'AP-bottle': 0.0, 'AP-wine glass': 0.0, 'AP-cup': 0.0, 'AP-fork': 0.0, 'AP-knife': 0.0, 'AP-spoon': 0.0, 'AP-bowl': 0.0, 'AP-banana': 0.0, 'AP-apple': 0.0, 'AP-sandwich': 0.0, 'AP-orange': 0.0, 'AP-broccoli': 0.0, 'AP-carrot': 0.0, 'AP-hot dog': 0.0, 'AP-pizza': 0.0, 'AP-donut': 0.0, 'AP-cake': 0.0, 'AP-chair': 0.0, 'AP-couch': 0.0, 'AP-potted plant': 0.0, 'AP-bed': 0.0, 'AP-dining table': 0.0, 'AP-toilet': 0.0, 'AP-tv': 0.0, 'AP-laptop': 0.0, 'AP-mouse': 0.0, 'AP-remote': 0.0, 'AP-keyboard': 0.0, 'AP-cell phone': 0.0, 'AP-microwave': 0.0, 'AP-oven': 0.0, 'AP-toaster': 0.0, 'AP-sink': 0.0, 'AP-refrigerator': 0.0, 'AP-book': 0.0, 'AP-clock': 0.0, 'AP-vase': 0.0, 'AP-scissors': 0.0, 'AP-teddy bear': 0.0, 'AP-hair drier': 0.0, 'AP-toothbrush': 0.0}})
+---------------------------------------
+Begin Slurm Epilog: Oct-24-2024 10:46:34
+Job ID:        883161
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      TOG_Plus_R50
+Resources:     cpu=1,gres/gpu:v100=1,mem=128G,node=1
+Rsrc Used:     cput=00:01:28,vmem=0,walltime=00:01:28,mem=2505996K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-02-009-32-0
+---------------------------------------
