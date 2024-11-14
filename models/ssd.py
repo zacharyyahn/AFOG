@@ -1,7 +1,7 @@
 from keras.layers import Input, Lambda, Conv2D, MaxPooling2D, ZeroPadding2D, Reshape, Concatenate
-from ssd_utils.keras_layer_L2Normalization import L2Normalization
-from ssd_utils.ssd_input_encoder import SSDInputEncoder
-from ssd_utils.keras_layer_AnchorBoxes import AnchorBoxes
+from utils.ssd_utils.keras_layer_L2Normalization import L2Normalization
+from utils.ssd_utils.ssd_input_encoder import SSDInputEncoder
+from utils.ssd_utils.keras_layer_AnchorBoxes import AnchorBoxes
 from keras.regularizers import l2
 from keras.models import Model
 import keras.backend as K

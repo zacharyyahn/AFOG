@@ -15,16 +15,16 @@ import torch.nn.functional as F
 from torch import nn
 import math
 
-from deformable_detr_utils import box_ops
-from deformable_detr_utils.misc import (NestedTensor, nested_tensor_from_tensor_list,
+from utils.deformable_detr_utils import box_ops
+from utils.deformable_detr_utils.misc import (NestedTensor, nested_tensor_from_tensor_list,
                        accuracy, get_world_size, interpolate,
                        is_dist_avail_and_initialized, inverse_sigmoid)
 
-from deformable_detr_utils.backbone import build_backbone
-from deformable_detr_utils.matcher import build_matcher
-from deformable_detr_utils.segmentation import (DETRsegm, PostProcessPanoptic, PostProcessSegm,
+from utils.deformable_detr_utils.backbone import build_backbone
+from utils.deformable_detr_utils.matcher import build_matcher
+from utils.deformable_detr_utils.segmentation import (DETRsegm, PostProcessPanoptic, PostProcessSegm,
                            dice_loss, sigmoid_focal_loss)
-from deformable_detr_utils.deformable_transformer import build_deforamble_transformer
+from utils.deformable_detr_utils.deformable_transformer import build_deforamble_transformer
 import copy
 
 
@@ -270,11 +270,7 @@ class DeformableDETR(nn.Module):
             out['enc_outputs'] = {'pred_logits': enc_outputs_class, 'pred_boxes': enc_outputs_coord}
         return out
     
-    ### NEW TOG METHOD ###
-    def compute_object_untargeted_gradient(self, x, x_orig=None, detections=None, norm=False):
-        #print(" ---- ATTEMPTING TO COMPUTE ATTACK GRADIENT ---- " )
-        #torch.set_grad_enabled(True)
-        
+    def compute_object_untargeted_gradient(self, x, x_orig=None, detections=None, norm=False):        
         x_copy = x.float().clone().cuda()
         x_copy.requires_grad = True
         if norm:
@@ -293,18 +289,14 @@ class DeformableDETR(nn.Module):
         
         detections_copy = (detections_copy,)
         
-        # detections argument is our labels (desired detections)
+        # detections_copy argument is our labels (desired detections)
         # detections_adv is our actual output from adv attack  
         losses = self.criterion(detections_adv, detections_copy)
-        #print(losses)
         class_error = losses["class_error"]
         loss_ce = losses["loss_ce"]
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
-        #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
         unt_loss = -(loss_ce + loss_bbox / (0.01 + loss_bbox / (0.01 + loss_ce))) + int(norm) * loss_norm
-        #print("Attention loss:", unt_loss)
-        #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)
         return x_copy.grad.data.cpu().numpy()
     
@@ -327,20 +319,15 @@ class DeformableDETR(nn.Module):
         detections_copy["scores"] = torch.tensor([0.]).long().cuda()
         
         detections_copy = (detections_copy,)
-        
-        
-        # detections argument is our labels (desired detections)
+         
+        # detections_copy argument is our labels (desired detections)
         # detections_adv is our actual output from adv attack  
         losses = self.criterion(detections_adv, detections_copy)
-        #print(losses)
         class_error = losses["class_error"]
         loss_ce = losses["loss_ce"]
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
-        #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
         unt_loss = (loss_ce + loss_bbox / (0.01 + loss_bbox / (0.01 + loss_ce))) + int(norm) * loss_norm
-        #print("Attention loss:", unt_loss)
-        #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)
         return x_copy.grad.data.cpu().numpy()
     
@@ -356,26 +343,21 @@ class DeformableDETR(nn.Module):
         
         detections_copy = self.postprocessors['bbox'](detections_copy, torch.Tensor([[1.0, 1.0]]).cuda())[0]        
         
-        # For vanishing there are no boxes, classes are N/A, and scores are 0
+        # For fabrication all boxes are accepted without any confidence threshold cutoff
         detections_copy["boxes"] = detections_copy["boxes"]
         detections_copy["labels"] = detections_copy["labels"]
         detections_copy["scores"] = torch.ones(detections_copy["scores"].shape).float().cuda()
                 
         detections_copy = (detections_copy,)
         
-        
-        # detections argument is our labels (desired detections)
+        # detections_copy argument is our labels (desired detections)
         # detections_adv is our actual output from adv attack  
         losses = self.criterion(detections_adv, detections_copy)
-        #print(losses)
         class_error = losses["class_error"]
         loss_ce = losses["loss_ce"]
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
-        #print("ATTN untarget: bbox loss:", loss_bbox.item(), "Class loss:", loss_ce.item(), "Class error:", class_error.item(), "Norm loss:", loss_norm)
         unt_loss = (loss_ce + loss_bbox / (0.01 + loss_bbox / (0.01 + loss_ce))) + int(norm) * loss_norm
-        #print("Attention loss:", unt_loss)
-        #self.optimizer.zero_grad()
         unt_loss.backward(retain_graph=True)
         return x_copy.grad.data.cpu().numpy()
 

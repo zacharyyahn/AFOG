@@ -1,0 +1,54 @@
+---------------------------------------
+Begin Slurm Prolog: Nov-13-2024 10:21:40
+Job ID:    933301
+User ID:   zyahn3
+Account:   scs
+Job name:  AFOG_DETR
+Partition: coc-gpu
+---------------------------------------
+/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Namespace(lr=0.0001, lr_backbone=1e-05, batch_size=1, weight_decay=0.0001, epochs=300, lr_drop=200, clip_max_norm=0.1, frozen_weights=None, backbone='resnet50', dilation=False, position_embedding='sine', enc_layers=6, dec_layers=6, dim_feedforward=2048, hidden_dim=256, dropout=0.1, nheads=8, num_queries=100, pre_norm=False, masks=False, aux_loss=False, set_cost_class=1, set_cost_bbox=5, set_cost_giou=2, mask_loss_coef=1, dice_loss_coef=1, bbox_loss_coef=5, giou_loss_coef=2, eos_coef=0.1, dataset_file='coco', coco_path='datasets/coco', coco_panoptic_path=None, remove_difficult=False, output_dir='', device='cuda', seed=42, resume='model_files/detr-r50.pth', start_epoch=0, eval=True, num_workers=1, world_size=1, dist_url='env://', distributed=False, attack='afog', attack_mode='baseline', load_attack='0.0', load_dir='datasets/blackbox/internimage/')
+number of params: 41302368
+loading annotations into memory...
+Done (t=0.36s)
+creating index...
+index created!
+--- Attacking with <function afog at 0x1554873b98a0> ----
+Test:  [   0/5000]  eta: 1 day, 17:21:50  class_error: 90.00  loss: 9.0295 (9.0295)  loss_ce: 7.1575 (7.1575)  loss_bbox: 0.5305 (0.5305)  loss_giou: 1.3416 (1.3416)  loss_ce_unscaled: 7.1575 (7.1575)  class_error_unscaled: 90.0000 (90.0000)  loss_bbox_unscaled: 0.1061 (0.1061)  loss_giou_unscaled: 0.6708 (0.6708)  cardinality_error_unscaled: 11.0000 (11.0000)  time: 29.7822  data: 2.6073  max mem: 2547
+Test:  [  10/5000]  eta: 5:38:49  class_error: 90.91  loss: 4.5785 (6.0324)  loss_ce: 3.3389 (4.2696)  loss_bbox: 0.6157 (0.7875)  loss_giou: 0.9711 (0.9753)  loss_ce_unscaled: 3.3389 (4.2696)  class_error_unscaled: 75.0000 (64.8866)  loss_bbox_unscaled: 0.1231 (0.1575)  loss_giou_unscaled: 0.4855 (0.4876)  cardinality_error_unscaled: 11.0000 (10.0909)  time: 4.0740  data: 0.2413  max mem: 2555
+Test:  [  20/5000]  eta: 3:53:35  class_error: 100.00  loss: 5.5138 (6.5406)  loss_ce: 3.4221 (4.4672)  loss_bbox: 0.7530 (0.9979)  loss_giou: 0.9711 (1.0755)  loss_ce_unscaled: 3.4221 (4.4672)  class_error_unscaled: 78.5714 (76.2501)  loss_bbox_unscaled: 0.1506 (0.1996)  loss_giou_unscaled: 0.4855 (0.5378)  cardinality_error_unscaled: 4.0000 (10.1429)  time: 1.4659  data: 0.0043  max mem: 2555
+Test:  [  30/5000]  eta: 3:18:21  class_error: 0.00  loss: 5.2375 (6.0137)  loss_ce: 3.2268 (3.9750)  loss_bbox: 0.7788 (0.9642)  loss_giou: 0.9134 (1.0744)  loss_ce_unscaled: 3.2268 (3.9750)  class_error_unscaled: 78.5714 (70.4326)  loss_bbox_unscaled: 0.1558 (0.1928)  loss_giou_unscaled: 0.4567 (0.5372)  cardinality_error_unscaled: 4.0000 (15.0323)  time: 1.4710  data: 0.0040  max mem: 2804
+Test:  [  40/5000]  eta: 2:59:31  class_error: 75.00  loss: 4.6771 (6.0455)  loss_ce: 3.1572 (4.0486)  loss_bbox: 0.5774 (0.9635)  loss_giou: 0.8523 (1.0334)  loss_ce_unscaled: 3.1572 (4.0486)  class_error_unscaled: 75.0000 (74.3729)  loss_bbox_unscaled: 0.1155 (0.1927)  loss_giou_unscaled: 0.4261 (0.5167)  cardinality_error_unscaled: 6.0000 (15.6341)  time: 1.4970  data: 0.0041  max mem: 2816
+Test:  [  50/5000]  eta: 2:47:00  class_error: 77.78  loss: 5.5094 (5.7976)  loss_ce: 4.0106 (3.9118)  loss_bbox: 0.6106 (0.8994)  loss_giou: 0.9138 (0.9864)  loss_ce_unscaled: 4.0106 (3.9118)  class_error_unscaled: 78.5714 (73.2043)  loss_bbox_unscaled: 0.1221 (0.1799)  loss_giou_unscaled: 0.4569 (0.4932)  cardinality_error_unscaled: 3.0000 (13.6471)  time: 1.4506  data: 0.0040  max mem: 2816
+Test:  [  60/5000]  eta: 2:39:36  class_error: 100.00  loss: 5.9740 (5.9665)  loss_ce: 4.0106 (3.9244)  loss_bbox: 0.9162 (0.9686)  loss_giou: 0.9663 (1.0735)  loss_ce_unscaled: 4.0106 (3.9244)  class_error_unscaled: 90.0000 (76.1724)  loss_bbox_unscaled: 0.1832 (0.1937)  loss_giou_unscaled: 0.4831 (0.5368)  cardinality_error_unscaled: 5.0000 (14.6557)  time: 1.4606  data: 0.0040  max mem: 2816
+Test:  [  70/5000]  eta: 2:33:47  class_error: 100.00  loss: 6.3610 (5.8267)  loss_ce: 3.0817 (3.8677)  loss_bbox: 0.8729 (0.9289)  loss_giou: 0.9663 (1.0301)  loss_ce_unscaled: 3.0817 (3.8677)  class_error_unscaled: 100.0000 (76.3412)  loss_bbox_unscaled: 0.1746 (0.1858)  loss_giou_unscaled: 0.4831 (0.5150)  cardinality_error_unscaled: 5.0000 (13.3803)  time: 1.4824  data: 0.0040  max mem: 2816
+Test:  [  80/5000]  eta: 2:29:13  class_error: 100.00  loss: 4.0950 (5.7494)  loss_ce: 2.5476 (3.8587)  loss_bbox: 0.5069 (0.8777)  loss_giou: 0.7233 (1.0130)  loss_ce_unscaled: 2.5476 (3.8587)  class_error_unscaled: 88.8889 (76.2715)  loss_bbox_unscaled: 0.1014 (0.1755)  loss_giou_unscaled: 0.3617 (0.5065)  cardinality_error_unscaled: 5.0000 (12.9630)  time: 1.4577  data: 0.0041  max mem: 2816
+Test:  [  90/5000]  eta: 2:25:20  class_error: 100.00  loss: 5.7381 (6.0122)  loss_ce: 3.5192 (4.0550)  loss_bbox: 0.6213 (0.9128)  loss_giou: 0.9358 (1.0443)  loss_ce_unscaled: 3.5192 (4.0550)  class_error_unscaled: 81.2500 (76.8434)  loss_bbox_unscaled: 0.1243 (0.1826)  loss_giou_unscaled: 0.4679 (0.5222)  cardinality_error_unscaled: 5.0000 (12.4835)  time: 1.4368  data: 0.0040  max mem: 2816
+Test:  [ 100/5000]  eta: 2:22:00  class_error: 85.71  loss: 6.2531 (6.1201)  loss_ce: 4.2783 (4.1495)  loss_bbox: 0.6905 (0.9030)  loss_giou: 1.2072 (1.0676)  loss_ce_unscaled: 4.2783 (4.1495)  class_error_unscaled: 85.7143 (76.9319)  loss_bbox_unscaled: 0.1381 (0.1806)  loss_giou_unscaled: 0.6036 (0.5338)  cardinality_error_unscaled: 6.0000 (12.3069)  time: 1.4110  data: 0.0040  max mem: 2816
+Test:  [ 110/5000]  eta: 2:19:23  class_error: 20.00  loss: 4.6554 (5.9759)  loss_ce: 2.9520 (4.0481)  loss_bbox: 0.6122 (0.8893)  loss_giou: 1.0300 (1.0385)  loss_ce_unscaled: 2.9520 (4.0481)  class_error_unscaled: 84.6154 (75.7218)  loss_bbox_unscaled: 0.1224 (0.1779)  loss_giou_unscaled: 0.5150 (0.5192)  cardinality_error_unscaled: 6.0000 (12.7117)  time: 1.4105  data: 0.0040  max mem: 2816
+Test:  [ 120/5000]  eta: 2:17:26  class_error: 53.33  loss: 4.6077 (5.9245)  loss_ce: 2.7065 (3.9893)  loss_bbox: 0.6233 (0.8859)  loss_giou: 0.9903 (1.0492)  loss_ce_unscaled: 2.7065 (3.9893)  class_error_unscaled: 75.0000 (75.3385)  loss_bbox_unscaled: 0.1247 (0.1772)  loss_giou_unscaled: 0.4952 (0.5246)  cardinality_error_unscaled: 5.0000 (12.8843)  time: 1.4421  data: 0.0040  max mem: 2816
+Test:  [ 130/5000]  eta: 2:15:49  class_error: 62.50  loss: 4.2805 (5.7942)  loss_ce: 2.6454 (3.8978)  loss_bbox: 0.6233 (0.8686)  loss_giou: 0.9431 (1.0279)  loss_ce_unscaled: 2.6454 (3.8978)  class_error_unscaled: 66.6667 (74.0031)  loss_bbox_unscaled: 0.1247 (0.1737)  loss_giou_unscaled: 0.4715 (0.5139)  cardinality_error_unscaled: 5.0000 (12.4656)  time: 1.4682  data: 0.0040  max mem: 2816
+Test:  [ 140/5000]  eta: 2:14:27  class_error: 45.00  loss: 4.5490 (5.9115)  loss_ce: 3.4123 (4.0144)  loss_bbox: 0.5457 (0.8614)  loss_giou: 0.8889 (1.0357)  loss_ce_unscaled: 3.4123 (4.0144)  class_error_unscaled: 66.6667 (74.3637)  loss_bbox_unscaled: 0.1091 (0.1723)  loss_giou_unscaled: 0.4444 (0.5179)  cardinality_error_unscaled: 8.0000 (13.2270)  time: 1.4800  data: 0.0040  max mem: 2816
+Test:  [ 150/5000]  eta: 2:13:12  class_error: 66.67  loss: 5.6820 (5.9342)  loss_ce: 3.9249 (4.0285)  loss_bbox: 0.5779 (0.8803)  loss_giou: 0.9294 (1.0254)  loss_ce_unscaled: 3.9249 (4.0285)  class_error_unscaled: 100.0000 (75.6752)  loss_bbox_unscaled: 0.1156 (0.1761)  loss_giou_unscaled: 0.4647 (0.5127)  cardinality_error_unscaled: 8.0000 (13.2119)  time: 1.4820  data: 0.0040  max mem: 2816
+Test:  [ 160/5000]  eta: 2:12:03  class_error: 72.73  loss: 5.6820 (5.9973)  loss_ce: 4.0324 (4.0804)  loss_bbox: 0.7179 (0.8839)  loss_giou: 1.0454 (1.0330)  loss_ce_unscaled: 4.0324 (4.0804)  class_error_unscaled: 100.0000 (76.2180)  loss_bbox_unscaled: 0.1436 (0.1768)  loss_giou_unscaled: 0.5227 (0.5165)  cardinality_error_unscaled: 6.0000 (13.3230)  time: 1.4744  data: 0.0041  max mem: 2816
+Test:  [ 170/5000]  eta: 2:10:41  class_error: 100.00  loss: 5.6470 (5.9294)  loss_ce: 3.3072 (4.0363)  loss_bbox: 0.7179 (0.8759)  loss_giou: 0.8570 (1.0171)  loss_ce_unscaled: 3.3072 (4.0363)  class_error_unscaled: 100.0000 (75.9909)  loss_bbox_unscaled: 0.1436 (0.1752)  loss_giou_unscaled: 0.4285 (0.5086)  cardinality_error_unscaled: 5.0000 (13.3333)  time: 1.4393  data: 0.0040  max mem: 2816
+Test:  [ 180/5000]  eta: 2:09:29  class_error: 100.00  loss: 5.2291 (5.9483)  loss_ce: 3.3682 (4.0565)  loss_bbox: 0.5370 (0.8751)  loss_giou: 0.5910 (1.0167)  loss_ce_unscaled: 3.3682 (4.0565)  class_error_unscaled: 80.0000 (76.0281)  loss_bbox_unscaled: 0.1074 (0.1750)  loss_giou_unscaled: 0.2955 (0.5084)  cardinality_error_unscaled: 4.0000 (13.3094)  time: 1.4110  data: 0.0040  max mem: 2816
+Test:  [ 190/5000]  eta: 2:08:44  class_error: 74.07  loss: 5.2992 (5.9229)  loss_ce: 3.3682 (4.0273)  loss_bbox: 0.6866 (0.8765)  loss_giou: 1.0143 (1.0191)  loss_ce_unscaled: 3.3682 (4.0273)  class_error_unscaled: 74.0741 (75.0007)  loss_bbox_unscaled: 0.1373 (0.1753)  loss_giou_unscaled: 0.5072 (0.5095)  cardinality_error_unscaled: 10.0000 (14.0157)  time: 1.4553  data: 0.0040  max mem: 2816
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: error: *** STEP 933301.0 ON atl1-1-03-007-33-0 CANCELLED AT 2024-11-13T10:27:31 ***
+slurmstepd: error: *** JOB 933301 ON atl1-1-03-007-33-0 CANCELLED AT 2024-11-13T10:27:31 ***
+---------------------------------------
+Begin Slurm Epilog: Nov-13-2024 10:27:33
+Job ID:        933301
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      AFOG_DETR
+Resources:     cpu=1,gres/gpu:a100=1,mem=32G,node=1
+Rsrc Used:     cput=00:05:52,vmem=0,walltime=00:05:52,mem=6544K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-03-007-33-0
+---------------------------------------

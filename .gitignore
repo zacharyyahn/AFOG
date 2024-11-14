@@ -3,9 +3,12 @@
 *.pth
 *.tar
 *.zip
-*.ipynb-checkpoints
+.ipynb-checkpoints/
+*.ipynb-checkpoints/
+demos/.ipynb-checkpoints/
+output/blackbox/
+.github/ISSUE_TEMPLATE
 *.gif
-*.png
 *.xml
 *.h5
 *.sbatch
@@ -25,4 +28,5 @@ experiment-*
 **/.mypy_cache/*
 .mypy_cache/*
 not_tracked_dir/
+demos/output/
 .vscode

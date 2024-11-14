@@ -1,92 +1,132 @@
-## TOG: Adversarial Objectness Gradient Attacks in Real-time Object Detection Systems
-![](assets/showcase.png)
+## Attention-Based Adversarial Perturbations on Large Vision Transformers for Object Detection
 
-Real-time object detection is one of the key applications of deep neural networks (DNNs) for real-world mission-critical systems. While DNN-powered object detection systems celebrate many life-enriching opportunities, they also open doors for misuse and abuse. This project presents a suite of adversarial objectness gradient attacks, coined as TOG, which can cause the state-of-the-art deep object detection networks to suffer from untargeted random attacks or even targeted attacks with three types of specificity: (1) object-vanishing, (2) object-fabrication, and (3) object-mislabeling. Apart from tailoring an adversarial perturbation for each input image, we further demonstrate TOG as a universal attack, which trains a single adversarial perturbation that can be generalized to effectively craft an unseen input with a negligible attack time cost. Also, we apply TOG as an adversarial patch attack, a form of physical attacks, showing its ability to optimize a visually confined patch filled with malicious patterns, deceiving well-trained object detectors to misbehave purposefully. 
+[](assets/examples.png)
 
-| No Attack | TOG-vanishing | TOG-fabrication | TOG-mislabeling |
-|:---------:|:-------------:|:---------------:|-----------------|
-|![](assets/showcase_benign.gif)|![](assets/showcase_vanish.gif)|![](assets/showcase_fabricate.gif)|![](assets/showcase_mislabel.gif)|
+Adversarial perturbations are useful tools for gaining a deeper understanding of large transformer-based object detection models. Existing adversarial perturbation methods are limited to attacking regression-based object detectors (be it two-stage proposal-based or single-stage detectors). This paper presents an attention-focused offensive gradient (AFOG) attack with dual objectives: AFOG is an adversarial perturbation method targeted at vision transformer models for object detection; and the AFOG adversarial perturbation framework is neural-architecture agnostic and effective for attacking both large transformer-based object detectors and conventional regression-based detectors. First, AFOG utilizes a learnable attention mechanism that focuses perturbations on vulnerable areas of feature maps in multi-box detection tasks. Second, AFOG’s attack loss is formulated by integrating two types of feature loss through learnable feature-map based attention updates with iterative injection of adversarial perturbations. Finally, AFOG is an efficient and stealthy adversarial perturbation method, and it probes the weak spots of detection-transformers by adding strategically generated and yet visually imperceptible perturbations, which can cause well-trained vision models to fail on their object detection tasks. To the best of our knowledge, AFOG is the first method that can attack both advanced transformer-based object detection models and traditional regression-based object detectors through a unified attention-based attack framework. Extensive experiments conducted with twelve large detection transformers on COCO demonstrate the efficacy of AFOG. Our empirical results also show that AFOG outperforms the existing attacks on regression-based objet detectors.
 
-This repository contains the source code for the following papers in our lab:
-* Ka-Ho Chow, Ling Liu, Margaret Loper, Juhyun Bae, Mehmet Emre Gursoy, Stacey Truex, Wenqi Wei, and Yanzhao Wu. "Adversarial Objectness Gradient Attacks in Real-time Object Detection Systems." In IEEE International Conference on Trust, Privacy and Security in Intelligent Systems, and Applications, 2020. [[PDF]](https://khchow.com/media/arXiv_TOG.pdf) [[Talk]](http://www.youtube.com/watch?v=acWI5pFNvwg)
-* Ka-Ho Chow, Ling Liu, Mehmet Emre Gursoy, Stacey Truex, Wenqi Wei, and Yanzhao Wu. "Understanding Object Detection Through an Adversarial Lens." In European Symposium on Research in Computer Security, pp. 460-481. Springer, 2020. [[PDF]](https://arxiv.org/pdf/2007.05828.pdf) [[Talk]](http://www.youtube.com/watch?v=acWI5pFNvwg)
+## Setup and Dependencies
+This project uses Python 3.12.4 with CUDA 12.5 on an NVIDIA A100 GPU. Other versions and hardware are not guaranteed to function properly. To run our code, following these steps (note that initial steps are different depending on model):
 
+#### Transformers and FRCNN
 
-## Installation and Dependencies
-This project runs on Python 3.6. You are highly recommended to create a virtual environment to make sure the dependencies do not interfere with your current programming environment. By default, GPUs will be used to accelerate the process of adversarial attacks. 
-
-To create a virtual environment, run the following command in terminal:
-```bash
-python3 -m venv venv
-source venv/bin/activate
+1. Create and activate a virtual environment.
 ```
-
-To install related packages, run the following command in terminal:
-```bash
-pip install --upgrade pip
+conda create -n AFOG
+conda activate AFOG
+```
+2. Download and unzip or clone our repository.
+3. Install required packages and build Detrex, Detectron2.
+```
 pip install -r requirements.txt
+pushd models/detrex
+git submodule init
+git submodule update
+python -m pip install -e detectron2
+pip install -e .
+popd
 ```
+
+#### SSD and YOLO
+
+1. Create and activate a virtual environment.
+```
+conda create -n AFOG_Reg
+conda activate AFOG_Reg
+```
+2. Download and unzip or clone our repository.
+3. Install required packages.
+```
+pip install -r requirements_reg.txt
+```
+
+#### All Models
+4a. If exploring transformers, download and unzip [COCO](http://images.cocodataset.org/annotations/annotations_trainval2017.zip) to locations:
+```
+<top_level_name>/datasets/coco/annotations/
+<top_level_name>/datasets/coco/val2017/
+```
+
+4b. If exploring regression-based detectors, download and unzip [VOC](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar) to locations:
+
+```
+<top_level_name>/datasets/voc/VOCDevKit/VOC2007/JPEGImages
+<top_level_name>/datasets/voc/VOCDevKit/VOC2007/Annotations
+```
+
+5. Download and unzip models as necessary so that each is either .pth or .h5. Store them in:
+```
+<top_level_name>/model_files/example_model.pth
+```
+
+Model Files:
+* [DETR-R50](https://dl.fbaipublicfiles.com/detr/detr-r50-e632da11.pth)
+* [DETR-R101](https://dl.fbaipublicfiles.com/detr/detr-r101-2c7b67e5.pth)
+* [Deformable DETR](https://drive.google.com/file/d/1nDWZWHuRwtwGden77NLM9JoWe-YisJnA/view?usp=sharing)
+* [ResNet-50](https://github.com/IDEA-Research/detrex-storage/releases/download/v0.2.0/dino_r50_4scale_12ep_49_2AP.pth)
+* [AlignDETR](https://drive.google.com/file/d/1zQYe78fDdCmK3nwbAWYLvGCdQCFsTqoX/view?usp=share_link)
+* [ViTDet](https://github.com/IDEA-Research/detrex-storage/releases/download/v0.2.1/dino_vitdet_base_4scale_50ep.pth)
+* [ConvNeXt](https://github.com/IDEA-Research/detrex-storage/releases/download/v0.4.0/dino_convnext_large_384_4scale_12ep.pth)
+* [Swin-L](https://drive.google.com/drive/folders/1qD5m1NmK0kjE5hh-G17XUX751WsEG-h_?usp=sharing)
+* [InternImage](https://github.com/IDEA-Research/detrex-storage/releases/download/v0.4.0/dino_internimage_large_4scale_12ep.pth)
+* [FocalNet](https://github.com/IDEA-Research/detrex-storage/releases/download/v0.2.1/dino_focalnet_large_lrf_384_fl4_5scale_12ep.pth)
+* [EVA](https://huggingface.co/IDEA-CVR/DINO-EVA/resolve/main/dino_eva_01_o365_finetune_1280_lsj_augmentation_4scale_12ep.pth)
+* [DETA](https://github.com/IDEA-Research/detrex-storage/releases/download/v0.3.0/converted_deta_swin_o365_finetune.pth)
+* [Faster R-CNN](https://github.com/git-disl/TOG/releases/download/pm-v1.0/FRCNN.pth)
+* [SSD-300](https://github.com/git-disl/TOG/releases/download/pm-v1.0/SSD300.h5)
+* [YOLO-v3](https://github.com/git-disl/TOG/releases/download/pm-v1.0/YOLOv3_Darknet53.h5)
+
 
 ## Instruction
-TOG attacks support both one-phase and two-phase object detectors. In this repository, we include five object detectors trained on the VOC dataset. We prepare a Jupyter notebook for each victim detector to demonstrate the TOG attacks. Pretrained weights are available for download, and the links are provided in the corresponding notebook.
-* TOG-untargeted, TOG-vanishing, TOG-fabrication, and TOG-mislabeling
-    * YOLOv3 with Darknet53: [[link]](https://github.com/git-disl/TOG/blob/master/demo_yolov3-d.ipynb)
-    * YOLOv3 with MobileNetV1: [[link]](https://github.com/git-disl/TOG/blob/master/demo_yolov3-m.ipynb)
-    * SSD300 with VGG16: [[link]](https://github.com/git-disl/TOG/blob/master/demo_ssd300.ipynb)
-    * SSD512 with VGG16: [[link]](https://github.com/git-disl/TOG/blob/master/demo_ssd512.ipynb)
-    * Faster R-CNN with VGG16: [[link]](https://github.com/git-disl/TOG/blob/master/demo_frcnn.ipynb)
-* TOG-patch: [[link]](https://github.com/git-disl/TOG/blob/master/demo_patch.ipynb)
-* TOG-universal: [[link]](https://github.com/git-disl/TOG/blob/master/demo_universal.ipynb) - Pretrained universal perturbations (both vanishing and fabrication) for all supported models are available [[here]](https://github.com/git-disl/TOG/blob/master/pretrained_universal).
+We provide two means of running AFOG on a variety of models. First, we provide Jupyter notebooks for deploying AFOG against a single COCO image and visualizing the results. Second, we provide Slurm scripts for running AFOG on the entire COCO 2017 test-dev set and logging the results.
 
-## Status
-We are continuing the development and there is ongoing work in our lab regarding adversarial attacks and defenses on object detection. If you would like to contribute to this project, please contact [Ka-Ho Chow](https://khchow.com). 
-
-The code is provided as is, without warranty or support. If you use our code, please cite:
-```
-@inproceedings{chow2020adversarial,
-  title={Adversarial Objectness Gradient Attacks in Real-time Object Detection Systems},
-  author={Chow, Ka-Ho and Liu, Ling and Loper, Margaret and Bae, Juhyun and Emre Gursoy, Mehmet and Truex, Stacey and Wei, Wenqi and Wu, Yanzhao},
-  booktitle={IEEE International Conference on Trust, Privacy and Security in Intelligent Systems, and Applications},
-  pages={263--272},
-  year={2020},
-  organization={IEEE}
-}
-```
+#### AFOG on a Single Image
+Before running these notebooks, be sure to link the Conda environment kernel with Ipykernel:
 
 ```
-@inproceedings{chow2020understanding,
-  title={Understanding Object Detection Through an Adversarial Lens},
-  author={Chow, Ka-Ho and Liu, Ling and Gursoy, Mehmet Emre and Truex, Stacey and Wei, Wenqi and Wu, Yanzhao},
-  booktitle={European Symposium on Research in Computer Security},
-  pages={460--481},
-  year={2020},
-  organization={Springer}
-}
+conda activate <AFOG or AFOG_Reg>
+conda install ipykernel                                    
+ipython kernel install --user --name=<AFOG or AFOG_Reg>
 ```
 
-Our lab also investigates robust object detection against adversarial attacks, you can refer to:
+We provide the following demo notebooks:
+
+Visualize AFOG attack on DETR and self-attention weight analysis:
 ```
-@inproceedings{chow2021robust,
-  title={Robust Object Detection Fusion Against Deception},
-  author={Chow, Ka-Ho and Liu, Ling},
-  booktitle={ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
-  year={2021},
-  organization={ACM}
-}
+demos/visualize_detr.ipynb
 ```
+Visualize AFOG attack on Swin-L:
 ```
-@inproceedings{chow2022boosting,
-  title={Boosting Object Detection Ensembles with Error Diversity},
-  author={Chow, Ka-Ho and Liu, Ling},
-  booktitle={IEEE International Conference on Data Mining},
-  year={2022},
-  organization={IEEE}
-}
+demos/visualize_swin.ipynb
 ```
+Visualize AFOG attacks on Detrex models:
+```
+demos/visualize_detrex.ipynb
+```
+Visualize AFOG attack on Faster R-CNN and compare with TOG:
+```
+demos/visualize_frcnn.ipynb
+```
+Visualize AFOG attack on SSD-300:
+```
+demos/visualize_ssd300.ipynb
+```
+Visualize AFOG attack on YOLO-v3:
+```
+demos/visualize_ssd300.ipynb
+```
+
+#### AFOG on COCO:
+We provide Slurm scripts for running AFOG through the entire COCO test-dev set on each model with configurable attack parameters and modes. Each script follows the general format `<model_name>_job.sbatch`. For example, to evaluate generic AFOG on ViTDet, the command would simply be:
+```
+sbatch scripts/vitdet_job.sbatch
+```
+
 
 ## Acknowledgement
 This project is developed based on the following repositories:
+* [idea-research/detrex](https://github.com/IDEA-Research/detrex/tree/main?tab=readme-ov-file)
+* [facebookresearch/detr](https://github.com/facebookresearch/detr)
+* [git-disl/tog](https://github.com/git-disl/TOG/tree/master)
 * [qqwweee/keras-yolo3](https://github.com/qqwweee/keras-yolo3)
-* [Adamdad/keras-YOLOv3-mobilenet](https://github.com/Adamdad/keras-YOLOv3-mobilenet)
 * [pierluigiferrari/ssd_keras](https://github.com/pierluigiferrari/ssd_keras)
 * [chenyuntc/simple-faster-rcnn-pytorch](https://github.com/chenyuntc/simple-faster-rcnn-pytorch)

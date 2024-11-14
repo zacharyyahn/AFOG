@@ -1,5 +1,5 @@
-from yolov3_utils.model import preprocess_true_boxes, yolo_boxes_and_scores, yolo_head, box_iou
-from yolov3_utils.model import yolo_darknet53, yolo_mobilenetv1
+from utils.yolov3_utils.model import preprocess_true_boxes, yolo_boxes_and_scores, yolo_head, box_iou
+from utils.yolov3_utils.model import yolo_darknet53, yolo_mobilenetv1
 from keras.layers import Input
 from keras import backend as K
 import tensorflow as tf
