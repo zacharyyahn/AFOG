@@ -17,6 +17,7 @@ output/blackbox/
 .dumbo.json
 .DS_store
 .*.swp
+logs/
 **/__pycache__/**
 .ipynb_checkpoints/
 datasets/coco/
