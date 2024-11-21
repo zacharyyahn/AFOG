@@ -1,0 +1,423 @@
+---------------------------------------
+Begin Slurm Prolog: Nov-15-2024 10:02:00
+Job ID:    941573
+User ID:   zyahn3
+Account:   scs
+Job name:  AFOG_InternImage
+Partition: coc-gpu
+---------------------------------------
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/condabin/conda
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/bin/conda
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/bin/conda-env
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/bin/activate
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/bin/deactivate
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/etc/profile.d/conda.sh
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/etc/fish/conf.d/conda.fish
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/shell/condabin/Conda.psm1
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/shell/condabin/conda-hook.ps1
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/lib/python3.10/site-packages/xontrib/conda.xsh
+no change     /usr/local/pace-apps/manual/packages/anaconda3/2023.03/etc/profile.d/conda.csh
+no change     /home/hice1/zyahn3/.bashrc
+No action taken.
+/storage/ice1/5/9/zyahn3/TOG_plus/models/detrex/detrex/layers/dcn_v3.py:23: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  @custom_fwd
+/storage/ice1/5/9/zyahn3/TOG_plus/models/detrex/detrex/layers/dcn_v3.py:52: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  @custom_bwd
+[11/15 10:03:51 detectron2]: Rank of current process: 0. World size: 1
+[11/15 10:03:53 detectron2]: Environment info:
+-------------------------------  ------------------------------------------------------------------------------------
+sys.platform                     linux
+Python                           3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:12:24) [GCC 11.2.0]
+numpy                            1.26.4
+detectron2                       0.6 @/storage/ice1/5/9/zyahn3/TOG_plus/models/detrex/detectron2/detectron2
+Compiler                         GCC 12.3
+CUDA compiler                    not available
+DETECTRON2_ENV_MODULE            <not set>
+PyTorch                          2.4.1 @/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/torch
+PyTorch debug build              False
+torch._C._GLIBCXX_USE_CXX11_ABI  False
+GPU available                    Yes
+GPU 0                            NVIDIA A100-PCIE-40GB (arch=8.0)
+Driver version                   555.42.02
+CUDA_HOME                        /usr/local/cuda
+Pillow                           10.4.0
+torchvision                      0.19.1 @/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/torchvision
+torchvision arch flags           5.0, 6.0, 7.0, 7.5, 8.0, 8.6, 9.0
+fvcore                           0.1.5.post20221221
+iopath                           0.1.9
+cv2                              4.10.0
+-------------------------------  ------------------------------------------------------------------------------------
+PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.4.2 (Git Hash 1137e04ec0b5251ca2b4400a4fd3c667ce843d67)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 12.4
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 90.1
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.4, CUDNN_VERSION=9.1.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.4.1, USE_CUDA=ON, USE_CUDNN=ON, USE_CUSPARSELT=1, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+[11/15 10:03:53 detectron2]: Command line arguments: Namespace(config_file='models/detrex/projects/dino/configs/dino-internimage/dino_internimage_large_4scale_12ep.py', resume=False, eval_only=True, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:53103', opts=['train.init_checkpoint=model_files/internimage.pth', 'attack=none', 'attack_mode=none', 'sample=1.0', 'save_attack=0.0', 'save_dir=datasets/blackbox/internimage/', 'load_attack=0.0', 'load_dir=datasets/blackbox/internimage/'])
+[11/15 10:03:53 detectron2]: Contents of args.config_file=models/detrex/projects/dino/configs/dino-internimage/dino_internimage_large_4scale_12ep.py:
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15mdetrex[39m[38;5;15m.[39m[38;5;15mconfig[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mget_config[39m
+[38;5;204mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15m.[39m[38;5;15mmodels[39m[38;5;15m.[39m[38;5;15mdino_internimage[39m[38;5;15m [39m[38;5;204mimport[39m[38;5;15m [39m[38;5;15mmodel[39m
+
+[38;5;245m# get default config[39m
+[38;5;15mdataloader[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/data/coco_detr.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mdataloader[39m
+[38;5;15moptimizer[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/optim.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mAdamW[39m
+[38;5;15mlr_multiplier[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/coco_schedule.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mlr_multiplier_12ep[39m
+[38;5;15mtrain[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mget_config[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mcommon/train.py[39m[38;5;186m"[39m[38;5;15m)[39m[38;5;204m.[39m[38;5;15mtrain[39m
+
+[38;5;245m# modify training config[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15minit_checkpoint[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186m/path/to/internimage_l_22kto1k_384.pth[39m[38;5;186m"[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15moutput_dir[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186m./output/dino_internimage_large_384_4scale_12ep[39m[38;5;186m"[39m
+
+[38;5;245m# max training iterations[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mmax_iter[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m90000[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15meval_period[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m5000[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mlog_period[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m20[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mcheckpointer[39m[38;5;204m.[39m[38;5;15mperiod[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m5000[39m
+
+[38;5;245m# gradient clipping for training[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15menabled[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mTrue[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mmax_norm[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m0.1[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mclip_grad[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mnorm_type[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m2[39m
+
+[38;5;245m# set training devices[39m
+[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mdevice[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mcuda[39m[38;5;186m"[39m
+[38;5;15mmodel[39m[38;5;204m.[39m[38;5;15mdevice[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mdevice[39m
+
+[38;5;245m# modify optimizer config[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mlr[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1e-4[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mbetas[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;15m([39m[38;5;141m0.9[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m0.999[39m[38;5;15m)[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mweight_decay[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m1e-4[39m
+[38;5;15moptimizer[39m[38;5;204m.[39m[38;5;15mparams[39m[38;5;204m.[39m[38;5;15mlr_factor_func[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;81mlambda[39m[38;5;15m [39m[38;5;15mmodule_name[39m[38;5;15m:[39m[38;5;15m [39m[38;5;141m0.1[39m[38;5;15m [39m[38;5;81mif[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mbackbone[39m[38;5;186m"[39m[38;5;15m [39m[38;5;204min[39m[38;5;15m [39m[38;5;15mmodule_name[39m[38;5;15m [39m[38;5;81melse[39m[38;5;15m [39m[38;5;141m1[39m
+
+[38;5;245m# modify dataloader config[39m
+[38;5;15mdataloader[39m[38;5;204m.[39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mnum_workers[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m16[39m
+
+[38;5;245m# please notice that this is total batch size.[39m
+[38;5;245m# surpose you're using 4 gpus for training and the batch size for[39m
+[38;5;245m# each gpu is 16/4 = 4[39m
+[38;5;15mdataloader[39m[38;5;204m.[39m[38;5;15mtrain[39m[38;5;204m.[39m[38;5;15mtotal_batch_size[39m[38;5;15m [39m[38;5;204m=[39m[38;5;15m [39m[38;5;141m16[39m
+
+[38;5;15mattack[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15mattack_mode[39m[38;5;204m=[39m[38;5;81mNone[39m
+[38;5;15msample[39m[38;5;204m=[39m[38;5;141m1.0[39m
+
+WARNING [11/15 10:03:53 d2.config.lazy]: The config contains objects that cannot serialize to a valid yaml. ./output/dino_internimage_large_384_4scale_12ep/config.yaml is human-readable but cannot be loaded.
+WARNING [11/15 10:03:53 d2.config.lazy]: Config is saved using cloudpickle at ./output/dino_internimage_large_384_4scale_12ep/config.yaml.pkl.
+[11/15 10:03:53 detectron2]: Full config saved to ./output/dino_internimage_large_384_4scale_12ep/config.yaml
+[11/15 10:03:53 d2.utils.env]: Using a generated random seed 55640219
+[11/15 10:03:53 InternImage]: using core type: DCNv3
+[11/15 10:03:53 InternImage]: using activation layer: GELU
+[11/15 10:03:53 InternImage]: using main norm layer: LN
+[11/15 10:03:53 InternImage]: using dpr: linear, 0.0
+[11/15 10:03:53 InternImage]: level2_post_norm: False
+[11/15 10:03:53 InternImage]: level2_post_norm_block_ids: None
+[11/15 10:03:53 InternImage]: res_post_norm: False
+[11/15 10:03:59 d2.checkpoint.detection_checkpoint]: [DetectionCheckpointer] Loading from model_files/internimage.pth ...
+[11/15 10:03:59 fvcore.common.checkpoint]: [Checkpointer] Loading from model_files/internimage.pth ...
+/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/fvcore/common/checkpoint.py:252: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(f, map_location=torch.device("cpu"))
+[11/15 10:04:03 detectron2]: Run evaluation under eval-only mode
+[11/15 10:04:03 detectron2]: Run evaluation without EMA.
+[11/15 10:04:03 d2.data.datasets.coco]: Loaded 5000 images in COCO format from datasets/coco/annotations/instances_val2017.json
+[11/15 10:04:03 d2.data.build]: Distribution of instances among all 80 categories:
+|   category    | #instances   |   category   | #instances   |   category    | #instances   |
+|:-------------:|:-------------|:------------:|:-------------|:-------------:|:-------------|
+|    person     | 10777        |   bicycle    | 314          |      car      | 1918         |
+|  motorcycle   | 367          |   airplane   | 143          |      bus      | 283          |
+|     train     | 190          |    truck     | 414          |     boat      | 424          |
+| traffic light | 634          | fire hydrant | 101          |   stop sign   | 75           |
+| parking meter | 60           |    bench     | 411          |     bird      | 427          |
+|      cat      | 202          |     dog      | 218          |     horse     | 272          |
+|     sheep     | 354          |     cow      | 372          |   elephant    | 252          |
+|     bear      | 71           |    zebra     | 266          |    giraffe    | 232          |
+|   backpack    | 371          |   umbrella   | 407          |    handbag    | 540          |
+|      tie      | 252          |   suitcase   | 299          |    frisbee    | 115          |
+|     skis      | 241          |  snowboard   | 69           |  sports ball  | 260          |
+|     kite      | 327          | baseball bat | 145          | baseball gl.. | 148          |
+|  skateboard   | 179          |  surfboard   | 267          | tennis racket | 225          |
+|    bottle     | 1013         |  wine glass  | 341          |      cup      | 895          |
+|     fork      | 215          |    knife     | 325          |     spoon     | 253          |
+|     bowl      | 623          |    banana    | 370          |     apple     | 236          |
+|   sandwich    | 177          |    orange    | 285          |   broccoli    | 312          |
+|    carrot     | 365          |   hot dog    | 125          |     pizza     | 284          |
+|     donut     | 328          |     cake     | 310          |     chair     | 1771         |
+|     couch     | 261          | potted plant | 342          |      bed      | 163          |
+| dining table  | 695          |    toilet    | 179          |      tv       | 288          |
+|    laptop     | 231          |    mouse     | 106          |    remote     | 283          |
+|   keyboard    | 153          |  cell phone  | 262          |   microwave   | 55           |
+|     oven      | 143          |   toaster    | 9            |     sink      | 225          |
+| refrigerator  | 126          |     book     | 1129         |     clock     | 267          |
+|     vase      | 274          |   scissors   | 36           |  teddy bear   | 190          |
+|  hair drier   | 11           |  toothbrush  | 57           |               |              |
+|     total     | 36335        |              |              |               |              |
+[11/15 10:04:03 d2.data.common]: Serializing the dataset using: <class 'detectron2.data.common._TorchSerializedList'>
+[11/15 10:04:03 d2.data.common]: Serializing 5000 elements to byte tensors and concatenating them all ...
+[11/15 10:04:04 d2.data.common]: Serialized dataset takes 19.10 MiB
+[11/15 10:04:04 d2.evaluation.evaluator]: Start inference on 5000 batches
+Doing attack: None
+/home/hice1/zyahn3/.conda/envs/AFOG/lib/python3.12/site-packages/torch/functional.py:513: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /opt/conda/conda-bld/pytorch_1724789220573/work/aten/src/ATen/native/TensorShape.cpp:3609.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+[11/15 10:04:24 d2.evaluation.evaluator]: Inference done 1/5000. Dataloading: 1.6320 s/iter. Inference: 17.9706 s/iter. Eval: 0.0030 s/iter. Total: 19.6080 s/iter. ETA=1 day, 3:13:40
+[11/15 10:04:29 d2.evaluation.evaluator]: Inference done 29/5000. Dataloading: 0.0011 s/iter. Inference: 0.1700 s/iter. Eval: 0.0003 s/iter. Total: 0.1714 s/iter. ETA=0:14:11
+[11/15 10:04:34 d2.evaluation.evaluator]: Inference done 60/5000. Dataloading: 0.0011 s/iter. Inference: 0.1674 s/iter. Eval: 0.0003 s/iter. Total: 0.1688 s/iter. ETA=0:13:53
+[11/15 10:04:39 d2.evaluation.evaluator]: Inference done 91/5000. Dataloading: 0.0011 s/iter. Inference: 0.1660 s/iter. Eval: 0.0003 s/iter. Total: 0.1674 s/iter. ETA=0:13:41
+[11/15 10:04:44 d2.evaluation.evaluator]: Inference done 122/5000. Dataloading: 0.0011 s/iter. Inference: 0.1647 s/iter. Eval: 0.0003 s/iter. Total: 0.1661 s/iter. ETA=0:13:30
+[11/15 10:04:49 d2.evaluation.evaluator]: Inference done 152/5000. Dataloading: 0.0011 s/iter. Inference: 0.1657 s/iter. Eval: 0.0003 s/iter. Total: 0.1671 s/iter. ETA=0:13:30
+[11/15 10:04:54 d2.evaluation.evaluator]: Inference done 183/5000. Dataloading: 0.0011 s/iter. Inference: 0.1653 s/iter. Eval: 0.0003 s/iter. Total: 0.1667 s/iter. ETA=0:13:22
+[11/15 10:04:59 d2.evaluation.evaluator]: Inference done 213/5000. Dataloading: 0.0011 s/iter. Inference: 0.1656 s/iter. Eval: 0.0003 s/iter. Total: 0.1670 s/iter. ETA=0:13:19
+[11/15 10:05:04 d2.evaluation.evaluator]: Inference done 244/5000. Dataloading: 0.0011 s/iter. Inference: 0.1655 s/iter. Eval: 0.0003 s/iter. Total: 0.1669 s/iter. ETA=0:13:14
+[11/15 10:05:10 d2.evaluation.evaluator]: Inference done 275/5000. Dataloading: 0.0011 s/iter. Inference: 0.1654 s/iter. Eval: 0.0003 s/iter. Total: 0.1668 s/iter. ETA=0:13:08
+[11/15 10:05:15 d2.evaluation.evaluator]: Inference done 304/5000. Dataloading: 0.0011 s/iter. Inference: 0.1663 s/iter. Eval: 0.0003 s/iter. Total: 0.1677 s/iter. ETA=0:13:07
+[11/15 10:05:20 d2.evaluation.evaluator]: Inference done 334/5000. Dataloading: 0.0011 s/iter. Inference: 0.1664 s/iter. Eval: 0.0003 s/iter. Total: 0.1678 s/iter. ETA=0:13:03
+[11/15 10:05:25 d2.evaluation.evaluator]: Inference done 363/5000. Dataloading: 0.0011 s/iter. Inference: 0.1669 s/iter. Eval: 0.0003 s/iter. Total: 0.1683 s/iter. ETA=0:13:00
+[11/15 10:05:30 d2.evaluation.evaluator]: Inference done 393/5000. Dataloading: 0.0011 s/iter. Inference: 0.1669 s/iter. Eval: 0.0003 s/iter. Total: 0.1684 s/iter. ETA=0:12:55
+[11/15 10:05:35 d2.evaluation.evaluator]: Inference done 423/5000. Dataloading: 0.0011 s/iter. Inference: 0.1671 s/iter. Eval: 0.0003 s/iter. Total: 0.1685 s/iter. ETA=0:12:51
+[11/15 10:05:40 d2.evaluation.evaluator]: Inference done 453/5000. Dataloading: 0.0011 s/iter. Inference: 0.1673 s/iter. Eval: 0.0003 s/iter. Total: 0.1687 s/iter. ETA=0:12:47
+[11/15 10:05:45 d2.evaluation.evaluator]: Inference done 482/5000. Dataloading: 0.0011 s/iter. Inference: 0.1677 s/iter. Eval: 0.0003 s/iter. Total: 0.1692 s/iter. ETA=0:12:44
+[11/15 10:05:50 d2.evaluation.evaluator]: Inference done 513/5000. Dataloading: 0.0011 s/iter. Inference: 0.1676 s/iter. Eval: 0.0003 s/iter. Total: 0.1690 s/iter. ETA=0:12:38
+[11/15 10:05:55 d2.evaluation.evaluator]: Inference done 543/5000. Dataloading: 0.0011 s/iter. Inference: 0.1677 s/iter. Eval: 0.0003 s/iter. Total: 0.1691 s/iter. ETA=0:12:33
+[11/15 10:06:01 d2.evaluation.evaluator]: Inference done 573/5000. Dataloading: 0.0011 s/iter. Inference: 0.1677 s/iter. Eval: 0.0003 s/iter. Total: 0.1692 s/iter. ETA=0:12:28
+[11/15 10:06:06 d2.evaluation.evaluator]: Inference done 603/5000. Dataloading: 0.0011 s/iter. Inference: 0.1677 s/iter. Eval: 0.0003 s/iter. Total: 0.1691 s/iter. ETA=0:12:23
+[11/15 10:06:11 d2.evaluation.evaluator]: Inference done 631/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0006 s/iter. Total: 0.1696 s/iter. ETA=0:12:20
+[11/15 10:06:16 d2.evaluation.evaluator]: Inference done 661/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:12:15
+[11/15 10:06:21 d2.evaluation.evaluator]: Inference done 691/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:12:11
+[11/15 10:06:26 d2.evaluation.evaluator]: Inference done 720/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:12:07
+[11/15 10:06:31 d2.evaluation.evaluator]: Inference done 750/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:12:01
+[11/15 10:06:36 d2.evaluation.evaluator]: Inference done 779/5000. Dataloading: 0.0011 s/iter. Inference: 0.1683 s/iter. Eval: 0.0005 s/iter. Total: 0.1700 s/iter. ETA=0:11:57
+[11/15 10:06:41 d2.evaluation.evaluator]: Inference done 809/5000. Dataloading: 0.0011 s/iter. Inference: 0.1684 s/iter. Eval: 0.0005 s/iter. Total: 0.1700 s/iter. ETA=0:11:52
+[11/15 10:06:46 d2.evaluation.evaluator]: Inference done 839/5000. Dataloading: 0.0011 s/iter. Inference: 0.1683 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:11:47
+[11/15 10:06:51 d2.evaluation.evaluator]: Inference done 869/5000. Dataloading: 0.0011 s/iter. Inference: 0.1684 s/iter. Eval: 0.0005 s/iter. Total: 0.1700 s/iter. ETA=0:11:42
+[11/15 10:06:56 d2.evaluation.evaluator]: Inference done 899/5000. Dataloading: 0.0011 s/iter. Inference: 0.1684 s/iter. Eval: 0.0005 s/iter. Total: 0.1700 s/iter. ETA=0:11:37
+[11/15 10:07:01 d2.evaluation.evaluator]: Inference done 929/5000. Dataloading: 0.0011 s/iter. Inference: 0.1683 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:11:31
+[11/15 10:07:07 d2.evaluation.evaluator]: Inference done 959/5000. Dataloading: 0.0011 s/iter. Inference: 0.1683 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:11:26
+[11/15 10:07:12 d2.evaluation.evaluator]: Inference done 989/5000. Dataloading: 0.0011 s/iter. Inference: 0.1683 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:11:21
+[11/15 10:07:17 d2.evaluation.evaluator]: Inference done 1019/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0004 s/iter. Total: 0.1698 s/iter. ETA=0:11:16
+[11/15 10:07:22 d2.evaluation.evaluator]: Inference done 1048/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0006 s/iter. Total: 0.1700 s/iter. ETA=0:11:11
+[11/15 10:07:27 d2.evaluation.evaluator]: Inference done 1078/5000. Dataloading: 0.0011 s/iter. Inference: 0.1683 s/iter. Eval: 0.0006 s/iter. Total: 0.1701 s/iter. ETA=0:11:06
+[11/15 10:07:32 d2.evaluation.evaluator]: Inference done 1108/5000. Dataloading: 0.0011 s/iter. Inference: 0.1683 s/iter. Eval: 0.0006 s/iter. Total: 0.1701 s/iter. ETA=0:11:02
+[11/15 10:07:37 d2.evaluation.evaluator]: Inference done 1137/5000. Dataloading: 0.0011 s/iter. Inference: 0.1684 s/iter. Eval: 0.0006 s/iter. Total: 0.1702 s/iter. ETA=0:10:57
+[11/15 10:07:42 d2.evaluation.evaluator]: Inference done 1167/5000. Dataloading: 0.0011 s/iter. Inference: 0.1684 s/iter. Eval: 0.0006 s/iter. Total: 0.1702 s/iter. ETA=0:10:52
+[11/15 10:07:47 d2.evaluation.evaluator]: Inference done 1197/5000. Dataloading: 0.0011 s/iter. Inference: 0.1685 s/iter. Eval: 0.0006 s/iter. Total: 0.1702 s/iter. ETA=0:10:47
+[11/15 10:07:53 d2.evaluation.evaluator]: Inference done 1227/5000. Dataloading: 0.0011 s/iter. Inference: 0.1685 s/iter. Eval: 0.0006 s/iter. Total: 0.1702 s/iter. ETA=0:10:42
+[11/15 10:07:58 d2.evaluation.evaluator]: Inference done 1257/5000. Dataloading: 0.0011 s/iter. Inference: 0.1685 s/iter. Eval: 0.0006 s/iter. Total: 0.1702 s/iter. ETA=0:10:37
+[11/15 10:08:03 d2.evaluation.evaluator]: Inference done 1287/5000. Dataloading: 0.0011 s/iter. Inference: 0.1685 s/iter. Eval: 0.0006 s/iter. Total: 0.1702 s/iter. ETA=0:10:31
+[11/15 10:08:08 d2.evaluation.evaluator]: Inference done 1317/5000. Dataloading: 0.0011 s/iter. Inference: 0.1684 s/iter. Eval: 0.0006 s/iter. Total: 0.1701 s/iter. ETA=0:10:26
+[11/15 10:08:13 d2.evaluation.evaluator]: Inference done 1347/5000. Dataloading: 0.0011 s/iter. Inference: 0.1684 s/iter. Eval: 0.0006 s/iter. Total: 0.1701 s/iter. ETA=0:10:21
+[11/15 10:08:18 d2.evaluation.evaluator]: Inference done 1377/5000. Dataloading: 0.0011 s/iter. Inference: 0.1684 s/iter. Eval: 0.0005 s/iter. Total: 0.1701 s/iter. ETA=0:10:16
+[11/15 10:08:23 d2.evaluation.evaluator]: Inference done 1407/5000. Dataloading: 0.0011 s/iter. Inference: 0.1684 s/iter. Eval: 0.0005 s/iter. Total: 0.1701 s/iter. ETA=0:10:11
+[11/15 10:08:28 d2.evaluation.evaluator]: Inference done 1438/5000. Dataloading: 0.0011 s/iter. Inference: 0.1683 s/iter. Eval: 0.0005 s/iter. Total: 0.1700 s/iter. ETA=0:10:05
+[11/15 10:08:33 d2.evaluation.evaluator]: Inference done 1469/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1698 s/iter. ETA=0:09:59
+[11/15 10:08:38 d2.evaluation.evaluator]: Inference done 1499/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1698 s/iter. ETA=0:09:54
+[11/15 10:08:43 d2.evaluation.evaluator]: Inference done 1530/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:09:48
+[11/15 10:08:48 d2.evaluation.evaluator]: Inference done 1558/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:09:44
+[11/15 10:08:53 d2.evaluation.evaluator]: Inference done 1588/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:09:39
+[11/15 10:08:58 d2.evaluation.evaluator]: Inference done 1618/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:09:34
+[11/15 10:09:04 d2.evaluation.evaluator]: Inference done 1648/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:09:29
+[11/15 10:09:09 d2.evaluation.evaluator]: Inference done 1678/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:09:24
+[11/15 10:09:14 d2.evaluation.evaluator]: Inference done 1708/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1699 s/iter. ETA=0:09:19
+[11/15 10:09:19 d2.evaluation.evaluator]: Inference done 1738/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1698 s/iter. ETA=0:09:13
+[11/15 10:09:24 d2.evaluation.evaluator]: Inference done 1768/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0005 s/iter. Total: 0.1698 s/iter. ETA=0:09:08
+[11/15 10:09:29 d2.evaluation.evaluator]: Inference done 1799/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1698 s/iter. ETA=0:09:03
+[11/15 10:09:34 d2.evaluation.evaluator]: Inference done 1829/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1698 s/iter. ETA=0:08:58
+[11/15 10:09:39 d2.evaluation.evaluator]: Inference done 1860/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:08:52
+[11/15 10:09:44 d2.evaluation.evaluator]: Inference done 1890/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1698 s/iter. ETA=0:08:47
+[11/15 10:09:50 d2.evaluation.evaluator]: Inference done 1920/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1698 s/iter. ETA=0:08:42
+[11/15 10:09:55 d2.evaluation.evaluator]: Inference done 1950/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:08:37
+[11/15 10:10:00 d2.evaluation.evaluator]: Inference done 1981/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:08:32
+[11/15 10:10:05 d2.evaluation.evaluator]: Inference done 2011/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:08:27
+[11/15 10:10:10 d2.evaluation.evaluator]: Inference done 2041/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:08:22
+[11/15 10:10:15 d2.evaluation.evaluator]: Inference done 2071/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:08:16
+[11/15 10:10:20 d2.evaluation.evaluator]: Inference done 2101/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:08:11
+[11/15 10:10:25 d2.evaluation.evaluator]: Inference done 2131/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:08:06
+[11/15 10:10:30 d2.evaluation.evaluator]: Inference done 2161/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:08:01
+[11/15 10:10:35 d2.evaluation.evaluator]: Inference done 2192/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:07:56
+[11/15 10:10:41 d2.evaluation.evaluator]: Inference done 2222/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:07:51
+[11/15 10:10:46 d2.evaluation.evaluator]: Inference done 2252/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:07:46
+[11/15 10:10:51 d2.evaluation.evaluator]: Inference done 2281/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0004 s/iter. Total: 0.1698 s/iter. ETA=0:07:41
+[11/15 10:10:56 d2.evaluation.evaluator]: Inference done 2312/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:07:36
+[11/15 10:11:01 d2.evaluation.evaluator]: Inference done 2342/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:07:31
+[11/15 10:11:06 d2.evaluation.evaluator]: Inference done 2372/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:07:26
+[11/15 10:11:11 d2.evaluation.evaluator]: Inference done 2402/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:07:20
+[11/15 10:11:16 d2.evaluation.evaluator]: Inference done 2432/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:07:15
+[11/15 10:11:21 d2.evaluation.evaluator]: Inference done 2461/5000. Dataloading: 0.0011 s/iter. Inference: 0.1682 s/iter. Eval: 0.0004 s/iter. Total: 0.1698 s/iter. ETA=0:07:11
+[11/15 10:11:27 d2.evaluation.evaluator]: Inference done 2492/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:07:05
+[11/15 10:11:32 d2.evaluation.evaluator]: Inference done 2522/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:07:00
+[11/15 10:11:37 d2.evaluation.evaluator]: Inference done 2553/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:06:55
+[11/15 10:11:42 d2.evaluation.evaluator]: Inference done 2584/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:06:49
+[11/15 10:11:47 d2.evaluation.evaluator]: Inference done 2614/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:06:44
+[11/15 10:11:52 d2.evaluation.evaluator]: Inference done 2644/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:06:39
+[11/15 10:11:57 d2.evaluation.evaluator]: Inference done 2674/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:06:34
+[11/15 10:12:02 d2.evaluation.evaluator]: Inference done 2704/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1697 s/iter. ETA=0:06:29
+[11/15 10:12:07 d2.evaluation.evaluator]: Inference done 2734/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:06:24
+[11/15 10:12:12 d2.evaluation.evaluator]: Inference done 2764/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:06:19
+[11/15 10:12:17 d2.evaluation.evaluator]: Inference done 2794/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:06:14
+[11/15 10:12:22 d2.evaluation.evaluator]: Inference done 2824/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:06:08
+[11/15 10:12:28 d2.evaluation.evaluator]: Inference done 2853/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:06:04
+[11/15 10:12:33 d2.evaluation.evaluator]: Inference done 2883/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:05:59
+[11/15 10:12:38 d2.evaluation.evaluator]: Inference done 2913/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:05:54
+[11/15 10:12:43 d2.evaluation.evaluator]: Inference done 2943/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:05:48
+[11/15 10:12:48 d2.evaluation.evaluator]: Inference done 2973/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:05:43
+[11/15 10:12:53 d2.evaluation.evaluator]: Inference done 3002/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:05:38
+[11/15 10:12:58 d2.evaluation.evaluator]: Inference done 3032/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:05:33
+[11/15 10:13:03 d2.evaluation.evaluator]: Inference done 3061/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:05:29
+[11/15 10:13:08 d2.evaluation.evaluator]: Inference done 3091/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:05:23
+[11/15 10:13:13 d2.evaluation.evaluator]: Inference done 3121/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:05:18
+[11/15 10:13:18 d2.evaluation.evaluator]: Inference done 3151/5000. Dataloading: 0.0011 s/iter. Inference: 0.1681 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:05:13
+[11/15 10:13:23 d2.evaluation.evaluator]: Inference done 3181/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:05:08
+[11/15 10:13:28 d2.evaluation.evaluator]: Inference done 3211/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:05:03
+[11/15 10:13:34 d2.evaluation.evaluator]: Inference done 3241/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:04:58
+[11/15 10:13:39 d2.evaluation.evaluator]: Inference done 3271/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:04:53
+[11/15 10:13:44 d2.evaluation.evaluator]: Inference done 3300/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:04:48
+[11/15 10:13:49 d2.evaluation.evaluator]: Inference done 3330/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:04:43
+[11/15 10:13:54 d2.evaluation.evaluator]: Inference done 3360/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:04:38
+[11/15 10:13:59 d2.evaluation.evaluator]: Inference done 3390/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1697 s/iter. ETA=0:04:33
+[11/15 10:14:04 d2.evaluation.evaluator]: Inference done 3421/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:04:27
+[11/15 10:14:09 d2.evaluation.evaluator]: Inference done 3451/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:04:22
+[11/15 10:14:14 d2.evaluation.evaluator]: Inference done 3481/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:04:17
+[11/15 10:14:19 d2.evaluation.evaluator]: Inference done 3511/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:04:12
+[11/15 10:14:24 d2.evaluation.evaluator]: Inference done 3542/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:04:07
+[11/15 10:14:29 d2.evaluation.evaluator]: Inference done 3572/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:04:02
+[11/15 10:14:34 d2.evaluation.evaluator]: Inference done 3602/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:03:57
+[11/15 10:14:39 d2.evaluation.evaluator]: Inference done 3632/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0005 s/iter. Total: 0.1695 s/iter. ETA=0:03:51
+[11/15 10:14:45 d2.evaluation.evaluator]: Inference done 3662/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:03:46
+[11/15 10:14:50 d2.evaluation.evaluator]: Inference done 3692/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:03:41
+[11/15 10:14:55 d2.evaluation.evaluator]: Inference done 3722/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:03:36
+[11/15 10:15:00 d2.evaluation.evaluator]: Inference done 3752/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0005 s/iter. Total: 0.1696 s/iter. ETA=0:03:31
+[11/15 10:15:05 d2.evaluation.evaluator]: Inference done 3782/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:03:26
+[11/15 10:15:10 d2.evaluation.evaluator]: Inference done 3812/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:03:21
+[11/15 10:15:15 d2.evaluation.evaluator]: Inference done 3842/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:03:16
+[11/15 10:15:20 d2.evaluation.evaluator]: Inference done 3872/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:03:11
+[11/15 10:15:25 d2.evaluation.evaluator]: Inference done 3903/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:03:06
+[11/15 10:15:30 d2.evaluation.evaluator]: Inference done 3933/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:03:00
+[11/15 10:15:35 d2.evaluation.evaluator]: Inference done 3963/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:02:55
+[11/15 10:15:41 d2.evaluation.evaluator]: Inference done 3994/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:02:50
+[11/15 10:15:46 d2.evaluation.evaluator]: Inference done 4022/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:02:45
+[11/15 10:15:51 d2.evaluation.evaluator]: Inference done 4052/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:02:40
+[11/15 10:15:56 d2.evaluation.evaluator]: Inference done 4082/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:02:35
+[11/15 10:16:01 d2.evaluation.evaluator]: Inference done 4112/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:02:30
+[11/15 10:16:06 d2.evaluation.evaluator]: Inference done 4141/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:02:25
+[11/15 10:16:11 d2.evaluation.evaluator]: Inference done 4172/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:02:20
+[11/15 10:16:16 d2.evaluation.evaluator]: Inference done 4202/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:02:15
+[11/15 10:16:21 d2.evaluation.evaluator]: Inference done 4233/5000. Dataloading: 0.0011 s/iter. Inference: 0.1680 s/iter. Eval: 0.0004 s/iter. Total: 0.1696 s/iter. ETA=0:02:10
+[11/15 10:16:26 d2.evaluation.evaluator]: Inference done 4264/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:02:04
+[11/15 10:16:32 d2.evaluation.evaluator]: Inference done 4295/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:01:59
+[11/15 10:16:37 d2.evaluation.evaluator]: Inference done 4325/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:01:54
+[11/15 10:16:42 d2.evaluation.evaluator]: Inference done 4355/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:01:49
+[11/15 10:16:47 d2.evaluation.evaluator]: Inference done 4386/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:01:44
+[11/15 10:16:52 d2.evaluation.evaluator]: Inference done 4416/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:01:38
+[11/15 10:16:57 d2.evaluation.evaluator]: Inference done 4446/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:01:33
+[11/15 10:17:02 d2.evaluation.evaluator]: Inference done 4476/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:01:28
+[11/15 10:17:07 d2.evaluation.evaluator]: Inference done 4506/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:01:23
+[11/15 10:17:12 d2.evaluation.evaluator]: Inference done 4536/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:01:18
+[11/15 10:17:17 d2.evaluation.evaluator]: Inference done 4566/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:01:13
+[11/15 10:17:22 d2.evaluation.evaluator]: Inference done 4596/5000. Dataloading: 0.0011 s/iter. Inference: 0.1678 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:01:08
+[11/15 10:17:27 d2.evaluation.evaluator]: Inference done 4626/5000. Dataloading: 0.0011 s/iter. Inference: 0.1678 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:01:03
+[11/15 10:17:33 d2.evaluation.evaluator]: Inference done 4656/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:58
+[11/15 10:17:38 d2.evaluation.evaluator]: Inference done 4687/5000. Dataloading: 0.0011 s/iter. Inference: 0.1678 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:53
+[11/15 10:17:43 d2.evaluation.evaluator]: Inference done 4717/5000. Dataloading: 0.0011 s/iter. Inference: 0.1678 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:47
+[11/15 10:17:48 d2.evaluation.evaluator]: Inference done 4747/5000. Dataloading: 0.0011 s/iter. Inference: 0.1678 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:42
+[11/15 10:17:53 d2.evaluation.evaluator]: Inference done 4777/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:37
+[11/15 10:17:58 d2.evaluation.evaluator]: Inference done 4807/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:32
+[11/15 10:18:03 d2.evaluation.evaluator]: Inference done 4839/5000. Dataloading: 0.0011 s/iter. Inference: 0.1678 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:27
+[11/15 10:18:08 d2.evaluation.evaluator]: Inference done 4868/5000. Dataloading: 0.0011 s/iter. Inference: 0.1678 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:22
+[11/15 10:18:13 d2.evaluation.evaluator]: Inference done 4897/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:17
+[11/15 10:18:18 d2.evaluation.evaluator]: Inference done 4927/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1694 s/iter. ETA=0:00:12
+[11/15 10:18:24 d2.evaluation.evaluator]: Inference done 4957/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:00:07
+[11/15 10:18:29 d2.evaluation.evaluator]: Inference done 4987/5000. Dataloading: 0.0011 s/iter. Inference: 0.1679 s/iter. Eval: 0.0004 s/iter. Total: 0.1695 s/iter. ETA=0:00:02
+[11/15 10:18:31 d2.evaluation.evaluator]: Total inference time: 0:14:06.483676 (0.169466 s / iter per device, on 1 devices)
+[11/15 10:18:31 d2.evaluation.evaluator]: Total inference pure compute time: 0:13:58 (0.167885 s / iter per device, on 1 devices)
+[11/15 10:18:31 d2.evaluation.coco_evaluation]: Preparing results for COCO format ...
+[11/15 10:18:31 d2.evaluation.coco_evaluation]: Evaluating predictions with unofficial COCO API...
+Loading and preparing results...
+DONE (t=2.42s)
+creating index...
+index created!
+[11/15 10:18:34 d2.evaluation.fast_eval_api]: Evaluate annotation type *bbox*
+[11/15 10:18:43 d2.evaluation.fast_eval_api]: COCOeval_opt.evaluate() finished in 9.11 seconds.
+[11/15 10:18:43 d2.evaluation.fast_eval_api]: Accumulating evaluation results...
+[11/15 10:18:45 d2.evaluation.fast_eval_api]: COCOeval_opt.accumulate() finished in 2.11 seconds.
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.570
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.758
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.621
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.408
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.605
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.725
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.410
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.689
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.754
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.611
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.795
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.896
+[11/15 10:18:45 d2.evaluation.coco_evaluation]: Evaluation results for bbox: 
+|   AP   |  AP50  |  AP75  |  APs   |  APm   |  APl   |
+|:------:|:------:|:------:|:------:|:------:|:------:|
+| 56.957 | 75.790 | 62.116 | 40.795 | 60.498 | 72.546 |
+[11/15 10:18:45 d2.evaluation.coco_evaluation]: Per-category bbox AP: 
+| category      | AP     | category     | AP     | category       | AP     |
+|:--------------|:-------|:-------------|:-------|:---------------|:-------|
+| person        | 65.926 | bicycle      | 45.437 | car            | 56.835 |
+| motorcycle    | 57.652 | airplane     | 78.624 | bus            | 77.221 |
+| train         | 78.464 | truck        | 51.469 | boat           | 39.509 |
+| traffic light | 35.661 | fire hydrant | 81.024 | stop sign      | 75.781 |
+| parking meter | 52.676 | bench        | 39.124 | bird           | 51.563 |
+| cat           | 82.546 | dog          | 78.077 | horse          | 70.459 |
+| sheep         | 66.456 | cow          | 70.425 | elephant       | 78.740 |
+| bear          | 86.240 | zebra        | 78.924 | giraffe        | 80.254 |
+| backpack      | 28.845 | umbrella     | 56.011 | handbag        | 32.951 |
+| tie           | 50.336 | suitcase     | 56.384 | frisbee        | 78.803 |
+| skis          | 40.194 | snowboard    | 53.932 | sports ball    | 57.223 |
+| kite          | 57.988 | baseball bat | 57.263 | baseball glove | 49.178 |
+| skateboard    | 67.437 | surfboard    | 55.065 | tennis racket  | 66.433 |
+| bottle        | 54.213 | wine glass   | 52.364 | cup            | 59.765 |
+| fork          | 60.970 | knife        | 41.185 | spoon          | 42.162 |
+| bowl          | 55.815 | banana       | 35.446 | apple          | 34.571 |
+| sandwich      | 55.829 | orange       | 37.688 | broccoli       | 28.888 |
+| carrot        | 31.916 | hot dog      | 56.673 | pizza          | 65.946 |
+| donut         | 66.472 | cake         | 51.788 | chair          | 46.771 |
+| couch         | 59.026 | potted plant | 40.366 | bed            | 58.264 |
+| dining table  | 39.688 | toilet       | 73.815 | tv             | 68.378 |
+| laptop        | 78.872 | mouse        | 68.418 | remote         | 53.711 |
+| keyboard      | 64.484 | cell phone   | 52.554 | microwave      | 73.825 |
+| oven          | 49.115 | toaster      | 51.150 | sink           | 49.251 |
+| refrigerator  | 74.679 | book         | 28.181 | clock          | 58.542 |
+| vase          | 49.058 | scissors     | 54.648 | teddy bear     | 65.448 |
+| hair drier    | 33.764 | toothbrush   | 45.719 |                |        |
+
+
+------- Similarity and Timing Metrics -------
+Total Parameters: 241034238
+Average Attack Time: 0.1693
+Average L2 Norm: 0.0000
+Average L0 Norm: 0.0000
+Average SSIM 0.0000
+Mean Difference in Images: 0.0000
+Median Difference in Images: 0.0000
+Max Difference in Images: 0.0000
+------------------------------------------------
+
+
+[11/15 10:18:46 d2.evaluation.testing]: copypaste: Task: bbox
+[11/15 10:18:46 d2.evaluation.testing]: copypaste: AP,AP50,AP75,APs,APm,APl
+[11/15 10:18:46 d2.evaluation.testing]: copypaste: 56.9569,75.7902,62.1163,40.7949,60.4979,72.5461
+OrderedDict({'bbox': {'AP': 56.95685511313799, 'AP50': 75.79018414628224, 'AP75': 62.116323348183556, 'APs': 40.79489555201906, 'APm': 60.49788704992011, 'APl': 72.54607367350921, 'AP-person': 65.92632732952852, 'AP-bicycle': 45.436544377853835, 'AP-car': 56.834811354137706, 'AP-motorcycle': 57.65212011152535, 'AP-airplane': 78.62365291311045, 'AP-bus': 77.22053125121654, 'AP-train': 78.46358034316177, 'AP-truck': 51.46856380952579, 'AP-boat': 39.50929050949102, 'AP-traffic light': 35.6613874143589, 'AP-fire hydrant': 81.02421598564294, 'AP-stop sign': 75.78085478319811, 'AP-parking meter': 52.676157952654265, 'AP-bench': 39.12408966377413, 'AP-bird': 51.5634854777521, 'AP-cat': 82.54598663747097, 'AP-dog': 78.07740889635028, 'AP-horse': 70.45886270266469, 'AP-sheep': 66.45599590204229, 'AP-cow': 70.42539229273585, 'AP-elephant': 78.7401430828534, 'AP-bear': 86.23979894188021, 'AP-zebra': 78.92369693877902, 'AP-giraffe': 80.25428452420313, 'AP-backpack': 28.845405631680855, 'AP-umbrella': 56.01121257161057, 'AP-handbag': 32.95111822380361, 'AP-tie': 50.33626724390975, 'AP-suitcase': 56.384302482236535, 'AP-frisbee': 78.8027181079657, 'AP-skis': 40.19360206586538, 'AP-snowboard': 53.93160615009543, 'AP-sports ball': 57.222556418550184, 'AP-kite': 57.98821535861543, 'AP-baseball bat': 57.263229755178614, 'AP-baseball glove': 49.1776627614194, 'AP-skateboard': 67.43671990427103, 'AP-surfboard': 55.064898186100045, 'AP-tennis racket': 66.43326220755837, 'AP-bottle': 54.21312590682925, 'AP-wine glass': 52.36406870176372, 'AP-cup': 59.76459512986306, 'AP-fork': 60.96993833496512, 'AP-knife': 41.185235469143315, 'AP-spoon': 42.16230324719443, 'AP-bowl': 55.815029242656365, 'AP-banana': 35.44575784022932, 'AP-apple': 34.57130601845365, 'AP-sandwich': 55.828647611158914, 'AP-orange': 37.68751412812843, 'AP-broccoli': 28.887774746502544, 'AP-carrot': 31.916347395933826, 'AP-hot dog': 56.673255807373835, 'AP-pizza': 65.94569951075114, 'AP-donut': 66.47239431003231, 'AP-cake': 51.787771893334636, 'AP-chair': 46.7709816998914, 'AP-couch': 59.026448434559974, 'AP-potted plant': 40.36558520829236, 'AP-bed': 58.264183866968914, 'AP-dining table': 39.687720297201565, 'AP-toilet': 73.81499447851738, 'AP-tv': 68.37826481664163, 'AP-laptop': 78.87225200862518, 'AP-mouse': 68.41750619624082, 'AP-remote': 53.71088798251936, 'AP-keyboard': 64.48359488471935, 'AP-cell phone': 52.55380390737634, 'AP-microwave': 73.8248481113015, 'AP-oven': 49.11493427509156, 'AP-toaster': 51.15042848822697, 'AP-sink': 49.25107416679366, 'AP-refrigerator': 74.6789235332414, 'AP-book': 28.181494365889765, 'AP-clock': 58.54170005238003, 'AP-vase': 49.058170463377515, 'AP-scissors': 54.648442649100595, 'AP-teddy bear': 65.4475417723997, 'AP-hair drier': 33.76449277688866, 'AP-toothbrush': 45.719409055706656}})
+---------------------------------------
+Begin Slurm Epilog: Nov-15-2024 10:18:53
+Job ID:        941573
+Array Job ID:  _4294967294
+User ID:       zyahn3
+Account:       scs
+Job name:      AFOG_InternImage
+Resources:     cpu=1,gres/gpu:a100=1,mem=128G,node=1
+Rsrc Used:     cput=00:16:54,vmem=0,walltime=00:16:54,mem=5325848K,energy_used=0
+Partition:     coc-gpu
+Nodes:         atl1-1-03-007-33-0
+---------------------------------------

@@ -310,7 +310,7 @@ class AlignDETR(nn.Module):
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
         unt_loss = -(loss_ce + loss_bbox / (0.01 + loss_bbox / (0.01 + loss_ce))) + loss_norm
-        unt_loss.backward()
+        unt_loss.backward(retain_graph=True)
         torch.set_grad_enabled(False)
         return x_copy.grad.data.cpu().numpy()
         
@@ -334,7 +334,7 @@ class AlignDETR(nn.Module):
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
 
         unt_loss = (loss_ce + loss_bbox/(0.01 + loss_bbox/(0.01 + loss_ce))) + int(norm) * loss_norm
-        unt_loss.backward()
+        unt_loss.backward(retain_graph=True)
         torch.set_grad_enabled(False)
         return x_copy.grad.data.cpu().numpy()
     
@@ -358,7 +358,7 @@ class AlignDETR(nn.Module):
         loss_bbox = losses["loss_bbox"]
         loss_norm = torch.linalg.norm(torch.abs(x_copy - x_orig).flatten(), 5) if norm else 0.0
         unt_loss = (loss_ce + loss_bbox/(0.01 + loss_bbox / (0.01 + loss_ce))) + int(norm) * loss_norm
-        unt_loss.backward()
+        unt_loss.backward(retain_graph=True)
         torch.set_grad_enabled(False)
         return x_copy.grad.data.cpu().numpy()
 

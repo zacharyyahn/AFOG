@@ -207,20 +207,3 @@ License:                                  Apache License
            limitations under the License.
         
 License-File: LICENSE
-Requires-Dist: cloudpickle
-Requires-Dist: hydra-core
-Requires-Dist: omegaconf
-Requires-Dist: pybind11
-Requires-Dist: flake8
-Requires-Dist: isort
-Requires-Dist: black
-Requires-Dist: autoflake
-Requires-Dist: timm
-Requires-Dist: pytest
-Requires-Dist: scipy
-Requires-Dist: psutil
-Requires-Dist: opencv-python
-Requires-Dist: wandb
-Requires-Dist: submitit
-Requires-Dist: einops
-Requires-Dist: fairscale
