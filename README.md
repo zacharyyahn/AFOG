@@ -5,7 +5,7 @@
 Adversarial perturbations are useful tools for gaining a deeper understanding of large transformer-based object detection models. Existing adversarial perturbation methods are limited to attacking regression-based object detectors (be it two-stage proposal-based or single-stage detectors). This paper presents an attention-focused offensive gradient (AFOG) attack with dual objectives: AFOG is an adversarial perturbation method targeted at vision transformer models for object detection; and the AFOG adversarial perturbation framework is neural-architecture agnostic and effective for attacking both large transformer-based object detectors and conventional regression-based detectors. First, AFOG utilizes a learnable attention mechanism that focuses perturbations on vulnerable areas of feature maps in multi-box detection tasks. Second, AFOG’s attack loss is formulated by integrating two types of feature loss through learnable feature-map based attention updates with iterative injection of adversarial perturbations. Finally, AFOG is an efficient and stealthy adversarial perturbation method, and it probes the weak spots of detection-transformers by adding strategically generated and yet visually imperceptible perturbations, which can cause well-trained vision models to fail on their object detection tasks. To the best of our knowledge, AFOG is the first method that can attack both advanced transformer-based object detection models and traditional regression-based object detectors through a unified attention-based attack framework. Extensive experiments conducted with twelve large detection transformers on COCO demonstrate the efficacy of AFOG. Our empirical results also show that AFOG outperforms the existing attacks on regression-based objet detectors.
 
 ## Setup and Dependencies
-This project uses Python 3.12.4 with PyTorch 2.4.1 and CUDA 12.4 on an NVIDIA A100 GPU. Other versions and hardware are not guaranteed to function properly. To run our code, following these steps (note that initial steps are different depending on model):
+This project uses Python 3.12.4 with PyTorch 2.5.0 and CUDA 12.4 on an NVIDIA A100 GPU. Other versions and hardware are not guaranteed to function properly. To run our code, following these steps (note that initial steps are different depending on model):
 
 #### Transformers and FRCNN
 
@@ -29,7 +29,7 @@ popd
 
 1. Create and activate a virtual environment.
 ```
-conda create -n AFOG_Reg
+conda create -n AFOG_Reg python=3.9.18
 conda activate AFOG_Reg
 ```
 2. Download and unzip or clone our repository.
@@ -48,8 +48,8 @@ pip install -r requirements_reg.txt
 4b. If exploring regression-based detectors, download and unzip [VOC](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar) to locations:
 
 ```
-<top_level_name>/datasets/voc/VOCDevKit/VOC2007/JPEGImages
-<top_level_name>/datasets/voc/VOCDevKit/VOC2007/Annotations
+<top_level_name>/datasets/VOCDevKit/VOC2007/JPEGImages
+<top_level_name>/datasets/VOCDevKit/VOC2007/Annotations
 ```
 
 5. Download and unzip models as necessary so that each is either .pth or .h5. Store them in:
