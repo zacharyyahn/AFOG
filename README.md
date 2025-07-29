@@ -1,4 +1,6 @@
-## Attention-Based Adversarial Perturbations on Large Vision Transformers for Object Detection
+# Attention-Based Adversarial Perturbations on Large Vision Transformers for Object Detection
+
+This is the official implementation of the paper "Attention-Based Adversarial Perturbations on Large Vision Transformers for Object Detection (ICCV 2025)"
 
 ![](assets/examples.png)
 
@@ -38,7 +40,7 @@ conda activate AFOG_Reg
 pip install -r requirements_reg.txt
 ```
 
-#### All Models
+#### All Transformer Models
 4a. If exploring transformers, download and unzip [COCO Annotations](http://images.cocodataset.org/annotations/annotations_trainval2017.zip) and [COCO Images](http://images.cocodataset.org/zips/val2017.zip) to locations:
 ```
 <top_level_name>/datasets/coco/annotations/
@@ -75,7 +77,7 @@ Model Files:
 * [YOLO-v3](https://github.com/git-disl/TOG/releases/download/pm-v1.0/YOLOv3_Darknet53.h5)
 
 
-## Instruction
+## Instructions
 We provide two means of running AFOG on a variety of models. First, we provide Jupyter notebooks for deploying AFOG against a single COCO image and visualizing the results. Second, we provide Slurm scripts for running AFOG on the entire COCO 2017 test-dev set and logging the results.
 
 #### AFOG on a Single Image
