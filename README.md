@@ -1,6 +1,6 @@
-# Attention-Based Adversarial Perturbations on Large Vision Transformers for Object Detection
+# Adversarial Attention Perturbations for Large Object Detection Transformers
 
-This is the official implementation of the paper "Attention-Based Adversarial Perturbations on Large Vision Transformers for Object Detection (ICCV 2025)"
+This is the official implementation of the paper "Adversarial Attention Perturbations for Large Object Detection Transformers (ICCV 2025)"
 
 ![](assets/examples.png)
 
