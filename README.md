@@ -6,6 +6,20 @@ This is the official implementation of the paper "Adversarial Attention Perturba
 
 Adversarial perturbations are useful tools for gaining a deeper understanding of large transformer-based object detection models. Existing adversarial perturbation methods are limited to attacking regression-based object detectors (be it two-stage proposal-based or single-stage detectors). This paper presents an attention-focused offensive gradient (AFOG) attack with dual objectives: AFOG is an adversarial perturbation method targeted at vision transformer models for object detection; and the AFOG adversarial perturbation framework is neural-architecture agnostic and effective for attacking both large transformer-based object detectors and conventional regression-based detectors. First, AFOG utilizes a learnable attention mechanism that focuses perturbations on vulnerable areas of feature maps in multi-box detection tasks. Second, AFOG’s attack loss is formulated by integrating two types of feature loss through learnable feature-map based attention updates with iterative injection of adversarial perturbations. Finally, AFOG is an efficient and stealthy adversarial perturbation method, and it probes the weak spots of detection-transformers by adding strategically generated and yet visually imperceptible perturbations, which can cause well-trained vision models to fail on their object detection tasks. To the best of our knowledge, AFOG is the first method that can attack both advanced transformer-based object detection models and traditional regression-based object detectors through a unified attention-based attack framework. Extensive experiments conducted with twelve large detection transformers on COCO demonstrate the efficacy of AFOG. Our empirical results also show that AFOG outperforms the existing attacks on regression-based objet detectors.
 
+## Citation
+Please consider citing our ICCV paper if you found this work useful. 
+```
+@misc{yahn2025afog,
+      title={Adversarial Attention Perturbations for Large Object Detection Transformers}, 
+      author={Zachary Yahn and Selim Furkan Tekin and Fatih Ilhan and Sihao Hu and Tiansheng Huang and Yichang Xu and Margaret Loper and Ling Liu},
+      year={2025},
+      eprint={2508.02987},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2508.02987}, 
+}
+```
+
 ## Setup and Dependencies
 This project uses Python 3.12.4 with PyTorch 2.5.0 and CUDA 12.4 on an NVIDIA A100 GPU. Other versions and hardware are not guaranteed to function properly. To run our code, following these steps (note that initial steps are different depending on model):
 
